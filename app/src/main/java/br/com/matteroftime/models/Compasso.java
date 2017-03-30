@@ -18,6 +18,7 @@ public class Compasso extends RealmObject implements Serializable{
     private int nota;
     private int repeticoes;
     private boolean fim;
+    private double intervalo;
 
     public Compasso() {
     }
@@ -77,5 +78,13 @@ public class Compasso extends RealmObject implements Serializable{
 
     public void setFim(boolean fim) {
         this.fim = fim;
+    }
+
+    public double getIntervalo() {
+        return intervalo;
+    }
+
+    public void setIntervalo(double intervalo) {
+        this.intervalo = intervalo;
     }
 }

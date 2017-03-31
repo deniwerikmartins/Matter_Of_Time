@@ -14,7 +14,7 @@ public interface PlayContract {
     }
 
     public interface Actions{
-        public List<Compasso> defineCompasso(List<Compasso> compassos);
+        //public List<Compasso> defineCompasso(List<Compasso> compassos);
 
     }
 

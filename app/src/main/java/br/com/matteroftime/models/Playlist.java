@@ -3,6 +3,7 @@ package br.com.matteroftime.models;
 import java.util.List;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -14,6 +15,7 @@ public class Playlist extends RealmObject {
     @PrimaryKey
     private long id;
     private String nome;
+    @Ignore
     private List<Musica> musicas;
 
     public Playlist() {

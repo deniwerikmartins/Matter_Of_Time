@@ -2,6 +2,12 @@
   <dictionary name="RedBlood">
     <words>
       <w>butterknife</w>
+      <w>musica</w>
+      <w>musicas</w>
+      <w>nota</w>
+      <w>notas</w>
+      <w>numero</w>
+      <w>selecionada</w>
     </words>
   </dictionary>
 </component>

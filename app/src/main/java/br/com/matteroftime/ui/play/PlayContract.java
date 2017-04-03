@@ -2,7 +2,9 @@ package br.com.matteroftime.ui.play;
 
 import java.util.List;
 
+import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Compasso;
+import br.com.matteroftime.models.Musica;
 
 /**
  * Created by RedBlood on 30/03/2017.
@@ -10,15 +12,23 @@ import br.com.matteroftime.models.Compasso;
 
 public interface PlayContract {
     public interface View{
+        public void mostrarMusicas(List<Musica> musicas);
+        public void criaCompasso();
+        public void tocar();
+        public void parar();
 
     }
 
     public interface Actions{
-        //public List<Compasso> defineCompasso(List<Compasso> compassos);
-
+        public void loadMusics();
+        public void play();
+        public void stop();
+        public void defineMusica(Musica musicaSelecionada);
     }
 
     public interface Repository{
+        public List<Musica> getAllMusics();
+        public void addMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
 
     }
 }

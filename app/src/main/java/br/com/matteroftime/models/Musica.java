@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -16,6 +17,7 @@ public class Musica extends RealmObject implements Serializable {
     @PrimaryKey
     private long id;
     private String nome;
+    @Ignore
     private List<Compasso> compassos;
 
     public Musica() {

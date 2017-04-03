@@ -2,6 +2,8 @@ package br.com.matteroftime.core.dagger;
 
 import javax.inject.Singleton;
 
+import br.com.matteroftime.common.MainActivity;
+import br.com.matteroftime.ui.play.PlayPresenter;
 import dagger.Component;
 
 /**
@@ -10,8 +12,12 @@ import dagger.Component;
 @Singleton
 @Component(
         modules = {
+                AppModule.class,
+                PersistenceModule.class
+
 
 })
 public interface AppComponent {
-    //void inject()
+    void inject(MainActivity activity);
+    void inject(PlayPresenter presenter);
 }

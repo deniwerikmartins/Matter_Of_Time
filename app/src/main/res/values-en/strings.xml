@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MatterOfTime</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="formula_de_compasso">Time Signature</string>
+    <string name="tempos">Beats</string>
+    <string name="nota">Note</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="playlist">Playlist</string>
+    <string name="bpm">BPM</string>
+</resources>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -17,13 +18,14 @@ public class Musica extends RealmObject implements Serializable {
     @PrimaryKey
     private long id;
     private String nome;
-    @Ignore
-    private List<Compasso> compassos;
+    //@Ignore
+    //private List<Compasso> compassos;
+    private RealmList<Compasso> compassos;
 
     public Musica() {
     }
 
-    public Musica(long id, String nome, List<Compasso> compassos) {
+    public Musica(long id, String nome, RealmList<Compasso> compassos) {
         this.id = id;
         this.nome = nome;
         this.compassos = compassos;
@@ -45,15 +47,15 @@ public class Musica extends RealmObject implements Serializable {
         this.nome = nome;
     }
 
-    public List<Compasso> getCompassos() {
+    public RealmList<Compasso> getCompassos() {
         return compassos;
     }
 
-    public void setCompassos(List<Compasso> compassos) {
+    public void setCompassos(RealmList<Compasso> compassos) {
         this.compassos = compassos;
     }
 
-    public void defineIntervalo(final List<Compasso> compassos) {
+    public void defineIntervalo(final RealmList<Compasso> compassos) {
         for (Compasso compasso : compassos) {
             switch (compasso.getNota()){
                 //semi-breve

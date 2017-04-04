@@ -14,6 +14,7 @@ import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Musica;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmList;
 
 /**
  * Created by RedBlood on 30/03/2017.
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
     private List<Musica> musicas;
+    //private RealmList<Musica> musicas;
     private Context context;
     private final OnMusicSelectedListener listener;
 

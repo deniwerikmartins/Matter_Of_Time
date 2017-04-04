@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
+import io.realm.RealmList;
 
 /**
  * Created by RedBlood on 30/03/2017.
@@ -35,7 +36,7 @@ public class PlayPresenter implements PlayContract.Actions{
         if (musicasDisponiveis != null && musicasDisponiveis.size() > 0){
             view.mostrarMusicas(musicasDisponiveis);
         } else {
-
+            //exibir lista vazia (com mensagem??)
         }
     }
 

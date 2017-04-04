@@ -14,8 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.matteroftime.R;
@@ -24,6 +22,7 @@ import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +57,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         presenter = new PlayPresenter(this);
 
         //setup RecyclerView
-        List<Musica> tempMusicas = new ArrayList<>();
+        RealmList<Musica> tempMusicas = new RealmList<>();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         playAdapter = new PlayAdapter(tempMusicas, getContext(), this);
         playlistRecyclerView.setLayoutManager(layoutManager);
@@ -127,8 +126,9 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         compasso.setTempos(t);
         compasso.setNota(nota);
         compasso.setBpm(b);
-        List<Compasso> compassos = new ArrayList<>();
-        compassos.set(0, compasso);
+        RealmList<Compasso> compassos = new RealmList<>();
+        //compassos.set(0, compasso);
+        compassos.add(0,compasso);
         Musica musica = new Musica();
         musica.setCompassos(compassos);
         musica.defineIntervalo(musica.getCompassos());

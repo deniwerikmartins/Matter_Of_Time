@@ -5,6 +5,8 @@ import java.util.List;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 
 /**
  * Created by RedBlood on 30/03/2017.

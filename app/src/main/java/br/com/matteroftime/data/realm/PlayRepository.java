@@ -33,7 +33,7 @@ public class PlayRepository implements PlayContract.Repository{
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm backgroundRealm) {
-                //fazer for each nos compassos com "chave estrangeira" para a musica
+                //fazer for each nos compassos com "chave estrangeira" para a musica OU não :p
 
             }
         }, new Realm.Transaction.OnSuccess() {

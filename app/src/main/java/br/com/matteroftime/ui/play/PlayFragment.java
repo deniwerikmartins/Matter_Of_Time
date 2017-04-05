@@ -12,8 +12,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.matteroftime.R;
@@ -38,9 +44,20 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
-    @BindView(R.id.edt_tempos) EditText tempos;
-    @BindView(R.id.spn_notas) Spinner spinner;
-    @BindView(R.id.edt_BPM) EditText bpm;
+    @BindView(R.id.edtTempos) EditText tempos;
+    @BindView(R.id.spnNota) Spinner spinner;
+    @BindView(R.id.edtBPM) EditText bpm;
+    @BindView(R.id.txtBPMAtual) TextView bpmAtual;
+    @BindView(R.id.txtTemposAtual) TextView temposAtual;
+    @BindView(R.id.txtNotaAtual) TextView notaAtual;
+    @BindView(R.id.txtProxBPM) TextView proxBpm;
+    @BindView(R.id.txtProxTempos) TextView proxTempos;
+    @BindView(R.id.txtProxNota) TextView proxNota;
+    @BindView(R.id.btnOk) ImageButton imgBtnOk;
+    @BindView(R.id.btnPlay) ImageButton imgBtnPlay;
+    @BindView(R.id.btnStop) ImageButton imgBtnStop;
+    @BindView(R.id.imgClick) ImageView imgClick;
+    @BindView(R.id.imgStop) ImageView imgStop;
 
     public PlayFragment() {
         // Required empty public constructor
@@ -57,7 +74,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         presenter = new PlayPresenter(this);
 
         //setup RecyclerView
-        RealmList<Musica> tempMusicas = new RealmList<>();
+        List<Musica> tempMusicas = new ArrayList<>(); // ou RealmList
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         playAdapter = new PlayAdapter(tempMusicas, getContext(), this);
         playlistRecyclerView.setLayoutManager(layoutManager);

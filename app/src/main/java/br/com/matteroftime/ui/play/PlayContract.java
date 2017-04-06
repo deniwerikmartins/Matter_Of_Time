@@ -1,5 +1,8 @@
 package br.com.matteroftime.ui.play;
 
+import android.content.Context;
+import android.view.View;
+
 import java.util.List;
 
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
@@ -15,17 +18,16 @@ import io.realm.RealmResults;
 public interface PlayContract {
     public interface View{
         public void mostrarMusicas(List<Musica> musicas);
-        public void criaCompasso();
-        public void tocar();
-        public void parar();
+
 
     }
 
     public interface Actions{
         public void loadMusics();
-        public void play();
+        public void play(Context context);
         public void stop();
         public void defineMusica(Musica musicaSelecionada);
+        public void criaCompasso(int bpm, int tempos, int nota);
     }
 
     public interface Repository{

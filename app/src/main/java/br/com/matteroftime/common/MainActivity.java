@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        ButterKnife.bind(this);
+        activity = this;
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
+        setupViewPager();
 
     }
 

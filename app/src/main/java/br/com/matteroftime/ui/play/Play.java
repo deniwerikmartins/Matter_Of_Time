@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,30 +25,38 @@ public class Play extends AsyncTask<Musica,Void,Void> {
     private long intervalo;
     Musica musica;
     Timer timer = new Timer();
-    int i;
-    MediaPlayer clickForte = MediaPlayer.create(context, R.raw.clickforte);
-    MediaPlayer clickFraco = MediaPlayer.create(context, R.raw.clickfraco);
-
-    public Play() {
-    }
+    int incrementador;
+    int k;
+    public int tempoAtual = 0;
+    MediaPlayer clickForte;
+    MediaPlayer clickFraco;
 
     public Play(Context context, PlayContract.Actions pa) {
         this.context = context;
         this.pa = pa;
+        clickForte = MediaPlayer.create(context, R.raw.clickforte);
+        clickFraco = MediaPlayer.create(context, R.raw.clickfraco);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
     }
 
     @Override
     protected Void doInBackground(Musica... params) {
         musica = params[0];
-        for (i = 0;  i < musica.getCompassos().size(); i++){
-            intervalo = (long) musica.getCompassos().get(i).getIntervalo();
-            timer.schedule(new Play.click(), 0, intervalo);
+
+        for ( k = 0; k < musica.getCompassos().size(); k++  ) {
+            intervalo = (long)musica.getCompassos().get(k).getIntervalo();
+            for (incrementador = 0;  k < musica.getCompassos().size(); incrementador++){
+                //intervalo = (long) musica.getCompassos().get(incrementador).getIntervalo();
+                timer.schedule(new Play.click(), 0, intervalo);
+            }
         }
+
+
         return null;
     }
 
@@ -65,16 +74,19 @@ public class Play extends AsyncTask<Musica,Void,Void> {
 
     public class click extends TimerTask{
 
-        private int tempoAtual = 1;
+
 
         @Override
         public void run() {
 
-                for (int j = 0; j < musica.getCompassos().get(i).getRepeticoes(); j++){
-                    /*if (tempoAtual == 0){
+
+
+                for (int j = 0; j < musica.getCompassos().get(k).getRepeticoes(); j++){
+
+                    if (tempoAtual == 0){
                         tempoAtual += 1;
                         //return;
-                    }*/
+                    }
 
                     if (tempoAtual == 1){
                         clickForte();
@@ -82,8 +94,12 @@ public class Play extends AsyncTask<Musica,Void,Void> {
                         clickFraco();
                     }
 
-                    if (tempoAtual == musica.getCompassos().get(i).getTempos()){
+                    if (tempoAtual == musica.getCompassos().get(k).getTempos()){
                         tempoAtual = 1;
+                    }
+
+                    if (tempoAtual == musica.getCompassos().get(k).getTempos() && musica.getCompassos().get(j).getId() == musica.getCompassos().size() && j < musica.getCompassos().get(k).getRepeticoes()){
+                        timer.cancel();
                     }
 
                     tempoAtual++;

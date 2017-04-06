@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="4" />
+            android:text="0" />
 
         <TextView
             android:id="@+id/textView38"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="4" />
+            android:text="0" />
 
         <TextView
             android:id="@+id/textView45"
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="4" />
+            android:text="0" />
 
         <TextView
             android:id="@+id/textView48"
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="4" />
+            android:text="0" />
 
     </LinearLayout>
 
@@ -184,8 +184,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
+            android:hint="00"
             android:inputType="number"
-            android:text="00"
             android:textAlignment="center" />
 
         <TextView
@@ -212,8 +212,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:ems="2"
+            android:hint="000"
             android:inputType="number"
-            android:text="000"
             android:textAlignment="center" />
 
         <ImageButton

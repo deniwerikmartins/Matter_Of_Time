@@ -2,10 +2,7 @@ package br.com.matteroftime.ui.play;
 
 import android.content.Context;
 
-import java.sql.Time;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -25,6 +22,7 @@ public class PlayPresenter implements PlayContract.Actions{
     Play play;
     Musica musica;
 
+
     public PlayPresenter(PlayContract.View view) {
         this.view = view;
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
@@ -41,9 +39,9 @@ public class PlayPresenter implements PlayContract.Actions{
     }
 
     @Override
-    public void play() {
-        //play = new Play((Context) view,this);
-        play = new Play();
+    public void play(Context context) {
+        play = new Play(context, this);
+
         musica.defineIntervalo(musica.getCompassos());
         play.execute(musica);
     }
@@ -56,5 +54,22 @@ public class PlayPresenter implements PlayContract.Actions{
     @Override
     public void defineMusica(Musica musicaSelecionada) {
         musica = musicaSelecionada;
+    }
+
+    @Override
+    public void criaCompasso(int bpm, int tempos, int nota) {
+        Compasso compasso = new Compasso();
+        compasso.setTempos(tempos);
+        compasso.setNota(nota);
+        compasso.setBpm(bpm);
+        compasso.setRepeticoes(1);
+        compasso.setId(1);
+        RealmList<Compasso> compassos = new RealmList<>();
+        compassos.add(compasso);
+        Musica musica = new Musica();
+        musica.setCompassos(compassos);
+        musica.defineIntervalo(musica.getCompassos());
+        this.defineMusica(musica);
+
     }
 }

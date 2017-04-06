@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.RealmList;
 
 /**
@@ -70,6 +72,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_play, container, false);
+
         ButterKnife.bind(this, view);
         presenter = new PlayPresenter(this);
 
@@ -90,29 +93,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 nota = (int)spinner.getSelectedItem();
-                /*switch (select){
-                    case 1:
-                        nota = 1;
-                        break;
-                    case 2:
-                        nota = 2;
-                        break;
-                    case 4:
-                        nota = 4;
-                        break;
-                    case 8:
-                        nota = 8;
-                        break;
-                    case 16:
-                        nota = 16;
-                        break;
-                    case 32:
-                        nota = 32;
-                        break;
-                    case 64:
-                        nota = 64;
-                        break;
-                }*/
             }
 
             @Override
@@ -135,30 +115,29 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         playAdapter.replaceData(musicas);
     }
 
-    @Override
-    public void criaCompasso() {
-        Compasso compasso = new Compasso();
+    @OnClick(R.id.btnOk)
+    public void onClickOk(View view){
         int t = Integer.parseInt(tempos.getText().toString());
         int b = Integer.parseInt(bpm.getText().toString());
-        compasso.setTempos(t);
-        compasso.setNota(nota);
-        compasso.setBpm(b);
-        RealmList<Compasso> compassos = new RealmList<>();
-        //compassos.set(0, compasso);
-        compassos.add(0,compasso);
-        Musica musica = new Musica();
-        musica.setCompassos(compassos);
-        musica.defineIntervalo(musica.getCompassos());
-        presenter.defineMusica(musica);
+        presenter.criaCompasso(b, t, nota);
+        bpmAtual.setText(String.valueOf(b));
+        temposAtual.setText(String.valueOf(t));
+        notaAtual.setText(String.valueOf(nota));
     }
 
-    @Override
-    public void tocar() {
-        presenter.play();
+    @OnClick(R.id.btnPlay)
+    public void tocar(View view){
+        presenter.play(getContext());
     }
 
-    @Override
-    public void parar() {
+
+    @OnClick(R.id.btnStop)
+    public void parar(View view){
         presenter.stop();
     }
+
+
+
+
+
 }

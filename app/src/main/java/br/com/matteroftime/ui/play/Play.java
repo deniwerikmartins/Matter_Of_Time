@@ -25,9 +25,9 @@ public class Play extends AsyncTask<Musica,Void,Void> {
     private long intervalo;
     Musica musica;
     Timer timer = new Timer();
-    int incrementador;
-    int k;
-    public int tempoAtual = 0;
+    int k = 0;
+    int i = 0;
+    public int tempoAtual;
     MediaPlayer clickForte;
     MediaPlayer clickFraco;
 
@@ -48,14 +48,28 @@ public class Play extends AsyncTask<Musica,Void,Void> {
     protected Void doInBackground(Musica... params) {
         musica = params[0];
 
+        /*
         for ( k = 0; k < musica.getCompassos().size(); k++  ) {
             intervalo = (long)musica.getCompassos().get(k).getIntervalo();
             for (incrementador = 0;  k < musica.getCompassos().size(); incrementador++){
                 //intervalo = (long) musica.getCompassos().get(incrementador).getIntervalo();
-                timer.schedule(new Play.click(), 0, intervalo);
+                timer.scheduleAtFixedRate(new Play.click(), 0, intervalo);
             }
         }
+        */
 
+        /*for (Compasso compasso : musica.getCompassos()) {
+            intervalo = (long)compasso.getIntervalo();
+            timer.scheduleAtFixedRate(new Play.click(),0,intervalo);
+            //i++;
+        }*/
+
+        for (i = 0; i < musica.getCompassos().size(); i++){
+            if (i < musica.getCompassos().size()){
+                intervalo = (long)musica.getCompassos().get(i).getIntervalo();
+                timer.scheduleAtFixedRate(new Play.click(),0,intervalo);
+            }
+        }
 
         return null;
     }
@@ -74,35 +88,34 @@ public class Play extends AsyncTask<Musica,Void,Void> {
 
     public class click extends TimerTask{
 
-
-
         @Override
         public void run() {
+                                                       //.get(j)
+                for (int j = 0; j < musica.getCompassos().get(i).getRepeticoes(); j++){
+                    //int x = i;
+                    for (tempoAtual = 0; tempoAtual <= musica.getCompassos().get(i).getTempos(); tempoAtual++){
+                        if (tempoAtual == 0){
+                            tempoAtual += 1;
+                            //return;
+                        }
 
+                        if (tempoAtual == 1){
+                            clickForte();
+                        } else {
+                            clickFraco();
+                        }
 
+                        /*if (tempoAtual == musica.getCompassos().get(i).getTempos()){
+                            tempoAtual = 1;
+                        }*/
 
-                for (int j = 0; j < musica.getCompassos().get(k).getRepeticoes(); j++){
-
-                    if (tempoAtual == 0){
-                        tempoAtual += 1;
-                        //return;
+                        /*if (tempoAtual == musica.getCompassos().get(i).getTempos()
+                                && musica.getCompassos().get(i).getId() == musica.getCompassos().size()
+                                && j == musica.getCompassos().get(i).getRepeticoes() - 1){
+                            timer.cancel();
+                        }*/
+                        //tempoAtual++;
                     }
-
-                    if (tempoAtual == 1){
-                        clickForte();
-                    } else {
-                        clickFraco();
-                    }
-
-                    if (tempoAtual == musica.getCompassos().get(k).getTempos()){
-                        tempoAtual = 1;
-                    }
-
-                    if (tempoAtual == musica.getCompassos().get(k).getTempos() && musica.getCompassos().get(j).getId() == musica.getCompassos().size() && j < musica.getCompassos().get(k).getRepeticoes()){
-                        timer.cancel();
-                    }
-
-                    tempoAtual++;
                 }
         }
     }

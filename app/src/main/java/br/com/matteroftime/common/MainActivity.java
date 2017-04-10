@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.squareup.otto.Bus;
+
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import butterknife.BindView;
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
 
+    private Bus bus;
+
     private Activity activity;
 
     @Override
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         activity = this;
+        bus = MatterOfTimeApplication.getInstance().getBus();
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
         setupViewPager();
 
@@ -39,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        try {
+            bus.register(this);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void setupViewPager(){
@@ -55,5 +65,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        try {
+            bus.unregister(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

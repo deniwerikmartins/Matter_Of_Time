@@ -8,4 +8,5 @@ import br.com.matteroftime.models.Musica;
 
 public interface OnMusicSelectedListener {
     void onSelectMusic(Musica musicaSelecionada);
+    void onLongClickMusic(Musica musicaClicada);
 }

@@ -109,6 +109,11 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         presenter.defineMusica(musicaSelecionada);
     }
 
+    @Override
+    public void onLongClickMusic(Musica musicaClicada) {
+        presenter.defineMusica(musicaClicada);
+    }
+
 
     @Override
     public void mostrarMusicas(List<Musica> musicas) {

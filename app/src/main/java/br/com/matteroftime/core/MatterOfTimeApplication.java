@@ -2,6 +2,8 @@ package br.com.matteroftime.core;
 
 import android.app.Application;
 
+import com.squareup.otto.Bus;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 import br.com.matteroftime.core.dagger.AppComponent;
@@ -18,6 +20,10 @@ import io.realm.RealmResults;
  */
 
 public class MatterOfTimeApplication extends Application{
+    private Bus bus;
+    public Bus getBus() {
+        return bus;
+    }
 
     public static AtomicLong musicaPrimarykey;
 
@@ -31,6 +37,7 @@ public class MatterOfTimeApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        instance.bus = new Bus();
         getAppComponent();
         initRealm();
     }
@@ -70,4 +77,6 @@ public class MatterOfTimeApplication extends Application{
         return appComponent;
 
     }
+
+
 }

@@ -2,6 +2,8 @@ package br.com.matteroftime.ui.play;
 
 import android.content.Context;
 
+import com.squareup.otto.Bus;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +20,8 @@ import io.realm.RealmList;
 public class PlayPresenter implements PlayContract.Actions{
     private final PlayContract.View view;
     @Inject PlayContract.Repository repository;
+    @Inject
+    Bus bus;
 
     Play play;
     Musica musica;
@@ -26,6 +30,7 @@ public class PlayPresenter implements PlayContract.Actions{
     public PlayPresenter(PlayContract.View view) {
         this.view = view;
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
+        bus.register(this);
     }
 
     @Override
@@ -41,7 +46,6 @@ public class PlayPresenter implements PlayContract.Actions{
     @Override
     public void play(Context context) {
         play = new Play(context, this);
-
         musica.defineIntervalo(musica.getCompassos());
         play.execute(musica);
     }

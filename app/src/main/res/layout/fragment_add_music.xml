@@ -1,0 +1,34 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.matteroftime.ui.addMusic.AddMusicDialogFragment">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layour_add_music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp">
+
+        <EditText
+            android:id="@+id/edt_nome_da_musica"
+            style="@style/AddProductForm"
+            android:hint="@string/nomedamusica"
+            android:imeOptions="actionNext" />
+
+        <EditText
+            android:id="@+id/edt_quantidade_compassos"
+            style="@style/AddProductForm"
+            android:hint="@string/quantidadecompassos"
+            android:inputType="number" />
+
+
+    </LinearLayout>
+</ScrollView>

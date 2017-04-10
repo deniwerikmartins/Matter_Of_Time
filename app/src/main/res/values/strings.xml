@@ -13,4 +13,7 @@
     <string name="bpm">BPM</string>
     <string name="compasso_atual">Compasso atual</string>
     <string name="proximo_compasso">Próximo compasso</string>
+    <string name="dialog_title">Dialog Title</string>
+    <string name="nomedamusica">Nome da musica</string>
+    <string name="quantidadecompassos">Quantidade de compassos</string>
 </resources>

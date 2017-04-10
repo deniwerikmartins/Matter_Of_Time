@@ -1,12 +1,15 @@
 package br.com.matteroftime.ui.edit;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -81,16 +84,39 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @Override
     public void showAddMusicForm() {
         addMusicDialogFragment = AddMusicDialogFragment.newInstance(0);
-
+        addMusicDialogFragment.show(getActivity().getFragmentManager(), "Dialog");
     }
 
     @Override
     public void showEditMusicForm(Musica musica) {
-
+        AddMusicDialogFragment dialog = AddMusicDialogFragment.newInstance(musica.getId());
+        dialog.show(getActivity().getFragmentManager(), "Dialog");
     }
 
     @Override
-    public void showDeleteMusicPrompt(Musica musica) {
+    public void showDeleteMusicPrompt(final Musica musica) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View titleView = (View)inflater.inflate(R.layout.dialog_title,null);
+        TextView titleText = (TextView) titleView.findViewById(R.id.txt_view_dialog_title);
+        titleText.setText("Delete Music?");
+
+        alertDialog.setMessage("Delete" + musica.getNome());
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                presenter.deleteMusic(musica);
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
 
     }
 

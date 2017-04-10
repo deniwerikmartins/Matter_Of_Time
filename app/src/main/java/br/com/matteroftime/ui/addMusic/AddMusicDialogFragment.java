@@ -3,32 +3,33 @@ package br.com.matteroftime.ui.addMusic;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.util.Constants;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class AddMusicDialogFragment extends DialogFragment implements AddMusicContract.View  {
+
+public class AddMusicDialogFragment extends DialogFragment  implements AddMusicContract.View  {
 
     private AddMusicContract.Action presenter;
     private boolean editMode = false;
 
-
-    //binds da view
+    @BindView(R.id.edt_nome_da_musica) EditText edtNomeDaMusica;
+    @BindView(R.id.edt_quantidade_compassos) EditText edtQtdCompassos;
 
     public AddMusicDialogFragment() {
         // Required empty public constructor
@@ -56,18 +57,18 @@ public class AddMusicDialogFragment extends DialogFragment implements AddMusicCo
         if (savedInstanceState == null){
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            //View view = inflater.
-            //dialogFragment.setView(view);
-            //ButterKnife.bind(this, view);
+            View view = inflater.inflate(R.layout.fragment_add_music, null);
+            dialogFragment.setView(view);
+            ButterKnife.bind(this, view);
 
             if (getArguments() != null && getArguments().containsKey(Constants.COLUMN_ID)){
                 presenter.checkStatus(getArguments().getLong(Constants.COLUMN_ID));
             }
 
-            //View titleView = inflater
-            //TextView textText
-            //titleText.set
-            //dialogFragment.setCustomTitle(titleText);
+            View titleView = inflater.inflate(R.layout.dialog_title, null);
+            TextView titleText = (TextView)titleView.findViewById(R.id.txt_view_dialog_title);
+            titleText.setText(editMode ? "Update Music" : "Add Music");
+            dialogFragment.setCustomTitle(titleView);
 
             dialogFragment.setPositiveButton(editMode ? "Update" : "Add", new DialogInterface.OnClickListener() {
                 @Override
@@ -81,23 +82,14 @@ public class AddMusicDialogFragment extends DialogFragment implements AddMusicCo
                     dialog.dismiss();
                 }
             });
-
-
         }
-
-
-
-
-
         return dialogFragment.create();
-
-
-
     }
 
     @Override
     public void populateForm(Musica musica) {
-
+        edtNomeDaMusica.setText(musica.getNome());
+        edtQtdCompassos.setText(musica.getQtdCompassos());
     }
 
     @Override
@@ -111,6 +103,17 @@ public class AddMusicDialogFragment extends DialogFragment implements AddMusicCo
     }
 
     private boolean validateInputs(){
+        if (edtNomeDaMusica.getText().toString().isEmpty()){
+            edtNomeDaMusica.setError("Name is required");
+            edtNomeDaMusica.requestFocus();
+            return false;
+        }
+
+        if (edtNomeDaMusica.getText().toString().isEmpty()){
+            edtNomeDaMusica.setError("Quantity is required");
+            edtQtdCompassos.requestFocus();
+            return false;
+        }
 
         return true;
     }
@@ -118,9 +121,34 @@ public class AddMusicDialogFragment extends DialogFragment implements AddMusicCo
     @Override
     public void onStart() {
         super.onStart();
+        AlertDialog d = (AlertDialog)getDialog();
+
+        if (d != null){
+            Button positiveButton = (Button)d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean readyToCloseDialog = false;
+                    if (validateInputs()){
+                        saveMusic();
+                        readyToCloseDialog = true;
+                    }
+                    if (readyToCloseDialog){
+                        dismiss();
+                    }
+                }
+            });
+        }
     }
 
     public void saveMusic(){
 
+        Musica musica = new Musica();
+        musica.setNome(edtNomeDaMusica.getText().toString());
+        musica.setQtdCompassos(Integer.parseInt(edtQtdCompassos.getText().toString()));
+
+        presenter.ondAddMusicButtonClick(musica);
     }
+
+
 }

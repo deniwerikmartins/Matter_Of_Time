@@ -40,10 +40,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
         }
     }
 
-    @Override
-    public Musica getMusica(long id) {
-        return repository.getMusicById(id);
-    }
+
 
     @Override
     public void onAddMusicButtonClicked() {
@@ -53,6 +50,11 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     @Override
     public void ondAddToEditButtonClicked(Musica musica) {
         //passar para a view
+    }
+
+    @Override
+    public Musica getMusica(long id) {
+        return repository.getMusicById(id);
     }
 
     @Override
@@ -81,6 +83,11 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
         repository.updateMusic(musica,this);
     }
 
+    @Subscribe
+    public void onMusicListChanged(MusicListChangedEvent event){
+        loadMusics();
+    }
+
 
     @Override
     public void onSQLOperationFailed(String error) {
@@ -92,10 +99,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
         view.showMessage(message);
     }
 
-    @Subscribe
-    public void onMusicListChanged(MusicListChangedEvent event){
-        loadMusics();
-    }
+
 
 
 

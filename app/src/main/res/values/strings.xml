@@ -25,4 +25,5 @@
     <string name="sem_musicas">Sem Músicas</string>
     <string name="ordem_da_musica_na_playlist">Ordem da musica na Playlist</string>
     <string name="name_is_required">Nome obrigatório</string>
+    <string name="confirmar_compasso">Confirmar compasso</string>
 </resources>

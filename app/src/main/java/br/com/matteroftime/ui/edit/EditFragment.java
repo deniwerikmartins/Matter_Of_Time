@@ -209,7 +209,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     }
 
     private void showMusicContextMenu(final Musica musicaClicada) {
-        final String[] sortOptions = {"Edit Music", "Delete", "Edit Measures"};
+        final String[] sortOptions = {"Edit Music", "Delete"};
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -248,10 +248,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                         break;
                     case 1:
                         presenter.onDeleteMusicButtonClicked(musicaClicada);
-                        dialog.dismiss();
-                        break;
-                    case 2:
-                        presenter.ondAddToEditButtonClicked(musicaClicada);
+                        presenter.loadMusics();
                         dialog.dismiss();
                         break;
                 }

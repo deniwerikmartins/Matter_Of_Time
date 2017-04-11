@@ -153,8 +153,8 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
 
         for (int i = 0; i < musica.getQtdCompassos(); i++){
             compassos.add(i, new Compasso());
-            musica.setCompassos(compassos);
         }
+        musica.setCompassos(compassos);
 
         presenter.ondAddMusicButtonClick(musica);
     }

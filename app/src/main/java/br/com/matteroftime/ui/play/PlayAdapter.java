@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
@@ -23,7 +24,6 @@ import io.realm.RealmList;
 public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
     private List<Musica> musicas;
-    //private RealmList<Musica> musicas;
     private Context context;
     private final OnMusicSelectedListener listener;
 
@@ -46,9 +46,9 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
             final Musica musica = musicas.get(position);
             holder.numeroMusica.setText(String.valueOf(musica.getId()));
             holder.nomeMusica.setText(musica.getNome());
-            holder.bpm.setText(musica.getCompassos().get(0).getBpm());
+            /*holder.bpm.setText(musica.getCompassos().get(0).getBpm());
             holder.tempos.setText(musica.getCompassos().get(0).getTempos());
-            holder.nota.setText(musica.getCompassos().get(0).getNota());
+            holder.nota.setText(musica.getCompassos().get(0).getNota());*/
         }
     }
 

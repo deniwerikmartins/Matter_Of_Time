@@ -54,11 +54,17 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
 
     @Override
     public void saveMusic(Musica musica) {
-        repository.addMusic(musica,this);
+        if (musicaId > 0){
+            musica.setId(musicaId);
+            updateMusic(musica);
+        } else {
+            repository.addMusic(musica, this);
+        }
     }
 
     @Override
     public void updateMusic(Musica musica) {
+        musica.setId(musicaId);
         repository.updateMusic(musica, this);
     }
 
@@ -66,7 +72,6 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
     @Override
     public void onSQLOperationFailed(String error) {
         view.displayMessage("Error: " + error);
-
     }
 
     @Override

@@ -14,13 +14,12 @@ public interface EditContract {
 
     public interface View{
         void showMusics(List<Musica> musicas);
-        void showMessage(String message);
         void showAddMusicForm();
         void showEditMusicForm(Musica musica);
         void showDeleteMusicPrompt(Musica musica);
-
         void showEmptyText();
         void hideEmptyText();
+        void showMessage(String message);
     }
 
     public interface Actions{

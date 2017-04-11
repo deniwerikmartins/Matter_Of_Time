@@ -2,7 +2,9 @@ package br.com.matteroftime.core.dagger;
 
 import android.content.Context;
 
+import br.com.matteroftime.data.realm.EditRepository;
 import br.com.matteroftime.data.realm.PlayRepository;
+import br.com.matteroftime.ui.edit.EditContract;
 import br.com.matteroftime.ui.play.PlayContract;
 import dagger.Module;
 import dagger.Provides;
@@ -16,5 +18,10 @@ public class PersistenceModule {
     @Provides
     public PlayContract.Repository providesPlayRepository(Context context){
         return new PlayRepository();
+    }
+
+    @Provides
+    public EditContract.Repository providesEditRepository(Context context){
+        return new EditRepository();
     }
 }

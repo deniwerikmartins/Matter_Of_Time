@@ -37,9 +37,10 @@ public class PlayPresenter implements PlayContract.Actions{
     public void loadMusics() {
         List<Musica> musicasDisponiveis = repository.getAllMusics();
         if (musicasDisponiveis != null && musicasDisponiveis.size() > 0){
+            view.hideEmptyText();
             view.mostrarMusicas(musicasDisponiveis);
         } else {
-            //exibir lista vazia (com mensagem??)
+            view.showEmptyText();
         }
     }
 

@@ -16,4 +16,13 @@
     <string name="dialog_title">Dialog Title</string>
     <string name="nomedamusica">Nome da musica</string>
     <string name="quantidadecompassos">Quantidade de compassos</string>
+    <string name="numero_compasso">Compasso #</string>
+    <string name="pre_contagem">Pré Contagem</string>
+    <string name="contar_entrada">Contar</string>
+    <string name="compasso">Compasso</string>
+    <string name="remover_compasso">Remover Compasso</string>
+    <string name="insere_compasso">Inserir Compasso</string>
+    <string name="sem_musicas">Sem Músicas</string>
+    <string name="ordem_da_musica_na_playlist">Ordem da musica na Playlist</string>
+    <string name="name_is_required">Nome obrigatório</string>
 </resources>

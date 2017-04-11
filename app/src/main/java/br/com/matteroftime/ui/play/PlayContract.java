@@ -18,6 +18,9 @@ import io.realm.RealmResults;
 public interface PlayContract {
     public interface View{
         public void mostrarMusicas(List<Musica> musicas);
+        void showEmptyText();
+        void hideEmptyText();
+        void showMessage(String message);
 
 
     }
@@ -32,7 +35,7 @@ public interface PlayContract {
 
     public interface Repository{
         public List<Musica> getAllMusics();
-        public void addMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
+
 
     }
 }

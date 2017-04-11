@@ -3,6 +3,7 @@ package br.com.matteroftime.ui.play;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,9 +41,10 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private View view;
     private PlayAdapter playAdapter;
     private PlayContract.Actions presenter;
-    private Integer[] valorNotas = new Integer[]{1,2,4,8,16,32,64};
+    //private Integer[] valorNotas = new Integer[]{1,2,4,8,16,32,64};
+    private String[] valorNotas = new String[]{"Semibreve","Mímina","Seminima","Colcheia","Semicolcheia","Fusa","Semifusa"};
     private int nota;
-    private int select;
+    private String select;
 
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
@@ -60,6 +62,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @BindView(R.id.btnStop) ImageButton imgBtnStop;
     @BindView(R.id.imgClick) ImageView imgClick;
     @BindView(R.id.imgStop) ImageView imgStop;
+    @BindView(R.id.empty_text) TextView emptyText;
 
     public PlayFragment() {
         // Required empty public constructor
@@ -84,7 +87,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         playlistRecyclerView.setAdapter(playAdapter);
 
 
-        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, valorNotas);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, valorNotas);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //spinner = (Spinner) spinner.findViewById(R.id.spn_notas);
         spinner.setAdapter(arrayAdapter);
@@ -92,7 +95,31 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nota = (int)spinner.getSelectedItem();
+                //nota = (int)spinner.getSelectedItem();
+                select = (String)spinner.getSelectedItem();
+                switch (select){
+                                        case "Semibreve":
+                                                nota = 1;
+                                                break;
+                                        case "Mímina":
+                                                nota = 2;
+                                                break;
+                                        case "Seminima":
+                                                nota = 4;
+                                                break;
+                                        case "Colcheia":
+                                                nota = 8;
+                                                break;
+                                        case "Semicolcheia":
+                                                nota = 16;
+                                                break;
+                                        case "Fusa":
+                                                nota = 32;
+                                                break;
+                                        case "Semifusa":
+                                                nota = 64;
+                                                break;
+                                    }
             }
 
             @Override
@@ -104,6 +131,38 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        presenter.loadMusics();
+    }
+
+    @Override
+    public void mostrarMusicas(List<Musica> musicas) {
+        playAdapter.replaceData(musicas);
+    }
+
+    @Override
+    public void showEmptyText() {
+        emptyText.setVisibility(View.VISIBLE);
+        playlistRecyclerView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideEmptyText() {
+        emptyText.setVisibility(View.GONE);
+        playlistRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        showToastMessage(message);
+    }
+
+    private void showToastMessage(String message) {
+        Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onSelectMusic(Musica musicaSelecionada) {
         //musica recebida do listener
         presenter.defineMusica(musicaSelecionada);
@@ -112,12 +171,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @Override
     public void onLongClickMusic(Musica musicaClicada) {
         presenter.defineMusica(musicaClicada);
-    }
-
-
-    @Override
-    public void mostrarMusicas(List<Musica> musicas) {
-        playAdapter.replaceData(musicas);
     }
 
     @OnClick(R.id.btnOk)

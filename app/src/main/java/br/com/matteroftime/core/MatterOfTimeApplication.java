@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import br.com.matteroftime.core.dagger.AppComponent;
 import br.com.matteroftime.core.dagger.AppModule;
 import br.com.matteroftime.core.dagger.DaggerAppComponent;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -26,6 +27,7 @@ public class MatterOfTimeApplication extends Application{
     }
 
     public static AtomicLong musicaPrimarykey;
+    public static AtomicLong compassoPrimarykey;
 
     private static MatterOfTimeApplication instance = new MatterOfTimeApplication();
     private static AppComponent appComponent;
@@ -64,7 +66,19 @@ public class MatterOfTimeApplication extends Application{
             RealmResults<Musica> results = realm.where(Musica.class).equalTo("id",0).findAll();
             results.deleteAllFromRealm();
             realm.commitTransaction();
+        }
 
+        try{
+            compassoPrimarykey = new AtomicLong(realm.where(Compasso.class).max("id").longValue());
+        } catch (Exception e){
+            realm.beginTransaction();
+            Compasso tempCompasso = new Compasso();
+            tempCompasso.setId(0);
+            realm.copyToRealm(tempCompasso);
+            compassoPrimarykey = new AtomicLong(realm.where(Compasso.class).max("id").longValue());
+            RealmResults<Compasso> compassos = realm.where(Compasso.class).equalTo("id",0).findAll();
+            compassos.deleteAllFromRealm();
+            realm.commitTransaction();
         }
     }
 

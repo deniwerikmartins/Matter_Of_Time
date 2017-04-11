@@ -17,10 +17,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import br.com.matteroftime.R;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmList;
 
 
 public class AddMusicDialogFragment extends DialogFragment  implements AddMusicContract.View  {
@@ -104,13 +106,13 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
 
     private boolean validateInputs(){
         if (edtNomeDaMusica.getText().toString().isEmpty()){
-            edtNomeDaMusica.setError("Name is required");
+            edtNomeDaMusica.setError(getString(R.string.name_is_required));
             edtNomeDaMusica.requestFocus();
             return false;
         }
 
-        if (edtNomeDaMusica.getText().toString().isEmpty()){
-            edtNomeDaMusica.setError("Quantity is required");
+        if (edtQtdCompassos.getText().toString().isEmpty()){
+            edtQtdCompassos.setError(getString(R.string.quantidadecompassos));
             edtQtdCompassos.requestFocus();
             return false;
         }
@@ -146,6 +148,13 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
         Musica musica = new Musica();
         musica.setNome(edtNomeDaMusica.getText().toString());
         musica.setQtdCompassos(Integer.parseInt(edtQtdCompassos.getText().toString()));
+
+        RealmList<Compasso> compassos = new RealmList<>();
+
+        for (int i = 0; i < musica.getQtdCompassos(); i++){
+            compassos.add(i, new Compasso());
+            musica.setCompassos(compassos);
+        }
 
         presenter.ondAddMusicButtonClick(musica);
     }

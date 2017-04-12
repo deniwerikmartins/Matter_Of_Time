@@ -30,6 +30,7 @@ public class EditRepository implements EditContract.Repository{
         RealmResults<Musica> musicas = realm.where(Musica.class).equalTo("id", id).findAll();
         Musica result = musicas.first();
         Musica inMemoryMusic = realm.copyFromRealm(result);
+        realm.close();
         return inMemoryMusic;
     }
 

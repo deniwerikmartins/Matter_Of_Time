@@ -1,13 +1,13 @@
 package br.com.matteroftime.ui.edit;
 
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     private int nota;
     private String select;
     private boolean contagem;
+    private Musica musica;
 
     @BindView(R.id.editList_recycler_view) RecyclerView editListRecyclerView;
     @BindView(R.id.empty_text) TextView emptyText;
@@ -54,6 +57,21 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @BindView(R.id.btn_InserirCompasso) Button btnInserirCompasso;
     @BindView(R.id.spn_nota) Spinner spinner;
     @BindView(R.id.chk_pre_contagem) CheckBox checkBox;
+
+    @BindView(R.id.txtNumeroMusica) TextView numeroMusica;
+    @BindView(R.id.edt_ordem) EditText ordemDaMusica;
+    @BindView(R.id.imgBtnConfirmaOrdem) ImageButton confirmaOrdem;
+    @BindView(R.id.edt_contagem) EditText contar;
+    @BindView(R.id.txtNumCompasso) TextView txtNumeroCompasso;
+    @BindView(R.id.txtTempoCompasso) TextView txtTempoCompasso;
+    @BindView(R.id.txtNotaCompasso) TextView txtNotaCompasso;
+    @BindView(R.id.txtBpmCompasso) TextView txtBpmCompasso;
+
+    @BindView(R.id.edt_numero_compasso) EditText edtNumeroCompasso;
+    @BindView(R.id.edt_bpm) EditText edtBpm;
+    @BindView(R.id.edt_tempos) EditText edtTempos;
+
+
 
 
 
@@ -67,6 +85,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_edit, container, false);
+        musica = new Musica();
         ButterKnife.bind(this, view);
         presenter = new EditPresenter(this);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +109,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //nota = (int)spinner.getSelectedItem();
                 select = (String)spinner.getSelectedItem();
                 switch (select){
                     case "Semibreve":
@@ -256,9 +274,33 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         });
     }
 
+    @OnClick(R.id.imgBtnConfirmaOrdem)
+    public void setConfirmaOrdem(View view){
+        musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()));
+        List<Musica> musicas = presenter.getListaMusicas();
+        musicas.add(musica.getOrdem(), musica);
+        this.showMusics(musicas);
+    }
+
     @OnClick(R.id.chk_pre_contagem)
     public void onCheckboxClicked(View view){
         contagem = ((CheckBox) view).isChecked();
+    }
+
+    @OnClick(R.id.btnConfirmaCompasso)
+    public void setConfirmaCompasso(){
 
     }
+
+    @OnClick(R.id.btn_removerCompasso)
+    public void setBtnRemoverCompasso(){
+
+    }
+
+    @OnClick(R.id.btn_InserirCompasso)
+    public void setBtnInserirCompasso(){
+
+    }
+
+
 }

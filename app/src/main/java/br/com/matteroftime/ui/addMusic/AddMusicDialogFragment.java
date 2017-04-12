@@ -91,7 +91,7 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
     @Override
     public void populateForm(Musica musica) {
         edtNomeDaMusica.setText(musica.getNome());
-        edtQtdCompassos.setText(musica.getQtdCompassos());
+        edtQtdCompassos.setText(String.valueOf(musica.getQtdCompassos()));
     }
 
     @Override
@@ -144,18 +144,9 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
     }
 
     public void saveMusic(){
-
         Musica musica = new Musica();
         musica.setNome(edtNomeDaMusica.getText().toString());
         musica.setQtdCompassos(Integer.parseInt(edtQtdCompassos.getText().toString()));
-
-        RealmList<Compasso> compassos = new RealmList<>();
-
-        for (int i = 0; i < musica.getQtdCompassos(); i++){
-            compassos.add(i, new Compasso());
-        }
-        musica.setCompassos(compassos);
-
         presenter.ondAddMusicButtonClick(musica);
     }
 

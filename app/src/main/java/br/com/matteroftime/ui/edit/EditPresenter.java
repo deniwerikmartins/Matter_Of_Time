@@ -40,7 +40,11 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
         }
     }
 
-
+    @Override
+    public List<Musica> getListaMusicas() {
+        List<Musica> musicas = repository.getAllMusics();
+        return musicas;
+    }
 
     @Override
     public void onAddMusicButtonClicked() {

@@ -175,12 +175,19 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @OnClick(R.id.btnOk)
     public void onClickOk(View view){
-        int t = Integer.parseInt(tempos.getText().toString());
-        int b = Integer.parseInt(bpm.getText().toString());
-        presenter.criaCompasso(b, t, nota);
-        bpmAtual.setText(String.valueOf(b));
-        temposAtual.setText(String.valueOf(t));
-        notaAtual.setText(String.valueOf(nota));
+        if (tempos.getText().toString().isEmpty()){
+            this.showMessage(getString(R.string.tempo_necessario));
+        } else if (bpm.getText().toString().isEmpty()){
+            this.showMessage(getString(R.string.bpm_necessario));
+        } else {
+            int t = Integer.parseInt(tempos.getText().toString());
+            int b = Integer.parseInt(bpm.getText().toString());
+            presenter.criaCompasso(b, t, nota);
+            bpmAtual.setText(String.valueOf(b));
+            temposAtual.setText(String.valueOf(t));
+            notaAtual.setText(String.valueOf(nota));
+        }
+
     }
 
     @OnClick(R.id.btnPlay)

@@ -32,6 +32,7 @@ public interface EditContract {
         void deleteMusic(Musica musica);
         void onEditMusicaButtonClicked(Musica musica);
         void updateMusica(Musica musica);
+        List<Musica> getListaMusicas();
     }
 
     public interface Repository{

@@ -148,6 +148,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -179,7 +181,8 @@
             android:id="@+id/textView51"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tempos" />
+            android:text="@string/tempos"
+            android:textSize="@dimen/text_size_normal" />
 
         <EditText
             android:id="@+id/edtTempos"
@@ -188,25 +191,27 @@
             android:ems="2"
             android:hint="00"
             android:inputType="number"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_normal" />
 
         <TextView
             android:id="@+id/textView52"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nota" />
+            android:text="@string/nota"
+            android:textSize="@dimen/text_size_normal" />
 
         <Spinner
             android:id="@+id/spnNota"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textView53"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bpm" />
+            android:text="@string/bpm"
+            android:textSize="@dimen/text_size_normal" />
 
         <EditText
             android:id="@+id/edtBPM"
@@ -216,7 +221,8 @@
             android:ems="2"
             android:hint="000"
             android:inputType="number"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_normal" />
 
         <ImageButton
             android:id="@+id/btnOk"

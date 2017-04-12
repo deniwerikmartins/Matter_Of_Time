@@ -26,4 +26,6 @@
     <string name="ordem_da_musica_na_playlist">Ordem da musica na Playlist</string>
     <string name="name_is_required">Nome obrigatório</string>
     <string name="confirmar_compasso">Confirmar compasso</string>
+    <string name="tempo_necessario">Necessário tempos por compasso</string>
+    <string name="bpm_necessario">Necessário informar o BPM</string>
 </resources>

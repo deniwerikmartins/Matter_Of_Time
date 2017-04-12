@@ -7,8 +7,10 @@ import javax.inject.Inject;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.edit.EditContract;
+import io.realm.RealmList;
 
 /**
  * Created by RedBlood on 10/04/2017.
@@ -54,6 +56,15 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
 
     @Override
     public void saveMusic(Musica musica) {
+
+        RealmList<Compasso> compassos = new RealmList<>();
+
+        for (int i = 0; i < musica.getQtdCompassos(); i++){
+            compassos.add(i, new Compasso());
+        }
+
+        musica.setCompassos(compassos);
+
         if (musicaId > 0){
             musica.setId(musicaId);
             updateMusic(musica);

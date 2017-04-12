@@ -64,6 +64,12 @@
             android:ems="2"
             android:inputType="number" />
 
+        <ImageButton
+            android:id="@+id/imgBtnConfirmaOrdem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/checkbox_on_background" />
+
 
     </LinearLayout>
 
@@ -97,7 +103,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/edt_contar"
+            android:id="@+id/edt_contagem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"

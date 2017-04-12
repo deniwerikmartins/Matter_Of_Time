@@ -53,7 +53,12 @@ public class PlayPresenter implements PlayContract.Actions{
 
     @Override
     public void stop() {
-        play.cancel();
+        if (play != null){
+            play.cancel();
+        } else {
+            return;
+        }
+
     }
 
     @Override

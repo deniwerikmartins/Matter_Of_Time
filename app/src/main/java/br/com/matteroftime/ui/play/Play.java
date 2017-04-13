@@ -57,7 +57,7 @@ public class Play extends AsyncTask<Musica,Void,Void>{
     protected Void doInBackground(Musica... params) {
         musica = params[0];
 
-        while (!finished){
+/*        while (!finished){
             for ( k = 0; k < musica.getCompassos().size(); k++  ) {
                 intervalo = (long)musica.getCompassos().get(k).getIntervalo();
                 for (incrementador = 0;  k < musica.getCompassos().size(); incrementador++){
@@ -76,7 +76,7 @@ public class Play extends AsyncTask<Musica,Void,Void>{
                 }
             }
             finished = true;
-        }
+        }*/
 
 
         /*for (Compasso compasso : musica.getCompassos()) {
@@ -85,7 +85,7 @@ public class Play extends AsyncTask<Musica,Void,Void>{
             //i++;
         }*/
 
-        /*while (!finished){
+        while (!finished){
             for (i = 0; i < musica.getCompassos().size(); i++){
                 intervalo = (long)musica.getCompassos().get(i).getIntervalo();
                 timer.scheduleAtFixedRate(new Play.Click(),0,intervalo);
@@ -101,7 +101,7 @@ public class Play extends AsyncTask<Musica,Void,Void>{
                 }
             }
             finished = true;
-        }*/
+        }
         return null;
     }
 

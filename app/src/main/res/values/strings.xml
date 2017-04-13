@@ -31,6 +31,8 @@
     <string name="ordem_necessaria">Núme na ordem da playlist necessário</string>
     <string name="sem_contagem">Tempos para pré-contagem necessário</string>
     <string name="repeticoes">Repetições</string>
-    <string name="tamanho_compassos">Seu compasso possui</string>
+    <string name="tamanho_compassos">Sua musica possui</string>
     <string name="compassos">compassos</string>
+    <string name="compasso_inexistente">Compasso inexistente</string>
+    <string name="musica_inexistente">Posição de música inexistente</string>
 </resources>

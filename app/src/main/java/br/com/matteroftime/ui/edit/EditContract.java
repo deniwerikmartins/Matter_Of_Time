@@ -13,6 +13,7 @@ import br.com.matteroftime.ui.addMusic.AddMusicPresenter;
 public interface EditContract {
 
     public interface View{
+        void recebeMusica(Musica musica);
         void showMusics(List<Musica> musicas);
         void showAddMusicForm();
         void showEditMusicForm(Musica musica);

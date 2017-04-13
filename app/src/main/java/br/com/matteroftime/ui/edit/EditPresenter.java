@@ -53,7 +53,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
 
     @Override
     public void ondAddToEditButtonClicked(Musica musica) {
-        //passar para a view
+        view.recebeMusica(musica);
     }
 
     @Override

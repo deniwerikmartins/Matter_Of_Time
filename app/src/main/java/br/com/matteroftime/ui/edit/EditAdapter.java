@@ -51,11 +51,11 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
         if (musicas != null){
             try {
                 final Musica musica = musicas.get(position);
-                holder.numeroMusica.setText(musica.getOrdem());
+                holder.numeroMusica.setText(String.valueOf(musica.getOrdem()));
                 holder.nomeMusica.setText(musica.getNome());
-                holder.bpm.setText(musica.getCompassos().get(0).getBpm());
-                holder.tempos.setText(musica.getCompassos().get(0).getTempos());
-                holder.nota.setText(musica.getCompassos().get(0).getNota());
+                holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
+                holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
+                holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -92,7 +92,7 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-
+            nomeMusica.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 

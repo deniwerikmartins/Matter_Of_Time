@@ -22,20 +22,20 @@ public class Musica extends RealmObject implements Serializable {
     private int ordem;
     private int qtdCompassos;
     private boolean preContagem;
-    private int tempoContagem;
+    private int temposContagem;
 
 
     public Musica() {
     }
 
-    public Musica(long id, String nome, RealmList<Compasso> compassos, int ordem, int qtdCompassos, boolean preContagem, int tempoContagem) {
+    public Musica(long id, String nome, RealmList<Compasso> compassos, int ordem, int qtdCompassos, boolean preContagem, int temposContagem) {
         this.id = id;
         this.nome = nome;
         this.compassos = compassos;
         this.ordem = ordem;
         this.qtdCompassos = qtdCompassos;
         this.preContagem = preContagem;
-        this.tempoContagem = tempoContagem;
+        this.temposContagem = temposContagem;
     }
 
 
@@ -88,12 +88,12 @@ public class Musica extends RealmObject implements Serializable {
         this.preContagem = preContagem;
     }
 
-    public int getTempoContagem() {
-        return tempoContagem;
+    public int getTemposContagem() {
+        return temposContagem;
     }
 
-    public void setTempoContagem(int tempoContagem) {
-        this.tempoContagem = tempoContagem;
+    public void setTemposContagem(int temposContagem) {
+        this.temposContagem = temposContagem;
     }
 
     public void defineIntervalo(final RealmList<Compasso> compassos) {

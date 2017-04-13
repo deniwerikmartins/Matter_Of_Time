@@ -28,4 +28,9 @@
     <string name="confirmar_compasso">Confirmar compasso</string>
     <string name="tempo_necessario">Necessário tempos por compasso</string>
     <string name="bpm_necessario">Necessário informar o BPM</string>
+    <string name="ordem_necessaria">Núme na ordem da playlist necessário</string>
+    <string name="sem_contagem">Tempos para pré-contagem necessário</string>
+    <string name="repeticoes">Repetições</string>
+    <string name="tamanho_compassos">Seu compasso possui</string>
+    <string name="compassos">compassos</string>
 </resources>

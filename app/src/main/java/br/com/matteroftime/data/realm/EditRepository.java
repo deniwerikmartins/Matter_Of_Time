@@ -18,7 +18,7 @@ public class EditRepository implements EditContract.Repository{
     @Override
     public List<Musica> getAllMusics() {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<Musica> musicas = realm.where(Musica.class).findAll();
+        RealmResults<Musica> musicas = realm.where(Musica.class).findAllSorted("ordem");
         List<Musica> result = realm.copyFromRealm(musicas);
         realm.close();
         return result;

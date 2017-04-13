@@ -44,11 +44,11 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (musicas != null){
             final Musica musica = musicas.get(position);
-            holder.numeroMusica.setText(String.valueOf(musica.getId()));
+            holder.numeroMusica.setText(String.valueOf(musica.getOrdem()));
             holder.nomeMusica.setText(musica.getNome());
-            /*holder.bpm.setText(musica.getCompassos().get(0).getBpm());
-            holder.tempos.setText(musica.getCompassos().get(0).getTempos());
-            holder.nota.setText(musica.getCompassos().get(0).getNota());*/
+            holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
+            holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
+            holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
         }
     }
 
@@ -78,6 +78,7 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            nomeMusica.setOnClickListener(this);
             //itemView.setOnLongClickListener(this);
         }
 

@@ -25,14 +25,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.addMusic.AddMusicDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.RealmList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,15 +56,17 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @BindView(R.id.editList_recycler_view) RecyclerView editListRecyclerView;
     @BindView(R.id.empty_text) TextView emptyText;
     @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.btnConfirmaCompasso) Button btnConfirmaCompasso;
     @BindView(R.id.btn_removerCompasso) Button btnRemoverCompasso;
     @BindView(R.id.btn_InserirCompasso) Button btnInserirCompasso;
     @BindView(R.id.spn_nota) Spinner spinner;
     @BindView(R.id.chk_pre_contagem) CheckBox checkBox;
 
+    @BindView(R.id.txt_nome_musica) TextView nomeMusica;
     @BindView(R.id.txtNumeroMusica) TextView numeroMusica;
     @BindView(R.id.edt_ordem) EditText ordemDaMusica;
-    @BindView(R.id.imgBtnConfirmaOrdem) ImageButton confirmaOrdem;
-    @BindView(R.id.edt_contagem) EditText contar;
+    @BindView(R.id.imgBtnConfirmaMusica) ImageButton confirmaMusica;
+    @BindView(R.id.edt_contar) EditText contar;
     @BindView(R.id.txtNumCompasso) TextView txtNumeroCompasso;
     @BindView(R.id.txtTempoCompasso) TextView txtTempoCompasso;
     @BindView(R.id.txtNotaCompasso) TextView txtNotaCompasso;
@@ -70,6 +75,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @BindView(R.id.edt_numero_compasso) EditText edtNumeroCompasso;
     @BindView(R.id.edt_bpm) EditText edtBpm;
     @BindView(R.id.edt_tempos) EditText edtTempos;
+    @BindView(R.id.edt_repeticoes) EditText edtRepeticoes;
 
 
 
@@ -141,6 +147,18 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             }
         });
 
+        edtNumeroCompasso.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+
+                }
+            }
+        });
+
+
+
+
         return view;
     }
 
@@ -148,6 +166,11 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     public void onResume() {
         super.onResume();
         presenter.loadMusics();
+    }
+
+    @Override
+    public void recebeMusica(Musica musica) {
+        this.musica = musica;
     }
 
     @Override
@@ -217,7 +240,11 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
 
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
+
         presenter.ondAddToEditButtonClicked(musicaSelecionada);
+        nomeMusica.setText(musicaSelecionada.getNome());
+        numeroMusica.setText(String.valueOf(musicaSelecionada.getOrdem()));
+
     }
 
     @Override
@@ -274,33 +301,76 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         });
     }
 
-    @OnClick(R.id.imgBtnConfirmaOrdem)
-    public void setConfirmaOrdem(View view){
-        musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()));
-        List<Musica> musicas = presenter.getListaMusicas();
-        musicas.add(musica.getOrdem(), musica);
-        this.showMusics(musicas);
-    }
-
     @OnClick(R.id.chk_pre_contagem)
     public void onCheckboxClicked(View view){
         contagem = ((CheckBox) view).isChecked();
+        if (contagem == false){
+            contar.setActivated(false);
+        } else {
+            contar.setActivated(true);
+        }
+
+    }
+
+    @OnClick(R.id.imgBtnConfirmaMusica)
+    public void setConfirmaMusica(View view){
+        if (ordemDaMusica.getText().toString().isEmpty()){
+            showMessage(getString(R.string.ordem_necessaria));
+        } else if(presenter.getListaMusicas() == null){
+            showMessage(getString(R.string.sem_musicas));
+        } else if(contagem == true && contar.getText().toString().isEmpty() || Integer.parseInt(contar.getText().toString()) == 0) {
+            showMessage(getString(R.string.sem_contagem));
+        } else if (contagem == true) {
+            musica.setPreContagem(contagem);
+            musica.setTemposContagem(Integer.parseInt(contar.getText().toString()));
+        } else {
+            musica.setPreContagem(contagem);
+            musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()));
+            List<Musica> musicas = presenter.getListaMusicas();
+            musicas.add(musica.getOrdem(), musica);
+            presenter.updateMusica(musica);
+            this.showMusics(musicas);
+
+        }
     }
 
     @OnClick(R.id.btnConfirmaCompasso)
     public void setConfirmaCompasso(){
+        Compasso compasso = new Compasso();
+        compasso.setOrdem(Integer.parseInt(edtNumeroCompasso.getText().toString()));
+        compasso.setBpm(Integer.parseInt(edtBpm.getText().toString()));
+        compasso.setTempos(Integer.parseInt(edtTempos.getText().toString()));
+        compasso.setNota(nota);
+        compasso.setRepeticoes(Integer.parseInt(edtRepeticoes.getText().toString()));
 
+        musica.getCompassos().set(Integer.parseInt(edtNumeroCompasso.getText().toString()),compasso);
+        presenter.updateMusica(musica);
+
+        List<Musica> musicas = presenter.getListaMusicas();
+        this.showMusics(musicas);
     }
 
     @OnClick(R.id.btn_removerCompasso)
     public void setBtnRemoverCompasso(){
+        int compasso = Integer.parseInt(edtNumeroCompasso.getText().toString());
+        musica.getCompassos().remove(compasso);
+        presenter.updateMusica(musica);
 
+        List<Musica> musicas = presenter.getListaMusicas();
+        this.showMusics(musicas);
     }
 
     @OnClick(R.id.btn_InserirCompasso)
     public void setBtnInserirCompasso(){
+        musica.getCompassos().add(new Compasso());
+        showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
+        presenter.updateMusica(musica);
 
+        List<Musica> musicas = presenter.getListaMusicas();
+        this.showMusics(musicas);
     }
+
+
 
 
 }

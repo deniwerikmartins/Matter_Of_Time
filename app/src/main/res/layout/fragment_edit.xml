@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     tools:context="br.com.matteroftime.ui.edit.EditFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="end"
+            android:gravity="center"
             android:hint="@string/nomedamusica"
             android:text="@string/nomedamusica"
             android:textStyle="bold" />
@@ -64,12 +64,6 @@
             android:ems="2"
             android:inputType="number" />
 
-        <ImageButton
-            android:id="@+id/imgBtnConfirmaOrdem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/checkbox_on_background" />
-
 
     </LinearLayout>
 
@@ -103,11 +97,17 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/edt_contagem"
+            android:id="@+id/edt_contar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
             android:inputType="number" />
+
+        <ImageButton
+            android:id="@+id/imgBtnConfirmaMusica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/checkbox_on_background" />
     </LinearLayout>
 
     <LinearLayout
@@ -273,14 +273,29 @@
         android:id="@+id/linearLayout13"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linearLayout10"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout10"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.26"
+            android:text="@string/repeticoes"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/edt_repeticoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/btnConfirmaCompasso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/confirmar_compasso" />
     </LinearLayout>
 

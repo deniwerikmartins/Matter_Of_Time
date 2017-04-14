@@ -51,7 +51,7 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
         if (musicas != null){
             try {
                 final Musica musica = musicas.get(position);
-                holder.numeroMusica.setText(String.valueOf(musica.getOrdem()));
+                holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 holder.nomeMusica.setText(musica.getNome());
                 holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));

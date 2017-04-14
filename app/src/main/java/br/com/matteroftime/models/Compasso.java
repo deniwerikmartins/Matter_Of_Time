@@ -20,11 +20,12 @@ public class Compasso extends RealmObject implements Serializable{
     private boolean fim;
     private double intervalo;
     private int ordem;
+    private Musica musica;
 
     public Compasso() {
     }
 
-    public Compasso(long id, int bpm, int tempos, int nota, int repeticoes, boolean fim, int ordem) {
+    public Compasso(long id, int bpm, int tempos, int nota, int repeticoes, boolean fim, int ordem, Musica musica) {
         this.id = id;
         this.bpm = bpm;
         this.tempos = tempos;
@@ -96,5 +97,13 @@ public class Compasso extends RealmObject implements Serializable{
 
     public void setOrdem(int ordem) {
         this.ordem = ordem;
+    }
+
+    public Musica getMusica() {
+        return musica;
+    }
+
+    public void setMusica(Musica musica) {
+        this.musica = musica;
     }
 }

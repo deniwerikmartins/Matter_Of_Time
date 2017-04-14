@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.edit.EditContract;
 import io.realm.Realm;
@@ -18,8 +19,14 @@ public class EditRepository implements EditContract.Repository{
     @Override
     public List<Musica> getAllMusics() {
         Realm realm = Realm.getDefaultInstance();
+
         RealmResults<Musica> musicas = realm.where(Musica.class).findAllSorted("ordem");
+        //RealmResults<Musica> musicas = realm.where(Musica.class).findAll();
         List<Musica> result = realm.copyFromRealm(musicas);
+
+        /*RealmResults<Compasso> compassos = realm.where(Compasso.class).findAll();
+        List<Compasso> resultcomp = realm.copyFromRealm(compassos);*/
+
         realm.close();
         return result;
     }
@@ -98,7 +105,12 @@ public class EditRepository implements EditContract.Repository{
         realm.executeTransactionAsync(new Realm.Transaction() {
                                           @Override
                                           public void execute(Realm backgroundRealm) {
+                                              //musica.setId(99);
                                               backgroundRealm.copyToRealmOrUpdate(musica);
+                                              /*for (Compasso compasso : musica.getCompassos()) {
+                                                  compasso.setMusica(musica);
+                                                  backgroundRealm.copyToRealm(compasso);
+                                              }*/
                                           }
                                       }, new Realm.Transaction.OnSuccess() {
                                           @Override

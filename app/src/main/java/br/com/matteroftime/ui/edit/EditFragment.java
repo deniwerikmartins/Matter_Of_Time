@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ import br.com.matteroftime.ui.addMusic.AddMusicDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 import io.realm.RealmList;
 
 /**
@@ -151,7 +154,19 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
+                    int ord = Integer.parseInt(edtNumeroCompasso.getText().toString());
+                    int x = 0;
+                    if (musica.getNome() != null && ord <= 0 || ord > musica.getCompassos().size()){
+                        showMessage(getString(R.string.compasso_inexistente));
+                    } else if(musica.getCompassos() != null && musica.getCompassos().size() > 0){
+                        ord = ord - 1;
+                        x = musica.getCompassos().get(ord).getOrdem();
+                        x++;
+                        txtNumeroCompasso.setText(String.valueOf(x));
 
+                        atualizaViewsCompasso(musica, musica.getCompassos().get(ord));
+
+                    }
                 }
             }
         });
@@ -234,6 +249,8 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         showToastMessage(message);
     }
 
+
+
     private void showToastMessage(String message) {
         Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
     }
@@ -243,7 +260,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
 
         presenter.ondAddToEditButtonClicked(musicaSelecionada);
         nomeMusica.setText(musicaSelecionada.getNome());
-        numeroMusica.setText(String.valueOf(musicaSelecionada.getOrdem()));
+        numeroMusica.setText(String.valueOf(musicaSelecionada.getOrdem() + 1));
 
     }
 
@@ -314,60 +331,131 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
 
     @OnClick(R.id.imgBtnConfirmaMusica)
     public void setConfirmaMusica(View view){
-        if (ordemDaMusica.getText().toString().isEmpty()){
+        int ord = Integer.parseInt(ordemDaMusica.getText().toString());
+        if (ord < adapter.getItemCount() || ord > adapter.getItemCount()){
+            showMessage(getString(R.string.posicao_invalida));
+        } else if (musica.getNome() == null){
+            showMessage(getString(R.string.sem_musica));
+        } else if (ordemDaMusica.getText().toString().isEmpty()){
             showMessage(getString(R.string.ordem_necessaria));
         } else if(presenter.getListaMusicas() == null){
             showMessage(getString(R.string.sem_musicas));
         } else if(contagem == true && contar.getText().toString().isEmpty() || Integer.parseInt(contar.getText().toString()) == 0) {
             showMessage(getString(R.string.sem_contagem));
         } else if (contagem == true) {
-            musica.setPreContagem(contagem);
-            musica.setTemposContagem(Integer.parseInt(contar.getText().toString()));
+
+            if (ord - 1 < 0){
+                showMessage(getString(R.string.posicao_invalida));
+
+            } else if (ord > presenter.getListaMusicas().size()){
+                showMessage(getString(R.string.posicao_invalida));
+            }
+            else{
+                musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()) - 1);
+                musica.setPreContagem(contagem);
+                musica.setTemposContagem(Integer.parseInt(contar.getText().toString()));
+                atualizaViewsMusica(musica);
+            }
+
+        } else if (contagem == false){
+
+            if (ord - 1 < 0){
+                showMessage(getString(R.string.musica_inexistente));
+            } else if (ord > presenter.getListaMusicas().size()){
+                showMessage(getString(R.string.musica_inexistente));
+            } else {
+                musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()) - 1);
+                musica.setPreContagem(contagem);
+                atualizaViewsMusica(musica);
+            }
+        }
+    }
+
+    @Override
+    public void atualizaViewsMusica(Musica musica) {
+        List<Musica> musicas = presenter.getListaMusicas();
+        musicas.set(musica.getOrdem(), musica);
+        presenter.updateMusica(musica);
+        this.showMusics(musicas);
+    }
+
+
+
+    @OnClick(R.id.btnConfirmaCompasso)
+    public void setConfirmaCompasso(){
+        int ord = Integer.parseInt(edtNumeroCompasso.getText().toString());
+        if (musica.getNome() == null){
+            showMessage(getString(R.string.sem_musica));
+        } else if (edtNumeroCompasso.getText().toString().isEmpty()){
+            showMessage(getString(R.string.sem_compasso));
+        } else if (ord - 1 < 0){
+            showMessage(getString(R.string.compasso_inexistente));
+        } else if(ord > musica.getCompassos().size()){
+            showMessage(getString(R.string.compasso_inexistente));
         } else {
-            musica.setPreContagem(contagem);
-            musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()));
-            List<Musica> musicas = presenter.getListaMusicas();
-            musicas.add(musica.getOrdem(), musica);
+            Compasso compasso = new Compasso();
+            compasso.setOrdem(Integer.parseInt(edtNumeroCompasso.getText().toString()) - 1);
+            compasso.setBpm(Integer.parseInt(edtBpm.getText().toString()));
+            compasso.setTempos(Integer.parseInt(edtTempos.getText().toString()));
+            compasso.setNota(nota);
+            compasso.setRepeticoes(Integer.parseInt(edtRepeticoes.getText().toString()));
+
+            RealmList<Compasso> compassos = musica.getCompassos();
+            compassos.set(compasso.getOrdem(), compasso);
+            musica.setCompassos(compassos);
+
+            //musica.getCompassos().set(compasso.getOrdem(),compasso);
+
+
             presenter.updateMusica(musica);
+            List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
+            atualizaViewsCompasso(musica, compasso);
+
+
 
         }
     }
 
-    @OnClick(R.id.btnConfirmaCompasso)
-    public void setConfirmaCompasso(){
-        Compasso compasso = new Compasso();
-        compasso.setOrdem(Integer.parseInt(edtNumeroCompasso.getText().toString()));
-        compasso.setBpm(Integer.parseInt(edtBpm.getText().toString()));
-        compasso.setTempos(Integer.parseInt(edtTempos.getText().toString()));
-        compasso.setNota(nota);
-        compasso.setRepeticoes(Integer.parseInt(edtRepeticoes.getText().toString()));
-
-        musica.getCompassos().set(Integer.parseInt(edtNumeroCompasso.getText().toString()),compasso);
-        presenter.updateMusica(musica);
-
-        List<Musica> musicas = presenter.getListaMusicas();
-        this.showMusics(musicas);
+    @Override
+    public void atualizaViewsCompasso(Musica musica, Compasso compasso) {
+        txtTempoCompasso.setText(String.valueOf(musica.getCompassos().get(compasso.getOrdem()).getTempos()));
+        txtNotaCompasso.setText(String.valueOf(musica.getCompassos().get(compasso.getOrdem()).getNota()));
+        txtBpmCompasso.setText(String.valueOf(musica.getCompassos().get(compasso.getOrdem()).getBpm()));
     }
 
     @OnClick(R.id.btn_removerCompasso)
     public void setBtnRemoverCompasso(){
-        int compasso = Integer.parseInt(edtNumeroCompasso.getText().toString());
-        musica.getCompassos().remove(compasso);
-        presenter.updateMusica(musica);
+        int ord = Integer.parseInt(edtNumeroCompasso.getText().toString());
+        if (musica.getNome() == null) {
+            showMessage(getString(R.string.sem_musica));
+        } else if (ord - 1 < 0){
+            showMessage(getString(R.string.compasso_inexistente));
+        } else if(ord > musica.getCompassos().size()){
+            showMessage(getString(R.string.compasso_inexistente));
+        } else {
+            musica.getCompassos().remove(ord - 1);
+            presenter.updateMusica(musica);
+            List<Musica> musicas = presenter.getListaMusicas();
+            this.showMusics(musicas);
+            //showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
+            Toast.makeText(getContext(), getString(R.string.tamanho_compassos) + " " + String.valueOf(musica.getCompassos().size()) + " " +getString(R.string.compassos), Toast.LENGTH_SHORT ).show();
+        }
 
-        List<Musica> musicas = presenter.getListaMusicas();
-        this.showMusics(musicas);
     }
 
     @OnClick(R.id.btn_InserirCompasso)
     public void setBtnInserirCompasso(){
-        musica.getCompassos().add(new Compasso());
-        showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
-        presenter.updateMusica(musica);
+        if(musica.getNome() == null){
+            showMessage(getString(R.string.sem_musica));
+        } else {
+            musica.getCompassos().add(new Compasso());
+            presenter.updateMusica(musica);
+            List<Musica> musicas = presenter.getListaMusicas();
+            this.showMusics(musicas);
+            showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
+        }
 
-        List<Musica> musicas = presenter.getListaMusicas();
-        this.showMusics(musicas);
     }
 
 

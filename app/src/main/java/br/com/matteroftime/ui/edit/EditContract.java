@@ -3,6 +3,7 @@ package br.com.matteroftime.ui.edit;
 import java.util.List;
 
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.addMusic.AddMusicPresenter;
 
@@ -21,6 +22,8 @@ public interface EditContract {
         void showEmptyText();
         void hideEmptyText();
         void showMessage(String message);
+        void atualizaViewsMusica(Musica musica);
+        void atualizaViewsCompasso(Musica musica, Compasso compasso);
     }
 
     public interface Actions{

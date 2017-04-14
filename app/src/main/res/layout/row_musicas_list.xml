@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="left"
@@ -9,35 +10,54 @@
         android:id="@+id/txt_numero_musica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="@dimen/text_size_xxnormal" />
 
     <TextView
         android:id="@+id/txt_nome_musica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginLeft="@dimen/margin_padding_small"
+        android:text="TextView"
+        android:textSize="@dimen/text_size_xxnormal" />
 
     <TextView
         android:id="@+id/txt_BPM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginLeft="@dimen/margin_padding_small"
+        android:text="TextView"
+        android:textSize="@dimen/text_size_xxnormal" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_padding_tiny"
+        android:text="@string/bpm"
+        android:textSize="@dimen/text_size_xxnormal" />
 
     <TextView
         android:id="@+id/txt_tempos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginLeft="@dimen/margin_padding_small"
+        android:text="TextView"
+        android:textSize="@dimen/text_size_xxnormal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="/" />
+        android:layout_marginLeft="@dimen/margin_padding_small"
+        android:text="/"
+        android:textSize="@dimen/text_size_xxnormal" />
 
     <TextView
         android:id="@+id/txt_nota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="false"
-        android:text="TextView" />
+        android:layout_marginLeft="@dimen/margin_padding_small"
+        android:text="TextView"
+        android:textSize="@dimen/text_size_xxnormal" />
 </LinearLayout>

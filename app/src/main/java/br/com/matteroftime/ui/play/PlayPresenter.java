@@ -73,7 +73,7 @@ public class PlayPresenter implements PlayContract.Actions{
         compasso.setNota(nota);
         compasso.setBpm(bpm);
         compasso.setRepeticoes(20);
-        compasso.setId(1);
+        //compasso.setId(1);
         RealmList<Compasso> compassos = new RealmList<>();
         compassos.add(compasso);
         Musica musica = new Musica();

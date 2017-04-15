@@ -73,11 +73,11 @@ public class MatterOfTimeApplication extends Application{
         } catch (Exception e){
             realm.beginTransaction();
             Compasso tempCompasso = new Compasso();
-            tempCompasso.setId(0);
+            //tempCompasso.setId(0);
             realm.copyToRealm(tempCompasso);
-            compassoPrimarykey = new AtomicLong(realm.where(Compasso.class).max("id").longValue());
-            RealmResults<Compasso> compassos = realm.where(Compasso.class).equalTo("id",0).findAll();
-            compassos.deleteAllFromRealm();
+            //compassoPrimarykey = new AtomicLong(realm.where(Compasso.class).max("id").longValue());
+            //RealmResults<Compasso> compassos = realm.where(Compasso.class).equalTo("id",0).findAll();
+            //compassos.deleteAllFromRealm();
             realm.commitTransaction();
         }
     }

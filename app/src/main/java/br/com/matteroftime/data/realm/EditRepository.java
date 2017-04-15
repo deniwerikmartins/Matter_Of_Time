@@ -42,6 +42,29 @@ public class EditRepository implements EditContract.Repository{
     }
 
     @Override
+    public void atualizaCompasso(Musica musica, Compasso compasso){
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        //final Compasso managedCompasso = realm.copyToRealm(compasso);
+        final Compasso managedCompasso = realm.copyToRealmOrUpdate(compasso);
+        musica.getCompassos().set(compasso.getOrdem(), managedCompasso);
+
+        realm.copyToRealmOrUpdate(musica);
+
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    @Override
+    public void atualizaMusica(Musica musica) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        final Musica mangedMusica = realm.copyToRealmOrUpdate(musica);
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    @Override
     public void deleteMusic(final Musica musica, final OnDatabaseOperationCompleteListener listener) {
         final Realm realm = Realm.getDefaultInstance();
         realm.executeTransactionAsync(new Realm.Transaction() {
@@ -111,6 +134,11 @@ public class EditRepository implements EditContract.Repository{
                                                   compasso.setMusica(musica);
                                                   backgroundRealm.copyToRealm(compasso);
                                               }*/
+                                              /*
+                                              *  Dog dog = bgRealm.where(Dog.class).equalTo("age", 1).findFirst();
+                                                dog.setAge(3);
+                                              * */
+
                                           }
                                       }, new Realm.Transaction.OnSuccess() {
                                           @Override

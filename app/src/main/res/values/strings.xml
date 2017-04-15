@@ -38,4 +38,6 @@
     <string name="compasso_inexistente">Compasso inexistente</string>
     <string name="musica_inexistente">Musica inexistente</string>
     <string name="posicao_invalida">Posição para musica inválida</string>
+    <string name="total_de_compassos">Compassos:</string>
+    <string name="sem_posicao">Sem posição selecionada</string>
 </resources>

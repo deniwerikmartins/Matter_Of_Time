@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 
 /**
@@ -85,6 +86,16 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     @Override
     public void updateMusica(Musica musica) {
         repository.updateMusic(musica,this);
+    }
+
+    @Override
+    public void atualizaMusica(Musica musica) {
+        repository.atualizaMusica(musica);
+    }
+
+    @Override
+    public void atualizarCompassodaMusica(Musica musica, Compasso compasso) {
+        repository.atualizaCompasso(musica, compasso);
     }
 
     @Subscribe

@@ -37,6 +37,9 @@ public interface EditContract {
         void onEditMusicaButtonClicked(Musica musica);
         void updateMusica(Musica musica);
         List<Musica> getListaMusicas();
+        void atualizarCompassodaMusica(Musica musica, Compasso compasso);
+        void atualizaMusica(Musica musica);
+
     }
 
     public interface Repository{
@@ -45,5 +48,8 @@ public interface EditContract {
         void deleteMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
         void addMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
         void updateMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
+
+        void atualizaCompasso(Musica musica, Compasso compasso);
+        void atualizaMusica(Musica musica);
     }
 }

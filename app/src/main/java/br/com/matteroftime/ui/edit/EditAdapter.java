@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -56,6 +57,7 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
                 holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
+                holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -83,16 +85,13 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
         @BindView(R.id.txt_BPM) TextView bpm;
         @BindView(R.id.txt_tempos) TextView tempos;
         @BindView(R.id.txt_nota) TextView nota;
-
-
-
-
-
+        @BindView(R.id.txtTotalCompassos) TextView totalCompassos;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            nomeMusica.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+            //nomeMusica.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 

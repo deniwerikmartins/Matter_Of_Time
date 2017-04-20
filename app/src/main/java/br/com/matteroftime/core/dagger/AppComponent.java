@@ -6,6 +6,7 @@ import br.com.matteroftime.common.MainActivity;
 import br.com.matteroftime.ui.addMusic.AddMusicPresenter;
 import br.com.matteroftime.ui.edit.EditPresenter;
 import br.com.matteroftime.ui.play.PlayPresenter;
+import br.com.matteroftime.ui.userArea.UserAreaPresenter;
 import dagger.Component;
 
 /**
@@ -23,4 +24,5 @@ public interface AppComponent {
     void inject(PlayPresenter presenter);
     void inject(AddMusicPresenter addMusicPresenter);
     void inject(EditPresenter editPresenter);
+    void inject(UserAreaPresenter userAreaPresenter);
 }

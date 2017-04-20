@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" untranslatable="false">MatterOfTime</string>
-    <string name="action_settings" untranslatable="false">Settings</string>
+    <string name="app_name" untranslatable="false" translatable="false">Matter Of Time</string>
+    <string name="action_settings" untranslatable="false" translatable="false">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -14,7 +14,7 @@
     <string name="compasso_atual">Compasso atual</string>
     <string name="proximo_compasso">Próximo compasso</string>
     <string name="dialog_title">Dialog Title</string>
-    <string name="nomedamusica">Nome da musica</string>
+    <string name="nomedamusica">Nome da música</string>
     <string name="quantidadecompassos">Quantidade de compassos</string>
     <string name="numero_compasso">Compasso #</string>
     <string name="pre_contagem">Pré Contagem</string>
@@ -40,4 +40,16 @@
     <string name="posicao_invalida">Posição para musica inválida</string>
     <string name="total_de_compassos">Compassos:</string>
     <string name="sem_posicao">Sem posição selecionada</string>
+    <string name="usuario">Usuário</string>
+    <string name="email">E-mail</string>
+    <string name="digite_email">Digite seu e-mail</string>
+    <string name="senha">Senha</string>
+    <string name="digite_senha">Digite sua senha</string>
+    <string name="enviar_musica">Enviar música</string>
+    <string name="selecionar_musica">Selecionar Musica</string>
+    <string name="baixar_musica" >Baixar música</string>
+    <string name="musica">Música</string>
+    <string name="baixar">Baixar</string>
+    <string name="nome">Nome</string>
+    <string name="atualizar_musica">Atualizar música</string>
 </resources>

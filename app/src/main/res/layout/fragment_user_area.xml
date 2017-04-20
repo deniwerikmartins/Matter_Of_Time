@@ -194,7 +194,7 @@
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/textView33"
+            android:id="@+id/txtSemMusicas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-condensed"

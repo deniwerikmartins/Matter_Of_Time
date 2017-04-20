@@ -19,7 +19,9 @@ public interface UserAreaContract {
 
         void showEmptyText();
 
-        void showMessage(String error);
+        void showMessage(String message);
+
+
     }
 
     public interface Actions{

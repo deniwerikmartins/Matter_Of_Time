@@ -6,4 +6,13 @@ package br.com.matteroftime.ui.selectMusic;
  */
 
 public interface SelectMusicContract {
+
+    interface View{
+
+    }
+
+    interface Actions{
+
+    }
+
 }

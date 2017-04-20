@@ -1,8 +1,11 @@
 package br.com.matteroftime.ui.userArea;
 
-
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,9 @@ import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.selectMusic.SelectMusicDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static android.R.id.message;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +51,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     @BindView(R.id.txtMusicaBaixar) TextView musicaBaixar;
     @BindView(R.id.edtMusicaPesquisar) EditText pesquisarMusica;
     @BindView(R.id.btnBaixarMusica) Button baixarMusica;
+    @BindView(R.id.txtSemMusicas) TextView semMusicas;
 
 
 
@@ -86,8 +92,15 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     }
 
     @Override
-    public void hideEmptyText() {
+    public void showEmptyText() {
+        semMusicas.setVisibility(View.VISIBLE);
+        userAreaRecyclerView.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void hideEmptyText() {
+        semMusicas.setVisibility(View.GONE);
+        userAreaRecyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -95,13 +108,20 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     }
 
-    @Override
-    public void showEmptyText() {
 
+
+    @Override
+    public void showMessage(String message) {
+        showToastMessage(message);
     }
 
-    @Override
-    public void showMessage(String error) {
+    private void showToastMessage(String message) {
+        Snackbar.make(view.getRootView(), message, Snackbar.LENGTH_SHORT).show();
+    }
 
+    @OnClick(R.id.btnSelecionarMusica)
+    public void showSelectMusicDialog(View view){
+        selectMusicDialogFragment = SelectMusicDialogFragment.newInstance(0);
+        selectMusicDialogFragment.show(getActivity().getFragmentManager(), "Dialog");
     }
 }

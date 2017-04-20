@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,4 +6,22 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/select_music_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/txt_sem_musicas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:padding="@dimen/margin_padding_normal"
+        android:text="@string/sem_musicas"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_size_huge"
+        android:textStyle="italic"
+        android:visibility="gone" />
+
+</RelativeLayout>

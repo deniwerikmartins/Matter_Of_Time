@@ -4,8 +4,10 @@ import android.content.Context;
 
 import br.com.matteroftime.data.realm.EditRepository;
 import br.com.matteroftime.data.realm.PlayRepository;
+import br.com.matteroftime.data.realm.UserAreaRepository;
 import br.com.matteroftime.ui.edit.EditContract;
 import br.com.matteroftime.ui.play.PlayContract;
+import br.com.matteroftime.ui.userArea.UserAreaContract;
 import dagger.Module;
 import dagger.Provides;
 
@@ -23,5 +25,10 @@ public class PersistenceModule {
     @Provides
     public EditContract.Repository providesEditRepository(Context context){
         return new EditRepository();
+    }
+
+    @Provides
+    public UserAreaContract.Repository providesUserAreaRepository(Context context){
+        return new UserAreaRepository();
     }
 }

@@ -150,7 +150,7 @@ public class SelectMusicDialogFragment extends DialogFragment implements SelectM
                 public void onClick(View v) {
                     //boolean readyToCloseDialog = false;
                     //mandar musica para o fragment
-                    //testar com metodo que retorna a musica
+                    //testar com metodo que retorna a musica | muda retorno
                     dismiss();
                     /*readyToCloseDialog = true;
                     if (readyToCloseDialog){

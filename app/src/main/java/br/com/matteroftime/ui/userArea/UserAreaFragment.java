@@ -2,6 +2,7 @@ package br.com.matteroftime.ui.userArea;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -29,9 +30,7 @@ import butterknife.OnClick;
 
 import static android.R.id.message;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class UserAreaFragment extends Fragment implements UserAreaContract.View, OnMusicSelectedListener{
 
 
@@ -50,7 +49,8 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     @BindView(R.id.btnAtualizarMusica) Button atualizarMusica;
     @BindView(R.id.txtMusicaBaixar) TextView musicaBaixar;
     @BindView(R.id.edtMusicaPesquisar) EditText pesquisarMusica;
-    @BindView(R.id.btnBaixarMusica) Button baixarMusica;
+    @BindView(R.id.btnBaixarMusica) Button btnbaixarMusica;
+    @BindView(R.id.btnPesquisar) Button btnPesquisarMusica;
     @BindView(R.id.txtSemMusicas) TextView semMusicas;
 
 
@@ -59,6 +59,10 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +82,12 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         userAreaRecyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.loadMusics();
     }
 
     @Override
@@ -123,5 +133,30 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     public void showSelectMusicDialog(View view){
         selectMusicDialogFragment = SelectMusicDialogFragment.newInstance(0);
         selectMusicDialogFragment.show(getActivity().getFragmentManager(), "Dialog");
+
+
     }
+
+    @OnClick(R.id.btnEnviarMusica)
+    public void enviarMusica(View view){
+
+    }
+
+    @OnClick(R.id.btnAtualizarMusica)
+    public void atualizarMusica(View view){
+
+    }
+
+    @OnClick(R.id.btnPesquisar)
+    public void pesquisarMusica(View view){
+
+    }
+
+    @OnClick(R.id.btnBaixarMusica)
+    public void baixarMusica(View view){
+
+    }
+
+
+
 }

@@ -49,7 +49,7 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (musicas != null){
+        if (musicas != null  && musicas.get(0).getCompassos().size() > 0){
             try {
                 final Musica musica = musicas.get(position);
                 holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));

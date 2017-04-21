@@ -43,6 +43,11 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
     }
 
     @Override
+    public void pesquisaMusica(Musica musica) {
+
+    }
+
+    @Override
     public void baixaMusica(Musica musica) {
         repository.baixaMusica(musica, this);
     }
@@ -53,14 +58,14 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
     }
 
     @Override
-    public void deleteMusic(Musica musica) {
-        repository.deleteMusic(musica,this);
+    public void deletaMusica(Musica musica) {
+        repository.deletaMusica(musica,this);
         loadMusics();
     }
 
     @Override
-    public void updateMusica(Musica musica) {
-        repository.updateMusic(musica,this);
+    public void atualizaMusica(Musica musica) {
+        repository.atualizaMusica(musica,this);
     }
 
 

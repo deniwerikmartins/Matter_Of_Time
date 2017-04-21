@@ -28,10 +28,11 @@ public interface UserAreaContract {
 
         void loadMusics();
         Musica getMusica(long id);
+        void pesquisaMusica(Musica musica);
         void baixaMusica(Musica musica);
         void enviaMusica(Musica musica);
-        void updateMusica(Musica musica);
-        void deleteMusic(Musica musica);
+        void atualizaMusica(Musica musica);
+        void deletaMusica(Musica musica);
 
     }
 
@@ -41,12 +42,14 @@ public interface UserAreaContract {
 
         Musica getMusicById(long id);
 
-        void baixaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
+        void pesquisaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
 
-        void deleteMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
+        void deletaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
 
-        void updateMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
+        void atualizaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
 
         void enviaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
+
+        void baixaMusica(Musica musica, UserAreaPresenter userAreaPresenter);
     }
 }

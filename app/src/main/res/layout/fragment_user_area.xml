@@ -173,19 +173,36 @@
             android:hint="@string/nome"
             android:inputType="textPersonName" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout19"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPesquisar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pesquisar" />
+
         <Button
             android:id="@+id/btnBaixarMusica"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/baixar" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinarLayout20"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout19"
+        android:layout_below="@+id/linearLayout21"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView

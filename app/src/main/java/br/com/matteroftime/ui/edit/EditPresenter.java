@@ -65,6 +65,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     @Override
     public void addMusic(Musica musica) {
         repository.addMusic(musica, this);
+        loadMusics();
     }
 
     @Override
@@ -86,16 +87,19 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     @Override
     public void updateMusica(Musica musica) {
         repository.updateMusic(musica,this);
+        loadMusics();
     }
 
     @Override
     public void atualizaMusica(Musica musica) {
         repository.atualizaMusica(musica);
+        loadMusics();
     }
 
     @Override
     public void atualizarCompassodaMusica(Musica musica, Compasso compasso) {
         repository.atualizaCompasso(musica, compasso);
+        loadMusics();
     }
 
     @Subscribe
@@ -112,6 +116,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     @Override
     public void onSQLOperationSucceded(String message) {
         view.showMessage(message);
+        bus.post(new MusicListChangedEvent());
     }
 
 

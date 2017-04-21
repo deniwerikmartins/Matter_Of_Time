@@ -11,8 +11,8 @@ import io.realm.annotations.PrimaryKey;
 
 public class Compasso extends RealmObject implements Serializable{
 
-    //@PrimaryKey
-    //private long id;
+    @PrimaryKey
+    private long id;
     private int bpm;
     private int tempos;
     private int nota;
@@ -25,8 +25,8 @@ public class Compasso extends RealmObject implements Serializable{
     public Compasso() {
     }
 
-    public Compasso(/*long id,*/ int bpm, int tempos, int nota, int repeticoes, boolean fim, int ordem, Musica musica) {
-        //this.id = id;
+    public Compasso(long id, int bpm, int tempos, int nota, int repeticoes, boolean fim, int ordem, Musica musica) {
+        this.id = id;
         this.bpm = bpm;
         this.tempos = tempos;
         this.nota = nota;
@@ -35,13 +35,13 @@ public class Compasso extends RealmObject implements Serializable{
         this.ordem = ordem;
     }
 
-/*    public long getId() {
+    public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }*/
+    }
 
     public int getBpm() {
         return bpm;

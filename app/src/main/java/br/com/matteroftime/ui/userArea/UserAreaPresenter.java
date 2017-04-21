@@ -1,5 +1,7 @@
 package br.com.matteroftime.ui.userArea;
 
+import android.widget.Toast;
+
 import com.squareup.otto.Bus;
 
 import java.util.List;
@@ -9,6 +11,7 @@ import javax.inject.Inject;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.selectMusic.SelectMusicDialogFragment;
 
 /**
  * Created by RedBlood on 30/03/2017.
@@ -25,6 +28,8 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
         bus.register(this);
     }
+
+
 
     @Override
     public void loadMusics(){
@@ -61,6 +66,11 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
     public void deletaMusica(Musica musica) {
         repository.deletaMusica(musica,this);
         loadMusics();
+    }
+
+    @Override
+    public void recebeMusica(Musica musica) {
+        view.recebeMusica(musica);
     }
 
     @Override

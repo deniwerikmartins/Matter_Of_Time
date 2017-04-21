@@ -27,16 +27,20 @@ import br.com.matteroftime.R;
 
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.userArea.UserAreaContract;
+import br.com.matteroftime.ui.userArea.UserAreaFragment;
+import br.com.matteroftime.ui.userArea.UserAreaPresenter;
 import br.com.matteroftime.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SelectMusicDialogFragment extends DialogFragment implements SelectMusicContract.View, OnMusicSelectedListener{
+public class SelectMusicDialogFragment extends DialogFragment implements SelectMusicContract.View, OnMusicSelectedListener {
 
     private View view;
     private SelectMusicAdapter adapter;
     private SelectMusicContract.Actions presenter;
+    private Musica musica;
 
 
 
@@ -126,6 +130,8 @@ public class SelectMusicDialogFragment extends DialogFragment implements SelectM
         selectMusicRecyclerView.setVisibility(View.GONE);
     }
 
+
+
     @Override
     public void hideEmptyText() {
         semMusicas.setVisibility(View.GONE);
@@ -142,15 +148,25 @@ public class SelectMusicDialogFragment extends DialogFragment implements SelectM
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean readyToCloseDialog = false;
+                    //boolean readyToCloseDialog = false;
                     //mandar musica para o fragment
-
-                    readyToCloseDialog = true;
+                    //testar com metodo que retorna a musica
+                    dismiss();
+                    /*readyToCloseDialog = true;
                     if (readyToCloseDialog){
-                        dismiss();
-                    }
+
+                    }*/
                 }
 
+            });
+
+            Button negativeButton = (Button)d.getButton(DialogInterface.BUTTON_NEGATIVE);
+            negativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    musica = null;
+                    dismiss();
+                }
             });
         }
     }
@@ -162,7 +178,7 @@ public class SelectMusicDialogFragment extends DialogFragment implements SelectM
 
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
-
+        musica = musicaSelecionada;
     }
 
     @Override

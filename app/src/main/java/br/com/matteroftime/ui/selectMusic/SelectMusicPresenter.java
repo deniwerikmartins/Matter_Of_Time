@@ -11,6 +11,7 @@ import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.userArea.UserAreaContract;
+import br.com.matteroftime.ui.userArea.UserAreaPresenter;
 
 /**
  * Created by RedBlood on 30/03/2017.
@@ -61,4 +62,5 @@ public class SelectMusicPresenter implements SelectMusicContract.Actions, OnData
             view.showEmptyText();
         }
     }
+
 }

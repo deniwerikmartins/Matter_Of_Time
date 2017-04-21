@@ -1,6 +1,8 @@
 package br.com.matteroftime.ui.selectMusic;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,8 @@ public class SelectMusicAdapter extends RecyclerView.Adapter<SelectMusicAdapter.
 
     private List<Musica> musicas;
     private Context context;
+    private boolean shouldHighlightSelectedRow = false;
+    private int selectedPosition = 0;
     private final OnMusicSelectedListener listener;
 
     public SelectMusicAdapter(List<Musica> musicas, Context context, OnMusicSelectedListener listener) {
@@ -50,6 +54,15 @@ public class SelectMusicAdapter extends RecyclerView.Adapter<SelectMusicAdapter.
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
                 holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));
+                if (shouldHighlightSelectedRow){
+                    if (selectedPosition == position){
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    } else {
+                        holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                } else {
+                    holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -68,6 +81,7 @@ public class SelectMusicAdapter extends RecyclerView.Adapter<SelectMusicAdapter.
 
     public void replaceData(List<Musica> musicas) {
         this.musicas = musicas;
+        shouldHighlightSelectedRow = false;
         notifyDataSetChanged();
     }
 
@@ -88,8 +102,11 @@ public class SelectMusicAdapter extends RecyclerView.Adapter<SelectMusicAdapter.
 
         @Override
         public void onClick(View v) {
+            shouldHighlightSelectedRow = true;
+            selectedPosition = getLayoutPosition();
             Musica musicaSelecionada = musicas.get(getLayoutPosition());
             listener.onSelectMusic(musicaSelecionada);
+            notifyDataSetChanged();
         }
     }
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -125,6 +126,14 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         showToastMessage(message);
     }
 
+    @Override
+    public void recebeMusica(Musica musica) {
+        this.musica = musica;
+        Toast.makeText(getContext(), musica.getNome(), Toast.LENGTH_LONG);
+        musicaEnvio.setText(musica.getNome());
+
+    }
+
     private void showToastMessage(String message) {
         Snackbar.make(view.getRootView(), message, Snackbar.LENGTH_SHORT).show();
     }
@@ -133,7 +142,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     public void showSelectMusicDialog(View view){
         selectMusicDialogFragment = SelectMusicDialogFragment.newInstance(0);
         selectMusicDialogFragment.show(getActivity().getFragmentManager(), "Dialog");
-
+        // musica = ?
 
     }
 

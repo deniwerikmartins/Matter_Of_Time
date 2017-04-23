@@ -15,8 +15,6 @@ import io.realm.RealmResults;
 
 public class UserAreaRepository implements UserAreaContract.Repository {
 
-
-
     @Override
     public List<Musica> getAllMusics() {
         Realm realm = Realm.getDefaultInstance();
@@ -28,12 +26,12 @@ public class UserAreaRepository implements UserAreaContract.Repository {
 
     @Override
     public Musica getMusicById(long id) {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Musica> musicas = realm.where(Musica.class).equalTo("id", id).findAll();
-        Musica result = musicas.first();
-        Musica inMemoryMusic = realm.copyFromRealm(result);
-        realm.close();
-        return inMemoryMusic;
+            Realm realm = Realm.getDefaultInstance();
+            RealmResults<Musica> musicas = realm.where(Musica.class).equalTo("id", id).findAll();
+            Musica result = musicas.first();
+            Musica inMemoryMusic = realm.copyFromRealm(result);
+            realm.close();
+            return inMemoryMusic;
     }
 
     @Override

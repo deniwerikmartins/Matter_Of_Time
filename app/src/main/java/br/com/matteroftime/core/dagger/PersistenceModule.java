@@ -4,9 +4,11 @@ import android.content.Context;
 
 import br.com.matteroftime.data.realm.EditRepository;
 import br.com.matteroftime.data.realm.PlayRepository;
+import br.com.matteroftime.data.realm.UploadMusicRepository;
 import br.com.matteroftime.data.realm.UserAreaRepository;
 import br.com.matteroftime.ui.edit.EditContract;
 import br.com.matteroftime.ui.play.PlayContract;
+import br.com.matteroftime.ui.uploadMusic.UploadMusicContract;
 import br.com.matteroftime.ui.userArea.UserAreaContract;
 import dagger.Module;
 import dagger.Provides;
@@ -30,5 +32,10 @@ public class PersistenceModule {
     @Provides
     public UserAreaContract.Repository providesUserAreaRepository(Context context){
         return new UserAreaRepository();
+    }
+
+    @Provides
+    public UploadMusicContract.Repository providesUploadMusicRepository(Context context){
+        return new UploadMusicRepository();
     }
 }

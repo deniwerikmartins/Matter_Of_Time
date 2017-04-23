@@ -3,7 +3,9 @@ package br.com.matteroftime.ui.userArea;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.app.DialogFragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +27,8 @@ import br.com.matteroftime.R;
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.selectMusic.SelectMusicDialogFragment;
+import br.com.matteroftime.ui.uploadMusic.UploadMusicFragment;
+import br.com.matteroftime.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,7 +43,10 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     private UserAreaAdapter adapter;
     private UserAreaContract.Actions presenter;
     private SelectMusicDialogFragment selectMusicDialogFragment;
-    private Musica musica;
+    private UploadMusicFragment uploadMusicFragment;
+    private Musica musicaUpload;
+    private Musica musicaDownload;
+
 
     @BindView(R.id.user_area_recycler_view) RecyclerView userAreaRecyclerView;
     @BindView(R.id.edtEmail) EditText email;
@@ -70,7 +77,8 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_user_area, container,false);
-        musica = new Musica();
+        musicaUpload = new Musica();
+        musicaDownload = new Musica();
         ButterKnife.bind(this, view);
         presenter = new UserAreaPresenter(this);
 
@@ -93,8 +101,8 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
-        musica = musicaSelecionada;
-        musicaBaixar.setText(musicaSelecionada.getNome());
+        /*musica = musicaSelecionada;
+        musicaBaixar.setText(musicaSelecionada.getNome());*/
     }
 
     @Override
@@ -126,13 +134,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         showToastMessage(message);
     }
 
-    @Override
-    public void recebeMusica(Musica musica) {
-        this.musica = musica;
-        Toast.makeText(getContext(), musica.getNome(), Toast.LENGTH_LONG);
-        musicaEnvio.setText(musica.getNome());
 
-    }
 
     private void showToastMessage(String message) {
         Snackbar.make(view.getRootView(), message, Snackbar.LENGTH_SHORT).show();
@@ -141,14 +143,17 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     @OnClick(R.id.btnSelecionarMusica)
     public void showSelectMusicDialog(View view){
         selectMusicDialogFragment = SelectMusicDialogFragment.newInstance(0);
+        //selectMusicDialogFragment.dismiss();
         selectMusicDialogFragment.show(getActivity().getFragmentManager(), "Dialog");
-        // musica = ?
-
+        //selectMusicDialogFragment.getArguments();
     }
+
+
 
     @OnClick(R.id.btnEnviarMusica)
     public void enviarMusica(View view){
-
+        uploadMusicFragment = UploadMusicFragment.newInstance(0);
+        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
     }
 
     @OnClick(R.id.btnAtualizarMusica)

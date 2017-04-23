@@ -69,11 +69,6 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
     }
 
     @Override
-    public void recebeMusica(Musica musica) {
-        view.recebeMusica(musica);
-    }
-
-    @Override
     public void atualizaMusica(Musica musica) {
         repository.atualizaMusica(musica,this);
     }

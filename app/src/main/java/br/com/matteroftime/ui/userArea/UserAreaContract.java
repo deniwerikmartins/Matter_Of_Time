@@ -22,7 +22,7 @@ public interface UserAreaContract {
         void showMessage(String message);
 
 
-        void recebeMusica(Musica musica);
+
     }
 
     public interface Actions{
@@ -34,7 +34,7 @@ public interface UserAreaContract {
         void enviaMusica(Musica musica);
         void atualizaMusica(Musica musica);
         void deletaMusica(Musica musica);
-        void recebeMusica(Musica musica);
+
     }
 
     public interface Repository{

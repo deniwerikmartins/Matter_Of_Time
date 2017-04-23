@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" untranslatable="false" translatable="false">Matter Of Time</string>
-    <string name="action_settings" untranslatable="false" translatable="false">Settings</string>
+    <string name="app_name" translatable="false" untranslatable="false">Matter Of Time</string>
+    <string name="action_settings" translatable="false" untranslatable="false">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -47,10 +47,13 @@
     <string name="digite_senha">Digite sua senha</string>
     <string name="enviar_musica">Enviar música</string>
     <string name="selecionar_musica">Selecionar Musica</string>
-    <string name="baixar_musica" >Baixar música</string>
+    <string name="baixar_musica">Baixar música</string>
     <string name="musica">Música</string>
     <string name="baixar">Baixar</string>
     <string name="nome">Nome</string>
     <string name="atualizar_musica">Atualizar música</string>
     <string name="pesquisar">Pesquisar</string>
+    <string name="enviando_musica">Enviar música:</string>
+    <string name="enviar">Enviar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

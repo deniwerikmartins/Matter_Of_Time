@@ -443,10 +443,16 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
 
     @OnClick(R.id.btn_removerCompasso)
     public void setBtnRemoverCompasso(){
-        int ord = Integer.parseInt(edtNumeroCompasso.getText().toString());
+        int ord = -10;
+        if (!edtNumeroCompasso.getText().toString().isEmpty()) {
+            ord = Integer.parseInt(edtNumeroCompasso.getText().toString());
+        }
+
         if (musica.getNome() == null) {
             showMessage(getString(R.string.sem_musica));
-        } else if (ord - 1 < 0){
+        } else if (ord == -10){
+            showMessage(getString(R.string.sem_compasso));
+        } else if (ord - 1 < 0 && ord - 1 > -10){
             showMessage(getString(R.string.compasso_inexistente));
         } else if(ord > musica.getCompassos().size()){
             showMessage(getString(R.string.compasso_inexistente));

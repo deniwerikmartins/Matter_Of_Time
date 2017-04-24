@@ -4,18 +4,22 @@ package br.com.matteroftime.ui.uploadMusic;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.matteroftime.R;
+import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.userArea.UserAreaFragment;
 import br.com.matteroftime.util.Constants;
@@ -31,6 +35,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
     private View view;
     private UploadMusicContract.Action presenter;
     private Musica musica;
+    private boolean editMode = false;
 
     private SharedPreferences sharedPreferences;
 
@@ -74,16 +79,16 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
 
             View titleView = inflater.inflate(R.layout.dialog_title, null);
             TextView titleText = (TextView)titleView.findViewById(R.id.txt_view_dialog_title);
-            titleText.setText(R.string.enviar);
+            titleText.setText(editMode ? getString(R.string.atualizar_musica) : getString(R.string.enviar));
             dialogFragment.setCustomTitle(titleView);
 
-            dialogFragment.setPositiveButton(R.string.enviar, new DialogInterface.OnClickListener() {
+            dialogFragment.setPositiveButton(editMode ? getString(R.string.atualizar_musica) : getString(R.string.enviar), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-            dialogFragment.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            dialogFragment.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -98,6 +103,8 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         if (id > 0){
             musica = presenter.getMusica(id);
             nomeMusicaEnvio.setText(musica.getNome());
+        } else {
+           showMessage(getString(R.string.sem_musica));
         }
 
 
@@ -115,8 +122,12 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  //pegar no shared preferences e mandar para o banco
-                        dismiss();
+                    Context context = getActivity().getBaseContext();
+
+
+                    presenter.enviaMusica(musica, context);
+
+                    dismiss();
                 }
             });
 
@@ -131,4 +142,28 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         }
     }
 
+    @Override
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        showToastMessage(message);
+    }
+
+    private void showToastMessage(String message) {
+        Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean isEditMode() {
+        return editMode;
+    }
 }

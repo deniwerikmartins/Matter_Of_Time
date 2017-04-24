@@ -1,5 +1,7 @@
 package br.com.matteroftime.ui.userArea;
 
+import android.content.Context;
+
 import java.util.List;
 
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
@@ -15,11 +17,11 @@ public interface UserAreaContract {
 
         void hideEmptyText();
 
-        void showMusics(List<Musica> availableMusics);
-
         void showEmptyText();
 
         void showMessage(String message);
+
+        void showMusicas(List<Musica> musicas);
 
 
 
@@ -29,11 +31,9 @@ public interface UserAreaContract {
 
         void loadMusics();
         Musica getMusica(long id);
-        void pesquisaMusica(Musica musica);
-        void baixaMusica(Musica musica);
-        void enviaMusica(Musica musica);
-        void atualizaMusica(Musica musica);
-        void deletaMusica(Musica musica);
+        void pesquisaMusica(String nomeMusica, Context context);
+        void baixaMusica(Musica musica, Context context);
+
 
     }
 
@@ -43,14 +43,8 @@ public interface UserAreaContract {
 
         Musica getMusicById(long id);
 
-        void pesquisaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
+        List<Musica> pesquisaMusica(String nomeMusica, OnDatabaseOperationCompleteListener listener, Context context);
 
-        void deletaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
-
-        void atualizaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
-
-        void enviaMusica(Musica musica, OnDatabaseOperationCompleteListener listener);
-
-        void baixaMusica(Musica musica, UserAreaPresenter userAreaPresenter);
+        void baixaMusica(Musica musica, OnDatabaseOperationCompleteListener listener, Context context);
     }
 }

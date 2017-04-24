@@ -56,4 +56,14 @@
     <string name="enviando_musica">Enviar música:</string>
     <string name="enviar">Enviar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="sucesso_envio">Música enviada com sucesso</string>
+    <string name="erro_envio">Erro ao enviar música</string>
+    <string name="informe_musica">Informe o nome da musica à ser pesquisada</string>
+    <string name="ok">Ok</string>
+    <string name="sem_resultados">Sua busca não encontrou resultados</string>
+    <string name="erro_download">Erro ao baixar música</string>
+    <string name="sucesso_baixar">Sucesso ao baixar música</string>
+    <string name="sucesso_importar">Sucesso ao importar arquivo</string>
+    <string name="falha_importar">Falha ao importar</string>
+
 </resources>

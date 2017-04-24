@@ -44,12 +44,12 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
         if (musicas != null){
             try {
                 final Musica musica = musicas.get(position);
-                holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
+                //holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 holder.nomeMusica.setText(musica.getNome());
-                holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
+                /*holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
-                holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));
+                holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));*/
             } catch (Exception e){
                 e.printStackTrace();
             }

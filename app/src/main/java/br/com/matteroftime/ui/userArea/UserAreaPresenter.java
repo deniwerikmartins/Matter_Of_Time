@@ -1,5 +1,6 @@
 package br.com.matteroftime.ui.userArea;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import com.squareup.otto.Bus;
@@ -36,7 +37,7 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
         List<Musica> availableMusics = repository.getAllMusics();
         if (availableMusics != null && availableMusics.size() > 0){
             view.hideEmptyText();
-            view.showMusics(availableMusics);
+            view.showMusicas(availableMusics);
         } else {
             view.showEmptyText();
         }
@@ -48,31 +49,15 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
     }
 
     @Override
-    public void pesquisaMusica(Musica musica) {
-
+    public void pesquisaMusica(String nomeMusica, Context context) {
+//        repository.pesquisaMusica(nomeMusica, this, context);
+        view.showMusicas(repository.pesquisaMusica(nomeMusica, this, context));
     }
 
     @Override
-    public void baixaMusica(Musica musica) {
-        repository.baixaMusica(musica, this);
+    public void baixaMusica(Musica musica, Context context) {
+        repository.baixaMusica(musica, this, context);
     }
-
-    @Override
-    public void enviaMusica(Musica musica) {
-        repository.enviaMusica(musica, this);
-    }
-
-    @Override
-    public void deletaMusica(Musica musica) {
-        repository.deletaMusica(musica,this);
-        loadMusics();
-    }
-
-    @Override
-    public void atualizaMusica(Musica musica) {
-        repository.atualizaMusica(musica,this);
-    }
-
 
     @Override
     public void onSQLOperationFailed(String error) {

@@ -1,6 +1,7 @@
 package br.com.matteroftime.ui.userArea;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.app.DialogFragment;
 import android.content.SharedPreferences;
@@ -46,6 +47,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     private UploadMusicFragment uploadMusicFragment;
     private Musica musicaUpload;
     private Musica musicaDownload;
+    private Context context;
 
 
     @BindView(R.id.user_area_recycler_view) RecyclerView userAreaRecyclerView;
@@ -70,6 +72,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getActivity().getBaseContext();
     }
 
     @Override
@@ -90,6 +93,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         userAreaRecyclerView.setLayoutManager(layoutManager);
         userAreaRecyclerView.setAdapter(adapter);
 
+
         return view;
     }
 
@@ -101,8 +105,9 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
-        /*musica = musicaSelecionada;
-        musicaBaixar.setText(musicaSelecionada.getNome());*/
+        musicaDownload = musicaSelecionada;
+        musicaBaixar.setText(musicaDownload.getNome());
+        presenter.baixaMusica(musicaDownload, context);
     }
 
     @Override
@@ -122,10 +127,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         userAreaRecyclerView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void showMusics(List<Musica> availableMusics) {
 
-    }
 
 
 
@@ -158,12 +160,28 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     @OnClick(R.id.btnAtualizarMusica)
     public void atualizarMusica(View view){
+        uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId());
+        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
 
     }
 
     @OnClick(R.id.btnPesquisar)
     public void pesquisarMusica(View view){
+        //pesquisar no banco
+//        List<Musica> availableMusics;
+        if (pesquisarMusica.getText().toString().isEmpty()){
+            showMessage(getString(R.string.informe_musica));
+        } else {
+            presenter.pesquisaMusica(pesquisarMusica.getText().toString(), context);
+        }
 
+        /*availableMusics = new ArrayList<>();
+        showMusicas(availableMusics);*/
+    }
+
+    @Override
+    public void showMusicas(List<Musica> musicas) {
+        adapter.replaceData(musicas);
     }
 
     @OnClick(R.id.btnBaixarMusica)

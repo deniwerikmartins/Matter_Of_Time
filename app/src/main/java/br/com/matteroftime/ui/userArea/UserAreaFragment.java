@@ -154,13 +154,13 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     @OnClick(R.id.btnEnviarMusica)
     public void enviarMusica(View view){
-        uploadMusicFragment = UploadMusicFragment.newInstance(0);
+        uploadMusicFragment = UploadMusicFragment.newInstance(0, email.getText().toString(), senha.getText().toString());
         uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
     }
 
     @OnClick(R.id.btnAtualizarMusica)
     public void atualizarMusica(View view){
-        uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId());
+        uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), email.getText().toString(), senha.getText().toString());
         uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
 
     }

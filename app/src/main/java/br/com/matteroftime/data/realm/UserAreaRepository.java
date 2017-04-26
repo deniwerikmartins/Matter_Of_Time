@@ -54,15 +54,12 @@ public class UserAreaRepository implements UserAreaContract.Repository {
 
     @Override
     public List<Musica> pesquisaMusica(String nomeMusica, final OnDatabaseOperationCompleteListener listener, final Context context) {
-        //final ArrayAdapter<JsonObject> musicasAd = null;
         final List<Musica> musicas = new ArrayList<>();
-        //final Musica musica = null;
         JsonObject json = new JsonObject();
         json.addProperty("nome", nomeMusica);
 
         Ion.with(context)
                 .load("http://matteroftime.com.br/pesquisar")
-                //.setBodyParameter("nome", nomeMusica)
                 .setJsonObjectBody(json)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
@@ -71,14 +68,10 @@ public class UserAreaRepository implements UserAreaContract.Repository {
                         if (result.size() > 0){
                             for (int i = 0; i < result.size(); i ++){
                                 JsonObject jsonObject = result.get(i).getAsJsonObject();
-                                //musicasAd.add(jsonObject);
-                                /*musica.setNome(jsonObject.get("nome").getAsString());
-                                musicas.add(musica);*/
                                 musicas.add(new Musica());
                                 musicas.get(i).setId(jsonObject.get("id").getAsLong());
                                 musicas.get(i).setNome(jsonObject.get("nome").getAsString());
                             }
-                            //listener.onSQLOperationSucceded(context.getString(R.string.ok));
                         } else {
                             listener.onSQLOperationFailed(context.getString(R.string.sem_resultados));
                         }
@@ -129,9 +122,5 @@ public class UserAreaRepository implements UserAreaContract.Repository {
             e.printStackTrace();
             listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
         }
-
-
     }
-
-
 }

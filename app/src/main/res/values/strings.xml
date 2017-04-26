@@ -65,5 +65,6 @@
     <string name="sucesso_baixar">Sucesso ao baixar música</string>
     <string name="sucesso_importar">Sucesso ao importar arquivo</string>
     <string name="falha_importar">Falha ao importar</string>
+    <string name="erro_login">Erro de Login</string>
 
 </resources>

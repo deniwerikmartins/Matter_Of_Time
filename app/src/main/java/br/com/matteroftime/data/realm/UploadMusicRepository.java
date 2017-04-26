@@ -17,6 +17,7 @@ import br.com.matteroftime.R;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.uploadMusic.UploadMusicContract;
+import br.com.matteroftime.util.Constants;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -36,11 +37,12 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
     }
 
     @Override
-    public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener) {
+    public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final String email, final String senha) {
         final File file = new File("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
-        String nome = musica.getNome();
-        Future<File> uploading;
-
+        final String nome = musica.getNome();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(Constants.EMAIL, email);
+        jsonObject.addProperty(Constants.SENHA, senha);
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -50,36 +52,34 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            /*Ion.with(context)
-                    .load("http://matteroftime.com.br/inserir.php")
-                    .setMultipartParameter("nome", nome)
-                    .setMultipartFile("archive", "application/met", file)
+            Ion.with(context)
+                    .load("http://matteroftime.com.br/login.php")
+                    .setJsonObjectBody(jsonObject)
                     .asJsonObject()
                     .setCallback(new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
-                            if (result.get("retorno").getAsString().equals("YES")) {
-                                listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
+                            if (result.get("result").getAsString().equals("NO")){
+                                listener.onSQLOperationFailed(context.getString(R.string.erro_login));
                             } else {
-                                listener.onSQLOperationSucceded(context.getString(R.string.erro_envio));
-                            }
-                        }
-                    });*/
-
-            File echoedFile = context.getFileStreamPath("echo");
-
-            uploading = Ion.with(context)
-                    .load("http://matteroftime.com.br/inserir.php")
-                    .setMultipartParameter("nome", nome)
-                    .setMultipartFile("archive", file)
-                    .write(echoedFile)
-                    .setCallback(new FutureCallback<File>() {
-                        @Override
-                        public void onCompleted(Exception e, File result) {
-                            if (e != null){
-                                listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
-                            } else {
-                                listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
+                                File echoedFile = context.getFileStreamPath("echo");
+                                Future<File> uploading;
+                                uploading = Ion.with(context)
+                                        .load("http://matteroftime.com.br/inserir.php")
+                                        .setMultipartParameter("nome", nome)
+                                        .setMultipartFile("archive", file)
+                                        .write(echoedFile)
+                                        .setCallback(new FutureCallback<File>() {
+                                            @Override
+                                            public void onCompleted(Exception e, File result) {
+                                                if (e != null){
+                                                    listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
+                                                } else {
+                                                    listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
+                                                }
+                                            }
+                                        });
+                                uploading = null;
                             }
                         }
                     });
@@ -89,15 +89,18 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             e.printStackTrace();
         }
         file.delete();
-        uploading = null;
     }
 
     @Override
-    public void atualizaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener) {
+    public void atualizaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final String email, final String senha) {
         final File file = new File("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
-        String nome = musica.getNome();
-        long id = musica.getId();
-        Future<File> uploading;
+        final String nome = musica.getNome();
+        final long id = musica.getId();
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(Constants.ID_MUSICA, musica.getId());
+        jsonObject.addProperty(Constants.EMAIL, email);
+        jsonObject.addProperty(Constants.SENHA, senha);
 
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -108,32 +111,43 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            File echoedFile = context.getFileStreamPath("echo");
-
-            uploading = Ion.with(context)
-                    .load("http://matteroftime.com.br/inserir.php")
-                    .setMultipartParameter("nome", nome)
-                    .setMultipartParameter("id", String.valueOf(id))
-                    .setMultipartFile("archive", file)
-                    .write(echoedFile)
-                    .setCallback(new FutureCallback<File>() {
+            Ion.with(context)
+                    .load("http://matteroftime.com.br/login.php")
+                    .setJsonObjectBody(jsonObject)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
                         @Override
-                        public void onCompleted(Exception e, File result) {
-                            if (e != null){
+                        public void onCompleted(Exception e, JsonObject result) {
+                            if (result.get("result").getAsString().equals("NO")){
                                 listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
                             } else {
-                                listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
+                                File echoedFile = context.getFileStreamPath("echo");
+                                Future<File> uploading;
+                                uploading = Ion.with(context)
+                                        .load("http://matteroftime.com.br/inserir.php")
+                                        .setMultipartParameter("nome", nome)
+                                        .setMultipartParameter(Constants.ID_MUSICA, String.valueOf(id))
+                                        .setMultipartFile("archive", file)
+                                        .write(echoedFile)
+                                        .setCallback(new FutureCallback<File>() {
+                                            @Override
+                                            public void onCompleted(Exception e, File result) {
+                                                if (e != null){
+                                                    listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
+                                                } else {
+                                                    listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
+                                                }
+                                            }
+                                        });
+                                uploading = null;
                             }
                         }
                     });
-
-
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
         }
         file.delete();
-        uploading = null;
     }
 }

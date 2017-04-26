@@ -118,9 +118,4 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
         view.showMessage(message);
         bus.post(new MusicListChangedEvent());
     }
-
-
-
-
-
 }

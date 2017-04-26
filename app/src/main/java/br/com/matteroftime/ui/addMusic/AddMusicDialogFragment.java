@@ -26,17 +26,13 @@ import io.realm.RealmList;
 
 
 public class AddMusicDialogFragment extends DialogFragment  implements AddMusicContract.View  {
-
     private AddMusicContract.Action presenter;
     private boolean editMode = false;
-
     @BindView(R.id.edt_nome_da_musica) EditText edtNomeDaMusica;
     @BindView(R.id.edt_quantidade_compassos) EditText edtQtdCompassos;
-
     public AddMusicDialogFragment() {
         // Required empty public constructor
     }
-
     public static AddMusicDialogFragment newInstance(long id) {
         AddMusicDialogFragment fragment = new AddMusicDialogFragment();
         if (id > 0){
@@ -46,32 +42,26 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
         }
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new AddMusicPresenter(this);
     }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialogFragment = new AlertDialog.Builder(getActivity());
         if (savedInstanceState == null){
             LayoutInflater inflater = getActivity().getLayoutInflater();
-
             View view = inflater.inflate(R.layout.fragment_add_music, null);
             dialogFragment.setView(view);
             ButterKnife.bind(this, view);
-
             if (getArguments() != null && getArguments().containsKey(Constants.COLUMN_ID)){
                 presenter.checkStatus(getArguments().getLong(Constants.COLUMN_ID));
             }
-
             View titleView = inflater.inflate(R.layout.dialog_title, null);
             TextView titleText = (TextView)titleView.findViewById(R.id.txt_view_dialog_title);
             titleText.setText(editMode ? "Update Music" : "Add Music");
             dialogFragment.setCustomTitle(titleView);
-
             dialogFragment.setPositiveButton(editMode ? "Update" : "Add", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -87,44 +77,36 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
         }
         return dialogFragment.create();
     }
-
     @Override
     public void populateForm(Musica musica) {
         edtNomeDaMusica.setText(musica.getNome());
         edtQtdCompassos.setText(String.valueOf(musica.getQtdCompassos()));
     }
-
     @Override
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
     }
-
     @Override
     public void displayMessage(String message) {
 
     }
-
     private boolean validateInputs(){
         if (edtNomeDaMusica.getText().toString().isEmpty()){
             edtNomeDaMusica.setError(getString(R.string.name_is_required));
             edtNomeDaMusica.requestFocus();
             return false;
         }
-
         if (edtQtdCompassos.getText().toString().isEmpty()){
             edtQtdCompassos.setError(getString(R.string.quantidadecompassos));
             edtQtdCompassos.requestFocus();
             return false;
         }
-
         return true;
     }
-
     @Override
     public void onStart() {
         super.onStart();
         AlertDialog d = (AlertDialog)getDialog();
-
         if (d != null){
             Button positiveButton = (Button)d.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(new View.OnClickListener() {
@@ -142,13 +124,10 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
             });
         }
     }
-
     public void saveMusic(){
         Musica musica = new Musica();
         musica.setNome(edtNomeDaMusica.getText().toString());
         musica.setQtdCompassos(Integer.parseInt(edtQtdCompassos.getText().toString()));
         presenter.ondAddMusicButtonClick(musica);
     }
-
-
 }

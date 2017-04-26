@@ -45,7 +45,12 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
             try {
                 final Musica musica = musicas.get(position);
                 //holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
+                holder.numeroMusica.setVisibility(View.GONE);
                 holder.nomeMusica.setText(musica.getNome());
+                holder.bpm.setVisibility(View.GONE);
+                holder.tempos.setVisibility(View.GONE);
+                holder.nota.setVisibility(View.GONE);
+                holder.totalCompassos.setVisibility(View.GONE);
                 /*holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));

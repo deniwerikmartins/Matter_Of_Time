@@ -44,8 +44,6 @@ import io.realm.RealmList;
  * A simple {@link Fragment} subclass.
  */
 public class EditFragment extends Fragment implements EditContract.View, OnMusicSelectedListener{
-
-
     private View view;
     private EditAdapter adapter;
     private EditContract.Actions presenter;
@@ -55,7 +53,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     private String select;
     private boolean contagem;
     private Musica musica;
-
     @BindView(R.id.editList_recycler_view) RecyclerView editListRecyclerView;
     @BindView(R.id.empty_text) TextView emptyText;
     @BindView(R.id.fab) FloatingActionButton fab;
@@ -64,7 +61,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @BindView(R.id.btn_InserirCompasso) Button btnInserirCompasso;
     @BindView(R.id.spn_nota) Spinner spinner;
     @BindView(R.id.chk_pre_contagem) CheckBox checkBox;
-
     @BindView(R.id.txt_nome_musica) TextView nomeMusica;
     @BindView(R.id.txtNumeroMusica) TextView numeroMusica;
     @BindView(R.id.edt_ordem) EditText ordemDaMusica;
@@ -75,21 +71,14 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @BindView(R.id.txtNotaCompasso) TextView txtNotaCompasso;
     @BindView(R.id.txtBpmCompasso) TextView txtBpmCompasso;
     @BindView(R.id.txtRepeticoesCompasso) TextView txtRepeticoesCompasso;
-
     @BindView(R.id.edt_numero_compasso) EditText edtNumeroCompasso;
     @BindView(R.id.edt_bpm) EditText edtBpm;
     @BindView(R.id.edt_tempos) EditText edtTempos;
     @BindView(R.id.edt_repeticoes) EditText edtRepeticoes;
 
-
-
-
-
     public EditFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,14 +93,12 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 presenter.onAddMusicButtonClicked();
             }
         });
-
         //Setup Recyclyerview
         List<Musica> tempMusicas = new ArrayList<>();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapter = new EditAdapter(tempMusicas, getContext(), this);
         editListRecyclerView.setLayoutManager(layoutManager);
         editListRecyclerView.setAdapter(adapter);
-
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, valorNotas);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
@@ -144,10 +131,8 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                         break;
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -161,22 +146,14 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                         showMessage(getString(R.string.compasso_inexistente));
                     } else if(musica.getCompassos() != null && musica.getCompassos().size() > 0){
                         ord = ord - 1;
-
-                        /*x = musica.getCompassos().get(ord).getOrdem();
-                        x++;*/
                         x = ord;
                         x = x + 1;
                         txtNumeroCompasso.setText(String.valueOf(x));
-
                         atualizaViewsCompasso(musica, musica.getCompassos().get(ord));
                     }
                 }
             }
         });
-
-
-
-
         return view;
     }
 
@@ -212,11 +189,9 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     public void showDeleteMusicPrompt(final Musica musica) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         View titleView = (View)inflater.inflate(R.layout.dialog_title,null);
         TextView titleText = (TextView) titleView.findViewById(R.id.txt_view_dialog_title);
         titleText.setText("Delete Music?");
-
         alertDialog.setMessage("Delete" + musica.getNome());
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -232,7 +207,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             }
         });
         alertDialog.show();
-
     }
 
     @Override
@@ -252,55 +226,44 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         showToastMessage(message);
     }
 
-
-
     private void showToastMessage(String message) {
         Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
-
         presenter.ondAddToEditButtonClicked(musicaSelecionada);
         nomeMusica.setText(musicaSelecionada.getNome());
         numeroMusica.setText(String.valueOf(musicaSelecionada.getOrdem() + 1));
-
     }
 
     @Override
     public void onLongClickMusic(Musica musicaClicada) {
         showMusicContextMenu(musicaClicada);
-
     }
 
     private void showMusicContextMenu(final Musica musicaClicada) {
         final String[] sortOptions = {"Edit Music", "Delete"};
-
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         View convertView = (View) inflater.inflate(R.layout.dialog_list, null);
         alertDialog.setView(convertView);
-
         View titleView = (View) inflater.inflate(R.layout.dialog_title, null);
         TextView titleText = (TextView) titleView.findViewById(R.id.txt_view_dialog_title);
         if (musicaClicada.getNome() != null){
             titleText.setText(musicaClicada.getNome());
         }
         alertDialog.setCustomTitle(titleView);
-
         ListView dialogList = (ListView) convertView.findViewById(R.id.dialog_listview);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (getActivity(), android.R.layout.simple_list_item_1,sortOptions);
         dialogList.setAdapter(adapter);
-
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-
         final Dialog dialog = alertDialog.create();
         dialog.show();
         dialogList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -329,7 +292,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         } else {
             contar.setActivated(true);
         }
-
     }
 
     @OnClick(R.id.imgBtnConfirmaMusica)
@@ -348,10 +310,10 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             showMessage(getString(R.string.ordem_necessaria));
         } else if(presenter.getListaMusicas() == null){
             showMessage(getString(R.string.sem_musicas));
-        } else if(contagem == true && contar.getText().toString().isEmpty() || contagem == true && Integer.parseInt(contar.getText().toString()) == 0) {
+        } else if(contagem == true && contar.getText().toString().isEmpty() || contagem == true
+                && Integer.parseInt(contar.getText().toString()) == 0) {
             showMessage(getString(R.string.sem_contagem));
         } else if (contagem == true) {
-
             if (ord - 1 < 0){
                 showMessage(getString(R.string.posicao_invalida));
 
@@ -364,9 +326,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 musica.setTemposContagem(Integer.parseInt(contar.getText().toString()));
                 atualizaViewsMusica(musica);
             }
-
         } else if (contagem == false){
-
             if (ord - 1 < 0){
                 showMessage(getString(R.string.musica_inexistente));
             } else if (ord > presenter.getListaMusicas().size()){
@@ -386,8 +346,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         musicas.set(musica.getOrdem(), musica);
         this.showMusics(musicas);
     }
-
-
 
     @OnClick(R.id.btnConfirmaCompasso)
     public void setConfirmaCompasso(){
@@ -412,29 +370,18 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             compasso.setTempos(Integer.parseInt(edtTempos.getText().toString()));
             compasso.setNota(nota);
             compasso.setRepeticoes(Integer.parseInt(edtRepeticoes.getText().toString()));
-
             RealmList<Compasso> compassos = musica.getCompassos();
             compassos.set(compasso.getOrdem(), compasso);
             musica.setCompassos(compassos);
-
-            //musica.getCompassos().set(compasso.getOrdem(),compasso);
-
-
-            //presenter.updateMusica(musica);
             presenter.atualizarCompassodaMusica(musica, compasso);
-
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
             atualizaViewsCompasso(musica, compasso);
-
-
-
         }
     }
 
     @Override
     public void atualizaViewsCompasso(Musica musica, Compasso compasso) {
-
         txtTempoCompasso.setText(String.valueOf(compasso.getTempos()));
         txtNotaCompasso.setText(String.valueOf(compasso.getNota()));
         txtBpmCompasso.setText(String.valueOf(compasso.getBpm()));
@@ -447,7 +394,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         if (!edtNumeroCompasso.getText().toString().isEmpty()) {
             ord = Integer.parseInt(edtNumeroCompasso.getText().toString());
         }
-
         if (musica.getNome() == null) {
             showMessage(getString(R.string.sem_musica));
         } else if (ord == -10){
@@ -461,10 +407,9 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             presenter.updateMusica(musica);
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
-            //showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
-            Toast.makeText(getContext(), getString(R.string.tamanho_compassos) + " " + String.valueOf(musica.getCompassos().size()) + " " +getString(R.string.compassos), Toast.LENGTH_SHORT ).show();
+            Toast.makeText(getContext(), getString(R.string.tamanho_compassos) + " " + String.valueOf(musica.getCompassos().size())
+                    + " " +getString(R.string.compassos), Toast.LENGTH_SHORT ).show();
         }
-
     }
 
     @OnClick(R.id.btn_InserirCompasso)
@@ -478,10 +423,5 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             this.showMusics(musicas);
             showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
         }
-
     }
-
-
-
-
 }

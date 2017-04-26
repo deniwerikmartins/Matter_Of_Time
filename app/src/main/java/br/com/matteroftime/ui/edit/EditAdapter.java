@@ -91,7 +91,6 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
             super(itemView);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
-            //nomeMusica.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 

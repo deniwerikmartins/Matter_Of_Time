@@ -28,6 +28,5 @@ public interface AppComponent {
     void inject(EditPresenter editPresenter);
     void inject(UserAreaPresenter userAreaPresenter);
     void inject(SelectMusicPresenter selectMusicPresenter);
-
     void inject(UploadMusicPresenter uploadMusicPresenter);
 }

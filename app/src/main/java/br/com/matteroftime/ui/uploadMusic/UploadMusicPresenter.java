@@ -22,7 +22,9 @@ import javax.inject.Inject;
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
+import io.realm.RealmList;
 
 /**
  * Created by RedBlood on 23/04/2017.
@@ -61,6 +63,10 @@ public class UploadMusicPresenter implements UploadMusicContract.Action, OnDatab
 
     @Override
     public void enviaMusica(Musica musica, final Context context, final String email, final String senha) {
+        RealmList<Compasso> comps = new RealmList<>();
+        comps = musica.getCompassos();
+        musica.setCompassos(null);
+        musica.setCompassos(comps);
         if (view.isEditMode()){
             atualizaMusica(musica, context, email, senha);
         } else {

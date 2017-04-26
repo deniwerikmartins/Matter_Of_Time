@@ -70,6 +70,7 @@ public class UploadMusicPresenter implements UploadMusicContract.Action, OnDatab
 
     @Override
     public void salvaMusica(Musica musica, Context context, String email, String senha) {
+        musica.setCompassos(null);
         repository.salvaMusica(musica, context, this, email, senha);
 
     }

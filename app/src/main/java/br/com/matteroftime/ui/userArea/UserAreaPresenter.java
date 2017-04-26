@@ -33,25 +33,19 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
 
 
     @Override
-    public void loadMusics(){
-        List<Musica> availableMusics = repository.getAllMusics();
-        if (availableMusics != null && availableMusics.size() > 0){
-            view.hideEmptyText();
-            view.showMusicas(availableMusics);
-        } else {
-            view.showEmptyText();
-        }
-    }
-
-    @Override
     public Musica getMusica(long id) {
         return repository.getMusicById(id);
     }
 
     @Override
     public void pesquisaMusica(String nomeMusica, Context context) {
-//        repository.pesquisaMusica(nomeMusica, this, context);
-        view.showMusicas(repository.pesquisaMusica(nomeMusica, this, context));
+        List<Musica> availableMusics = repository.pesquisaMusica(nomeMusica, this, context);
+        if (availableMusics != null && availableMusics.size() > 0){
+            view.hideEmptyText();
+            view.showMusicas(availableMusics);
+        } else {
+            view.showEmptyText();
+        }
     }
 
     @Override

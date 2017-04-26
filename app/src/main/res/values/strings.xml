@@ -66,5 +66,7 @@
     <string name="sucesso_importar">Sucesso ao importar arquivo</string>
     <string name="falha_importar">Falha ao importar</string>
     <string name="erro_login">Erro de Login</string>
+    <string name="email_necessario">Email necessário</string>
+    <string name="senha_necessaria">Senha Necessária</string>
 
 </resources>

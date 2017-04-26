@@ -73,6 +73,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity().getBaseContext();
+
     }
 
     @Override
@@ -85,7 +86,6 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         ButterKnife.bind(this, view);
         presenter = new UserAreaPresenter(this);
 
-
         //setup Recyclerview
         List<Musica> tempMusicas = new ArrayList<>();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -94,13 +94,14 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         userAreaRecyclerView.setAdapter(adapter);
 
 
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadMusics();
+        //presenter.loadMusics();
     }
 
     @Override
@@ -127,16 +128,10 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         userAreaRecyclerView.setVisibility(View.VISIBLE);
     }
 
-
-
-
-
     @Override
     public void showMessage(String message) {
         showToastMessage(message);
     }
-
-
 
     private void showToastMessage(String message) {
         Snackbar.make(view.getRootView(), message, Snackbar.LENGTH_SHORT).show();
@@ -154,14 +149,28 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     @OnClick(R.id.btnEnviarMusica)
     public void enviarMusica(View view){
-        uploadMusicFragment = UploadMusicFragment.newInstance(0, email.getText().toString(), senha.getText().toString());
-        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        if (email.getText().toString().isEmpty()){
+            showMessage(getString(R.string.email_necessario));
+        } else if(senha.getText().toString().isEmpty()){
+            showMessage(getString(R.string.senha_necessaria));
+        } else {
+            uploadMusicFragment = UploadMusicFragment.newInstance(0, email.getText().toString(), senha.getText().toString());
+            uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        }
+
+
     }
 
     @OnClick(R.id.btnAtualizarMusica)
     public void atualizarMusica(View view){
-        uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), email.getText().toString(), senha.getText().toString());
-        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        if (email.getText().toString().isEmpty()){
+            showMessage(getString(R.string.email_necessario));
+        } else if(senha.getText().toString().isEmpty()){
+            showMessage(getString(R.string.senha_necessaria));
+        } else {
+            uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), email.getText().toString(), senha.getText().toString());
+            uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        }
 
     }
 

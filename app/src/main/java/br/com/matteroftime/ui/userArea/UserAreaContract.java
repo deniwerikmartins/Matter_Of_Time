@@ -29,7 +29,6 @@ public interface UserAreaContract {
 
     public interface Actions{
 
-        void loadMusics();
         Musica getMusica(long id);
         void pesquisaMusica(String nomeMusica, Context context);
         void baixaMusica(Musica musica, Context context);

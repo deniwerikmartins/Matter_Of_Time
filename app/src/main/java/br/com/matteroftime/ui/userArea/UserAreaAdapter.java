@@ -48,8 +48,11 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
                 holder.numeroMusica.setVisibility(View.GONE);
                 holder.nomeMusica.setText(musica.getNome());
                 holder.bpm.setVisibility(View.GONE);
+                holder.textoBpm.setVisibility(View.GONE);
                 holder.tempos.setVisibility(View.GONE);
                 holder.nota.setVisibility(View.GONE);
+                holder.barra.setVisibility(View.GONE);
+                holder.compassos.setVisibility(View.GONE);
                 holder.totalCompassos.setVisibility(View.GONE);
                 /*holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
@@ -80,8 +83,11 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
         @BindView(R.id.txt_numero_musica) TextView numeroMusica;
         @BindView(R.id.txt_nome_musica) TextView nomeMusica;
         @BindView(R.id.txt_BPM) TextView bpm;
+        @BindView(R.id.textoBPM) TextView textoBpm;
         @BindView(R.id.txt_tempos) TextView tempos;
         @BindView(R.id.txt_nota) TextView nota;
+        @BindView(R.id.txtBarra) TextView barra;
+        @BindView(R.id.txtCompassos) TextView compassos;
         @BindView(R.id.txtTotalCompassos) TextView totalCompassos;
 
         public ViewHolder(View itemView) {

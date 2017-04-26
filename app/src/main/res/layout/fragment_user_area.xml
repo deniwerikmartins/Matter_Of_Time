@@ -208,7 +208,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/user_area_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtSemMusicas"
@@ -221,7 +222,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/text_size_huge"
             android:textStyle="italic"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </LinearLayout>
 
 </RelativeLayout>

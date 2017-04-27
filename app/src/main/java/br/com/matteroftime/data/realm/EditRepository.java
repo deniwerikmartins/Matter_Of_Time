@@ -33,15 +33,51 @@ public class EditRepository implements EditContract.Repository{
         return inMemoryMusic;
     }
     @Override
-    public void atualizaCompasso(Musica musica, Compasso compasso){
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        final Compasso managedCompasso = realm.copyToRealmOrUpdate(compasso);
-        musica.getCompassos().set(compasso.getOrdem(), managedCompasso);
-        realm.copyToRealmOrUpdate(musica);
-        realm.commitTransaction();
-        realm.close();
+    public void atualizaCompasso(final Musica musica, final OnDatabaseOperationCompleteListener listener,final Compasso compasso) {
+        final Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm backgroundRealm) {
+                Musica managedMusic = backgroundRealm.where(Musica.class).equalTo("id", musica.getId()).findFirst();
+                managedMusic.getCompassos().get(compasso.getOrdem()).setBpm(compasso.getBpm());
+                managedMusic.getCompassos().get(compasso.getOrdem()).setTempos(compasso.getTempos());
+                managedMusic.getCompassos().get(compasso.getOrdem()).setNota(compasso.getNota());
+                managedMusic.getCompassos().get(compasso.getOrdem()).setBpm(compasso.getBpm());
+                managedMusic.getCompassos().get(compasso.getOrdem()).setRepeticoes(compasso.getRepeticoes());
+
+                backgroundRealm.copyToRealmOrUpdate(managedMusic);
+            }
+        });
+
+        /*realm.executeTransactionAsync(new Realm.Transaction() {
+                                          @Override
+                                          public void execute(Realm backgroundRealm) {
+                                              Musica managedMusic = backgroundRealm.where(Musica.class).equalTo("id", musica.getId()).findFirst();
+                                              managedMusic.getCompassos().get(compasso.getOrdem()).setBpm(compasso.getBpm());
+                                              managedMusic.getCompassos().get(compasso.getOrdem()).setTempos(compasso.getTempos());
+                                              managedMusic.getCompassos().get(compasso.getOrdem()).setNota(compasso.getNota());
+                                              managedMusic.getCompassos().get(compasso.getOrdem()).setBpm(compasso.getBpm());
+                                              managedMusic.getCompassos().get(compasso.getOrdem()).setRepeticoes(compasso.getRepeticoes());
+
+                                              backgroundRealm.copyToRealmOrUpdate(managedMusic);
+                                          }
+                                      }, new Realm.Transaction.OnSuccess() {
+                                          @Override
+                                          public void onSuccess() {
+                                              realm.close();
+                                              listener.onSQLOperationSucceded("Updated");
+                                          }
+                                      }, new Realm.Transaction.OnError() {
+                                          @Override
+                                          public void onError(Throwable error) {
+                                              realm.close();
+                                              listener.onSQLOperationFailed(error.getLocalizedMessage());
+                                          }
+                                      }
+        );*/
     }
+
+
     @Override
     public void atualizaMusica(Musica musica) {
         Realm realm = Realm.getDefaultInstance();
@@ -102,6 +138,15 @@ public class EditRepository implements EditContract.Repository{
     @Override
     public void updateMusic(final Musica musica, final OnDatabaseOperationCompleteListener listener) {
         final Realm realm = Realm.getDefaultInstance();
+/*        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm backgroundRealm) {
+                musica.getCompassos().get(0).setId(1);
+                musica.getCompassos().get(1).setId(2);
+                backgroundRealm.copyToRealmOrUpdate(musica.getCompassos());
+                backgroundRealm.copyToRealmOrUpdate(musica);
+            }
+        });*/
         realm.executeTransactionAsync(new Realm.Transaction() {
                                           @Override
                                           public void execute(Realm backgroundRealm) {

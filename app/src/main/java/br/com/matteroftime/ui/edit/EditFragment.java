@@ -382,10 +382,12 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             compasso.setTempos(Integer.parseInt(edtTempos.getText().toString()));
             compasso.setNota(nota);
             compasso.setRepeticoes(Integer.parseInt(edtRepeticoes.getText().toString()));
-            RealmList<Compasso> compassos = musica.getCompassos();
+            /*RealmList<Compasso> compassos = musica.getCompassos();
             compassos.set(compasso.getOrdem(), compasso);
-            musica.setCompassos(compassos);
+            musica.setCompassos(compassos);*/
+            //presenter.updateMusica(musica);
             presenter.atualizarCompassodaMusica(musica, compasso);
+            //presenter.atualizarCompassodaMusica(musica, compasso);
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
             atualizaViewsCompasso(musica, compasso);

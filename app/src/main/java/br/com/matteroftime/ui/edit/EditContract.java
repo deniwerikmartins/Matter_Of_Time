@@ -49,7 +49,7 @@ public interface EditContract {
         void addMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
         void updateMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
 
-        void atualizaCompasso(Musica musica, Compasso compasso);
+        void atualizaCompasso(Musica musica, OnDatabaseOperationCompleteListener listener, Compasso compasso);
         void atualizaMusica(Musica musica);
     }
 }

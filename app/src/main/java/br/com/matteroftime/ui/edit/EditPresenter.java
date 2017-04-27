@@ -98,7 +98,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
 
     @Override
     public void atualizarCompassodaMusica(Musica musica, Compasso compasso) {
-        repository.atualizaCompasso(musica, compasso);
+        repository.atualizaCompasso(musica, this ,compasso);
         loadMusics();
     }
 

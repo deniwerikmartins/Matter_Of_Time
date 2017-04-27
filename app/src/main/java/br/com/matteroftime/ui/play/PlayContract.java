@@ -21,6 +21,7 @@ public interface PlayContract {
         void showEmptyText();
         void hideEmptyText();
         void showMessage(String message);
+        void atualizaViewsMusica(int i);
 
 
     }

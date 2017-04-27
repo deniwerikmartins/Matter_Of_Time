@@ -3,12 +3,14 @@ package br.com.matteroftime.ui.play;
 import android.content.Context;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import br.com.matteroftime.core.MatterOfTimeApplication;
+import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import io.realm.RealmList;
@@ -78,8 +80,13 @@ public class PlayPresenter implements PlayContract.Actions{
         compassos.add(compasso);
         Musica musica = new Musica();
         musica.setCompassos(compassos);
-        musica.defineIntervalo(musica.getCompassos());
+        //musica.defineIntervalo(musica.getCompassos());
         this.defineMusica(musica);
+        bus.post(new MusicListChangedEvent());
+    }
 
+    @Subscribe
+    public void onMusicListChanged(MusicListChangedEvent event){
+        loadMusics();
     }
 }

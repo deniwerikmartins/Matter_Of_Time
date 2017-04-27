@@ -25,11 +25,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.inject.Inject;
+
 import br.com.matteroftime.R;
+import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
@@ -75,6 +81,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @BindView(R.id.edt_bpm) EditText edtBpm;
     @BindView(R.id.edt_tempos) EditText edtTempos;
     @BindView(R.id.edt_repeticoes) EditText edtRepeticoes;
+    @Inject Bus bus = new Bus();
 
     public EditFragment() {
         // Required empty public constructor
@@ -86,6 +93,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         view =  inflater.inflate(R.layout.fragment_edit, container, false);
         musica = new Musica();
         ButterKnife.bind(this, view);
+        bus.register(this);
         presenter = new EditPresenter(this);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +150,11 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 if(!hasFocus && !edtNumeroCompasso.getText().toString().isEmpty()){
                     int ord = Integer.parseInt(edtNumeroCompasso.getText().toString());
                     int x = 0;
-                    if (musica.getNome() != null && ord <= 0 || ord > musica.getCompassos().size()){
+                    if (musica == null){
+                        showMessage(getString(R.string.sem_musica));
+                    } else if (musica.getCompassos() == null || musica.getCompassos().size() == 0){
+                        showMessage(getString(R.string.compasso_inexistente));
+                    } else if (ord <= 0 || ord > musica.getCompassos().size()){
                         showMessage(getString(R.string.compasso_inexistente));
                     } else if(musica.getCompassos() != null && musica.getCompassos().size() > 0){
                         ord = ord - 1;
@@ -377,6 +389,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
             atualizaViewsCompasso(musica, compasso);
+            bus.post(new MusicListChangedEvent());
         }
     }
 
@@ -409,6 +422,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             this.showMusics(musicas);
             Toast.makeText(getContext(), getString(R.string.tamanho_compassos) + " " + String.valueOf(musica.getCompassos().size())
                     + " " +getString(R.string.compassos), Toast.LENGTH_SHORT ).show();
+            bus.post(new MusicListChangedEvent());
         }
     }
 
@@ -422,6 +436,12 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
             showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
+            bus.post(new MusicListChangedEvent());
         }
+    }
+
+    @Subscribe
+    public void onMusicListChanged(MusicListChangedEvent event){
+        presenter.loadMusics();
     }
 }

@@ -1,6 +1,7 @@
 package br.com.matteroftime.ui.play;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,12 +21,18 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.matteroftime.R;
+import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
@@ -46,6 +53,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private String[] valorNotas = new String[]{"Semibreve","Mímina","Seminima","Colcheia","Semicolcheia","Fusa","Semifusa"};
     private int nota;
     private String select;
+    private Musica musica;
 
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
@@ -64,6 +72,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @BindView(R.id.imgClick) ImageView imgClick;
     @BindView(R.id.imgStop) ImageView imgStop;
     @BindView(R.id.empty_text) TextView emptyText;
+    @BindView(R.id.txtNomeMusica) TextView nomeMusica;
+    @Inject Bus bus = new Bus();
 
     public PlayFragment() {
         // Required empty public constructor
@@ -79,6 +89,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
         ButterKnife.bind(this, view);
         presenter = new PlayPresenter(this);
+        bus.register(this);
 
         //setup RecyclerView
         List<Musica> tempMusicas = new ArrayList<>(); // ou RealmList
@@ -137,23 +148,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         presenter.loadMusics();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        presenter.loadMusics();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-       // presenter.loadMusics();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        presenter.loadMusics();
-    }
 
     @Override
     public void mostrarMusicas(List<Musica> musicas) {
@@ -183,13 +177,16 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
-        //musica recebida do listener
+        musica = musicaSelecionada;
         presenter.defineMusica(musicaSelecionada);
+        nomeMusica.setText(musica.getNome());
+        atualizaViewsMusica(0);
+
     }
 
     @Override
     public void onLongClickMusic(Musica musicaClicada) {
-        presenter.defineMusica(musicaClicada);
+        onSelectMusic(musicaClicada);
     }
 
     @OnClick(R.id.btnOk)
@@ -205,6 +202,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             bpmAtual.setText(String.valueOf(b));
             temposAtual.setText(String.valueOf(t));
             notaAtual.setText(String.valueOf(nota));
+            nomeMusica.setText(getString(R.string.compasso));
+            bus.post(new MusicListChangedEvent());
         }
 
     }
@@ -220,8 +219,27 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         presenter.stop();
     }
 
+    @Override
+    public void atualizaViewsMusica(int i) {
+        i = 0;
+        if (musica.getCompassos().size() > 0){
 
+            bpmAtual.setText(String.valueOf(musica.getCompassos().get(i).getBpm()));
+            temposAtual.setText(String.valueOf(musica.getCompassos().get(i).getTempos()));
+            notaAtual.setText(String.valueOf(musica.getCompassos().get(i).getNota()));
 
+            if (musica.getCompassos().get(i+1) != null){
+                proxBpm.setText(String.valueOf(musica.getCompassos().get(i+1).getBpm()));
+                proxTempos.setText(String.valueOf(musica.getCompassos().get(i+1).getTempos()));
+                proxNota.setText(String.valueOf(musica.getCompassos().get(i+1).getNota()));
+            }
+            bus.post(new MusicListChangedEvent());
+        }
 
+    }
 
+    @Subscribe
+    public void onMusicListChanged(MusicListChangedEvent event){
+        presenter.loadMusics();
+    }
 }

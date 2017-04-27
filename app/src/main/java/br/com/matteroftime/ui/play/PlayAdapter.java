@@ -42,15 +42,26 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Musica musica = musicas.get(position);
         if (musicas != null  && musicas.get(0).getCompassos().size() > 0){
             try {
-                final Musica musica = musicas.get(position);
                 holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 holder.nomeMusica.setText(musica.getNome());
                 holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
                 holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        } else if (musicas != null && musicas.get(0).getCompassos().size() == 0){
+            try {
+                holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
+                holder.nomeMusica.setText(musica.getNome());
+                holder.bpm.setText("0");
+                holder.tempos.setText("0");
+                holder.nota.setText("0");
+                holder.totalCompassos.setText("0");
             } catch (Exception e){
                 e.printStackTrace();
             }

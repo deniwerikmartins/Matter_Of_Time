@@ -39,13 +39,21 @@ public class EditRepository implements EditContract.Repository{
             @Override
             public void execute(Realm backgroundRealm) {
                 Musica managedMusic = backgroundRealm.where(Musica.class).equalTo("id", musica.getId()).findFirst();
-                managedMusic.getCompassos().get(compasso.getOrdem()).setBpm(compasso.getBpm());
-                managedMusic.getCompassos().get(compasso.getOrdem()).setTempos(compasso.getTempos());
+                Compasso managedCompasso = managedMusic.getCompassos().get(compasso.getOrdem());
+
+                managedCompasso.setOrdem(compasso.getOrdem());
+                managedCompasso.setRepeticoes(compasso.getRepeticoes());
+                managedCompasso.setNota(compasso.getNota());
+                managedCompasso.setBpm(compasso.getBpm());
+                managedCompasso.setTempos(compasso.getTempos());
+
+                /*managedMusic.getCompassos().get(compasso.getOrdem()).setOrdem(compasso.getOrdem());
                 managedMusic.getCompassos().get(compasso.getOrdem()).setNota(compasso.getNota());
                 managedMusic.getCompassos().get(compasso.getOrdem()).setBpm(compasso.getBpm());
-                managedMusic.getCompassos().get(compasso.getOrdem()).setRepeticoes(compasso.getRepeticoes());
+                managedMusic.getCompassos().get(compasso.getOrdem()).setTempos(compasso.getTempos());
+                managedMusic.getCompassos().get(compasso.getOrdem()).setRepeticoes(compasso.getRepeticoes());*/
 
-                backgroundRealm.copyToRealmOrUpdate(managedMusic);
+                //backgroundRealm.copyToRealmOrUpdate(managedMusic);
             }
         });
 

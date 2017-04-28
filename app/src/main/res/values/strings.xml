@@ -68,5 +68,6 @@
     <string name="erro_login">Erro de Login</string>
     <string name="email_necessario">Email necessário</string>
     <string name="senha_necessaria">Senha Necessária</string>
+    <string name="ordem_invalida">Ordem da música invalida</string>
 
 </resources>

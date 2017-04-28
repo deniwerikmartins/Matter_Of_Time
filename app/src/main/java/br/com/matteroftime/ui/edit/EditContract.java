@@ -24,6 +24,7 @@ public interface EditContract {
         void showMessage(String message);
         void atualizaViewsMusica(Musica musica);
         void atualizaViewsCompasso(Musica musica, Compasso compasso);
+        void atualizaNomeMusica(Musica musicaSelecionada);
     }
 
     public interface Actions{

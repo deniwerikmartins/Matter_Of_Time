@@ -15,7 +15,6 @@ import io.realm.RealmResults;
 
 public class PlayRepository implements PlayContract.Repository{
 
-
     @Override
     public List<Musica> getAllMusics() {
         Realm realm = Realm.getDefaultInstance();
@@ -24,6 +23,4 @@ public class PlayRepository implements PlayContract.Repository{
         realm.close();
         return result;
     }
-
-
 }

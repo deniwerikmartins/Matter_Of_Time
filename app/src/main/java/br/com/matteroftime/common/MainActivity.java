@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
 
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         bus = MatterOfTimeApplication.getInstance().getBus();
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
         setupViewPager();
-
     }
 
     @Override

@@ -52,7 +52,6 @@ public class MatterOfTimeApplication extends Application{
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(configuration);
-
         Realm realm = Realm.getDefaultInstance();
 
         try {

@@ -40,7 +40,16 @@ public class EditRepository implements EditContract.Repository{
             public void execute(Realm backgroundRealm) {
                 try {
                     Musica managedMusic = backgroundRealm.where(Musica.class).equalTo("id", musica.getId()).findFirst();
-                    managedMusic.getCompassos().set(compasso.getOrdem() - 1,compasso);
+                    managedMusic.getCompassos().get(compasso.getOrdem() - 1).setTempos(compasso.getTempos());
+                    managedMusic.getCompassos().get(compasso.getOrdem() - 1).setBpm(compasso.getBpm());
+                    managedMusic.getCompassos().get(compasso.getOrdem() - 1).setNota(compasso.getNota());
+                    managedMusic.getCompassos().get(compasso.getOrdem() - 1).setRepeticoes(compasso.getRepeticoes());
+                    managedMusic.getCompassos().get(compasso.getOrdem() - 1).setOrdem(compasso.getOrdem() - 1);
+
+
+
+                    /*managedMusic.getCompassos().set(compasso.getOrdem() - 1,compasso);
+                    managedMusic.getCompassos().get(compasso.getOrdem() - 1).setId(musica.getCompassos().get(compasso.getOrdem() - 1).getId());*/
                     listener.onSQLOperationSucceded("Updated");
                 } catch (Exception e) {
                     listener.onSQLOperationFailed("Error: " + e.getLocalizedMessage());

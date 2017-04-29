@@ -12,7 +12,6 @@ import br.com.matteroftime.ui.addMusic.AddMusicPresenter;
  */
 
 public interface EditContract {
-
     public interface View{
         void recebeMusica(Musica musica);
         void showMusics(List<Musica> musicas);
@@ -26,7 +25,6 @@ public interface EditContract {
         void atualizaViewsCompasso(Musica musica, Compasso compasso);
         void atualizaNomeMusica(Musica musicaSelecionada);
     }
-
     public interface Actions{
         void loadMusics();
         Musica getMusica(long id);
@@ -40,7 +38,6 @@ public interface EditContract {
         List<Musica> getListaMusicas();
         void atualizarCompassodaMusica(Musica musica, Compasso compasso);
         void atualizaMusica(Musica musica);
-
     }
 
     public interface Repository{
@@ -49,7 +46,6 @@ public interface EditContract {
         void deleteMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
         void addMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
         void updateMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
-
         void atualizaCompasso(Musica musica, OnDatabaseOperationCompleteListener listener, Compasso compasso);
         void atualizaMusica(Musica musica);
     }

@@ -48,18 +48,18 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         // Required empty public constructor
     }
 
-    public static UploadMusicFragment newInstance(long id, String email, String senha){
+    public static UploadMusicFragment newInstance(long id/*, String email, String senha*/){
         UploadMusicFragment fragment = new UploadMusicFragment();
         if (id == 0){
             Bundle args = new Bundle();
-            args.putString(Constants.EMAIL, email);
-            args.putString(Constants.SENHA, senha);
+            /*args.putString(Constants.SENHA, senha);
+            args.putString(Constants.EMAIL, email);*/
             fragment.setArguments(args);
         } else if (id > 0){
             Bundle args = new Bundle();
             args.putLong(Constants.COLUMN_ID, id);
-            args.putString(Constants.EMAIL, email);
-            args.putString(Constants.SENHA, senha);
+            /*args.putString(Constants.EMAIL, email);
+            args.putString(Constants.SENHA, senha);*/
             fragment.setArguments(args);
         }
         return fragment;

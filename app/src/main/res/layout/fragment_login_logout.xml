@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.matteroftime.ui.loginlogout.LoginLogoutFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout23"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/entrar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/email" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="5"
+                android:hint="@string/digite_email"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/senha" />
+
+            <EditText
+                android:id="@+id/edtSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="5"
+                android:hint="@string/digite_senha"
+                android:inputType="textPassword" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnEntrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/entrar" />
+
+        <Button
+            android:id="@+id/btnEsqueciSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/esqueci_senha" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout23"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/sair" />
+
+        <Button
+            android:id="@+id/btnSair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sair" />
+
+    </LinearLayout>
+</RelativeLayout>

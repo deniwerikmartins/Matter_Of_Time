@@ -51,9 +51,6 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
 
     @BindView(R.id.user_area_recycler_view) RecyclerView userAreaRecyclerView;
-    @BindView(R.id.edtEmail) EditText email;
-    @BindView(R.id.edtSenha) EditText senha;
-    @BindView(R.id.txtMusicaEnvio) TextView musicaEnvio;
     @BindView(R.id.btnSelecionarMusica) Button selecionarMusica;
     @BindView(R.id.btnEnviarMusica) Button enviarMusica;
     @BindView(R.id.btnAtualizarMusica) Button atualizarMusica;
@@ -145,33 +142,18 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         //selectMusicDialogFragment.getArguments();
     }
 
-
-
     @OnClick(R.id.btnEnviarMusica)
     public void enviarMusica(View view){
-        if (email.getText().toString().isEmpty()){
-            showMessage(getString(R.string.email_necessario));
-        } else if(senha.getText().toString().isEmpty()){
-            showMessage(getString(R.string.senha_necessaria));
-        } else {
-            uploadMusicFragment = UploadMusicFragment.newInstance(0, email.getText().toString(), senha.getText().toString());
-            uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
-        }
-
-
+        //recuperar usuario e senha - if
+        uploadMusicFragment = UploadMusicFragment.newInstance(0/*, email.getText().toString(), senha.getText().toString()*/);
+        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
     }
 
     @OnClick(R.id.btnAtualizarMusica)
     public void atualizarMusica(View view){
-        if (email.getText().toString().isEmpty()){
-            showMessage(getString(R.string.email_necessario));
-        } else if(senha.getText().toString().isEmpty()){
-            showMessage(getString(R.string.senha_necessaria));
-        } else {
-            uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), email.getText().toString(), senha.getText().toString());
-            uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
-        }
-
+        //recuperar usuario e senha - if
+        uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId()/*, email.getText().toString(), senha.getText().toString()*/);
+        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
     }
 
     @OnClick(R.id.btnPesquisar)

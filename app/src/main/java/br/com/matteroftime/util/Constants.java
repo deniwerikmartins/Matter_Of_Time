@@ -6,6 +6,9 @@ package br.com.matteroftime.util;
 
 public class Constants {
 
+    public final static int CADASTRO = 1;
+    public final static int LOGINLOGOUT = 2;
+
     public final static String COLUMN_ID = "_id";
     public static final String EMAIL = "email";
     public static final String SENHA = "senha";

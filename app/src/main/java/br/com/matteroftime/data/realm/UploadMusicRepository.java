@@ -52,37 +52,24 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            Ion.with(context)
-                    .load("http://matteroftime.com.br/login.php")
-                    .setJsonObjectBody(jsonObject)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>() {
+            File echoedFile = context.getFileStreamPath("echo");
+            Future<File> uploading;
+            uploading = Ion.with(context)
+                    .load("http://matteroftime.com.br/inserir.php")
+                    .setMultipartParameter("nome", nome)
+                    .setMultipartFile("archive", file)
+                    .write(echoedFile)
+                    .setCallback(new FutureCallback<File>() {
                         @Override
-                        public void onCompleted(Exception e, JsonObject result) {
-                            if (result.get("result").getAsString().equals("NO")){
-                                listener.onSQLOperationFailed(context.getString(R.string.erro_login));
+                        public void onCompleted(Exception e, File result) {
+                            if (e != null){
+                                listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
                             } else {
-                                File echoedFile = context.getFileStreamPath("echo");
-                                Future<File> uploading;
-                                uploading = Ion.with(context)
-                                        .load("http://matteroftime.com.br/inserir.php")
-                                        .setMultipartParameter("nome", nome)
-                                        .setMultipartFile("archive", file)
-                                        .write(echoedFile)
-                                        .setCallback(new FutureCallback<File>() {
-                                            @Override
-                                            public void onCompleted(Exception e, File result) {
-                                                if (e != null){
-                                                    listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
-                                                } else {
-                                                    listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
-                                                }
-                                            }
-                                        });
-                                uploading = null;
+                                listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
                             }
                         }
                     });
+            uploading = null;
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){

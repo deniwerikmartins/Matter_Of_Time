@@ -69,5 +69,20 @@
     <string name="email_necessario">Email necessário</string>
     <string name="senha_necessaria">Senha Necessária</string>
     <string name="ordem_invalida">Ordem da música invalida</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="loginlogout">Entrar / Sair</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_login_logout">LoginLogoutActivity</string>
+    <string name="registro">Registro</string>
+    <string name="confirme_senha">Confirme sua senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="entrar">Entrar</string>
+    <string name="sair">Sair</string>
+    <string name="confirmacaoSenhaNecessaria">Confirmação da senha necessária</string>
+    <string name="senha_nao_confere">Senhas não conferem</string>
+    <string name="esqueci_senha">Esqueci minha senha</string>
+    <string name="erro_cadastrar">Erro ao cadastrar usuário</string>
+    <string name="cadastro_sucesso">Casdastro realizado com sucesso</string>
+    <string name="login_sucesso">Login efetuado com sucesso</string>
 
 </resources>

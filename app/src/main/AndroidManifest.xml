@@ -25,11 +25,21 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:label="@string/title_activity_sign_up"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".common.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".common.MainActivity"/>
+            </activity>
         <activity
             android:name=".ui.loginlogout.LoginLogoutActivity"
             android:label="@string/title_activity_login_logout"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".common.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".common.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

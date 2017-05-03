@@ -84,5 +84,6 @@
     <string name="erro_cadastrar">Erro ao cadastrar usuário</string>
     <string name="cadastro_sucesso">Casdastro realizado com sucesso</string>
     <string name="login_sucesso">Login efetuado com sucesso</string>
+    <string name="ordem_igual">Há músicas com numero de ordenação igual</string>
 
 </resources>

@@ -30,7 +30,9 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 
@@ -344,6 +346,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 musica.setTemposContagem(Integer.parseInt(contar.getText().toString()));
                 musica.setPossuiOrdem(true);
                 atualizaViewsMusica(musica);
+                bus.post(new MusicListChangedEvent());
             }
         } else if (contagem == false){
             if (ord - 1 < 0){
@@ -355,6 +358,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 musica.setPreContagem(contagem);
                 musica.setPossuiOrdem(true);
                 atualizaViewsMusica(musica);
+                bus.post(new MusicListChangedEvent());
             }
         }
     }
@@ -363,8 +367,22 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     public void atualizaViewsMusica(Musica musica) {
         presenter.atualizaMusica(musica);
         List<Musica> musicas = presenter.getListaMusicas();
-        musicas.set(musica.getOrdem(), musica);
+        //musicas.set(musica.getOrdem(), musica); //2
+        boolean ordemIgual = possuiValoresRepetidos(musicas);
+        if (ordemIgual == true){
+            showMessage(getString(R.string.ordem_igual));
+        }
         this.showMusics(musicas);
+    }
+
+    public boolean possuiValoresRepetidos(List<Musica> musicas){
+        Set<Integer> conjunto = new TreeSet<>();
+        for (Musica musica: musicas) {
+            if (!conjunto.add(Integer.valueOf(musica.getOrdem()))){
+                return true;
+            }
+        }
+        return false;
     }
 
     @OnClick(R.id.btnConfirmaCompasso)

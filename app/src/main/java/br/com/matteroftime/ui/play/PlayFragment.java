@@ -73,6 +73,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @BindView(R.id.imgStop) ImageView imgStop;
     @BindView(R.id.empty_text) TextView emptyText;
     @BindView(R.id.txtNomeMusica) TextView nomeMusica;
+    @BindView(R.id.txtRepeticoesAtual) TextView repeticoesAtual;
+    @BindView(R.id.txtRepeticoesTotal) TextView repeticoesTotal;
     @Inject Bus bus = new Bus();
 
     public PlayFragment() {
@@ -180,6 +182,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         musica = musicaSelecionada;
         presenter.defineMusica(musicaSelecionada);
         nomeMusica.setText(musica.getNome());
+        repeticoesTotal.setText(String.valueOf(musica.getCompassos().get(0).getRepeticoes()));
         atualizaViewsMusica(0);
 
     }

@@ -145,15 +145,25 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     @OnClick(R.id.btnEnviarMusica)
     public void enviarMusica(View view){
         //recuperar usuario e senha - if
-        uploadMusicFragment = UploadMusicFragment.newInstance(0/*, email.getText().toString(), senha.getText().toString()*/);
-        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        if(musicaUpload.getNome() == null){
+            showMessage(getString(R.string.sem_musica));
+        } else if (musicaUpload.getNome() != null){
+            uploadMusicFragment = UploadMusicFragment.newInstance(0/*, email.getText().toString(), senha.getText().toString()*/);
+            uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        }
+
     }
 
     @OnClick(R.id.btnAtualizarMusica)
     public void atualizarMusica(View view){
         //recuperar usuario e senha - if
-        uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId()/*, email.getText().toString(), senha.getText().toString()*/);
-        uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        if(musicaUpload.getNome() == null){
+            showMessage(getString(R.string.sem_musica));
+        } else if(musicaUpload.getNome() != null){
+            uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId()/*, email.getText().toString(), senha.getText().toString()*/);
+            uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        }
+
     }
 
     @OnClick(R.id.btnPesquisar)

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.models.Compasso;
@@ -27,6 +28,7 @@ public class PlayPresenter implements PlayContract.Actions{
 
     Play play;
     Musica musica;
+    Musica musicaCompasso;
 
 
     public PlayPresenter(PlayContract.View view) {
@@ -50,7 +52,15 @@ public class PlayPresenter implements PlayContract.Actions{
     public void play(Context context) {
         play = new Play(context, this);
         musica.defineIntervalo(musica.getCompassos());
-        play.execute(musica);
+        if (musica == null){
+            view.showMessage(context.getString(R.string.sem_musica));
+        } else if (musica.isCompasso() == false){
+            play.execute(musica);
+        } else {
+            //chamar execução infinita
+            play.execute(musica);
+        }
+
     }
 
     @Override
@@ -78,8 +88,9 @@ public class PlayPresenter implements PlayContract.Actions{
         //compasso.setId(1);
         RealmList<Compasso> compassos = new RealmList<>();
         compassos.add(compasso);
-        Musica musica = new Musica();
+        musica = new Musica();
         musica.setCompassos(compassos);
+        musica.setCompasso(true);
         //musica.defineIntervalo(musica.getCompassos());
         this.defineMusica(musica);
         bus.post(new MusicListChangedEvent());

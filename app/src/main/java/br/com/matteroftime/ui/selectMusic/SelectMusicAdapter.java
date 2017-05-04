@@ -50,9 +50,11 @@ public class SelectMusicAdapter extends RecyclerView.Adapter<SelectMusicAdapter.
                 final Musica musica = musicas.get(position);
                 holder.numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 holder.nomeMusica.setText(musica.getNome());
-                holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
-                holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
-                holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
+                holder.bpm.setVisibility(View.GONE);
+                holder.tempos.setVisibility(View.GONE);
+                holder.nota.setVisibility(View.GONE);
+                holder.txBPM.setVisibility(View.GONE);
+                holder.txBarra.setVisibility(View.GONE);
                 holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));
                 if (shouldHighlightSelectedRow){
                     if (selectedPosition == position){
@@ -93,6 +95,8 @@ public class SelectMusicAdapter extends RecyclerView.Adapter<SelectMusicAdapter.
         @BindView(R.id.txt_tempos) TextView tempos;
         @BindView(R.id.txt_nota) TextView nota;
         @BindView(R.id.txtTotalCompassos) TextView totalCompassos;
+        @BindView(R.id.textoBPM) TextView txBPM;
+        @BindView(R.id.txtBarra) TextView txBarra;
 
         public ViewHolder(View itemView) {
             super(itemView);

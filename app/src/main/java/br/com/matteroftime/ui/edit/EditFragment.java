@@ -180,7 +180,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @Override
     public void recebeMusica(Musica musica) {
         this.musica = musica;
-        atualizaNomeMusica(musica);
+        //atualizaNomeMusica(musica);
     }
 
     @Override
@@ -248,7 +248,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
         presenter.ondAddToEditButtonClicked(musicaSelecionada);
-        atualizaNomeMusica(musicaSelecionada);
+        nomeMusica.setText(musicaSelecionada.getNome());
     }
 
     @Override
@@ -345,6 +345,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 musica.setPreContagem(contagem);
                 musica.setTemposContagem(Integer.parseInt(contar.getText().toString()));
                 musica.setPossuiOrdem(true);
+                numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 atualizaViewsMusica(musica);
                 bus.post(new MusicListChangedEvent());
             }
@@ -357,6 +358,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()) - 1);
                 musica.setPreContagem(contagem);
                 musica.setPossuiOrdem(true);
+                numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 atualizaViewsMusica(musica);
                 bus.post(new MusicListChangedEvent());
             }

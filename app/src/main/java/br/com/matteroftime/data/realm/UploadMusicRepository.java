@@ -53,12 +53,26 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
         RealmList<Compasso> comps = new RealmList<>();
         comps = musica.getCompassos();
         musica.setCompassos(null);
+
+        Compasso compasso = new Compasso();
+        compasso.setNota(4);
+        compasso.setRepeticoes(30);
+        compasso.setBpm(120);
+
+        RealmList<Compasso> comps2 = new RealmList<>();
+        comps2.add(compasso);
+        //musica.setCompassos(comps2);
+        Musica ms = new Musica();
+        ms.setNome("dsajnidwqo");
+        ms.setCompassos(comps2);
+
+
         //musica.setCompassos(comps);
 
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(musica);
+            objectOutputStream.writeObject(ms);
             objectOutputStream.flush();
             objectOutputStream.close();
             fileOutputStream.flush();

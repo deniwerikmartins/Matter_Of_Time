@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
@@ -41,38 +43,26 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
 
     @Override
     public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final long usuarioId) {
-        //musica.setId(0);
+        musica.setId(0);
         String nome = musica.getNome();
         nome = nome.trim();
         nome = nome.replaceAll(" ","");
         nome = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
         final File file = new File("data/data/br.com.matteroftime/"+nome+"_music.met");
 
-        JsonObject jsonObject = new JsonObject();
+        List<Compasso> compassosList = new ArrayList<>();
 
-        RealmList<Compasso> comps = new RealmList<>();
-        comps = musica.getCompassos();
+        for (Compasso compasso: musica.getCompassos()) {
+            compassosList.add(compasso);
+        }
+
+        musica.setCompassosList(compassosList);
         musica.setCompassos(null);
-
-        Compasso compasso = new Compasso();
-        compasso.setNota(4);
-        compasso.setRepeticoes(30);
-        compasso.setBpm(120);
-
-        RealmList<Compasso> comps2 = new RealmList<>();
-        comps2.add(compasso);
-        //musica.setCompassos(comps2);
-        Musica ms = new Musica();
-        ms.setNome("dsajnidwqo");
-        ms.setCompassos(comps2);
-
-
-        //musica.setCompassos(comps);
 
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(ms);
+            objectOutputStream.writeObject(musica);
             objectOutputStream.flush();
             objectOutputStream.close();
             fileOutputStream.flush();

@@ -33,6 +33,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
 
 
     private View view;
+    private View rootView;
     private UploadMusicContract.Action presenter;
     private Musica musica;
     private boolean editMode = false;
@@ -76,7 +77,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         if (savedInstanceState == null) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            View rootView = inflater.inflate(R.layout.fragment_upload_music, null);
+            rootView = inflater.inflate(R.layout.fragment_upload_music, null);
             dialogFragment.setView(rootView);
             ButterKnife.bind(this, rootView);
 
@@ -132,7 +133,12 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
                     Context context = getActivity().getBaseContext();
 
                     long usuarioId = sharedPreferences.getLong(Constants.ID_USUARIO, 0);
-                    presenter.enviaMusica(musica, context, usuarioId);
+                    try{
+                        presenter.enviaMusica(musica, context, usuarioId);
+                    } catch (Exception e){
+                        showMessage(getString(R.string.erro_envio));
+                    }
+
 
                     dismiss();
                 }
@@ -166,7 +172,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
     }
 
     private void showToastMessage(String message) {
-        Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(rootView.getRootView(),message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

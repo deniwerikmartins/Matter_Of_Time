@@ -25,9 +25,9 @@ public interface UploadMusicContract {
 
         void checkStatus(long id);
         Musica getMusica(long id);
-        void enviaMusica(Musica musica, Context context, String email, String senha);
-        void salvaMusica(Musica musica, Context context, String email, String senha);
-        void atualizaMusica(Musica musica, Context context, String email, String senha);
+        void enviaMusica(Musica musica, Context context, long usuarioId);
+        void salvaMusica(Musica musica, Context context, long usuarioId);
+        void atualizaMusica(Musica musica, Context context, long usuarioId);
 
 
     }
@@ -35,8 +35,8 @@ public interface UploadMusicContract {
     interface Repository{
 
         Musica getMusicById(long id);
-        void salvaMusica(Musica musica, Context context, OnDatabaseOperationCompleteListener listener, String email, String senha);
-        void atualizaMusica(Musica musica, Context context, OnDatabaseOperationCompleteListener listener, String email, String senha);
+        void salvaMusica(Musica musica, Context context, OnDatabaseOperationCompleteListener listener, long usuarioId);
+        void atualizaMusica(Musica musica, Context context, OnDatabaseOperationCompleteListener listener, long usuarioId);
 
 
 

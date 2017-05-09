@@ -63,6 +63,7 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
             compassos.add(i, new Compasso());
         }
 
+        musica.setCompassos(null);
         musica.setCompassos(compassos);
 
         if (musicaId > 0){

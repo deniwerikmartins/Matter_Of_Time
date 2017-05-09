@@ -44,6 +44,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        presenter = new SignUpPresenter(this);
 
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         ButterKnife.bind(this, view);
@@ -94,7 +95,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
         } else {
             String mail = email.getText().toString();
             String pass = senha.getText().toString();
-            Context context = getContext();
+            Context context = getActivity().getBaseContext();
             presenter.cadastraUsuario(mail, pass, context);
         }
 

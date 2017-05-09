@@ -20,13 +20,16 @@ public class SignUpRepository implements SignUpContract.Repository {
 
     @Override
     public void cadastraUsuario(final String mail, final String pass, final Context context, final OnDatabaseOperationCompleteListener listener) {
-        JsonObject jsonObject = new JsonObject();
+        /*JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("email", mail);
-        jsonObject.addProperty("senha", pass);
+        jsonObject.addProperty("senha", pass);*/
 
         Ion.with(context)
-                .load("http://matteroftime.com.br/cadastrar")
-                .setJsonObjectBody(jsonObject)
+                .load("https://matteroftime-redblood666.c9users.io/registrar.php")
+                //.setJsonObjectBody(jsonObject)
+                .setBodyParameter("email", mail)
+                .setBodyParameter("senha", pass)
+
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override

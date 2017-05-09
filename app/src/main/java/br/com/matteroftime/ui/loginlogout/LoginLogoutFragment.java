@@ -2,7 +2,9 @@ package br.com.matteroftime.ui.loginlogout;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import javax.inject.Inject;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
+import br.com.matteroftime.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,6 +48,7 @@ public class LoginLogoutFragment extends Fragment implements LoginLogoutContract
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        presenter = new LoginLogoutPresenter(this);
         view = inflater.inflate(R.layout.fragment_login_logout, container, false);
         ButterKnife.bind(this, view);
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
@@ -103,6 +107,16 @@ public class LoginLogoutFragment extends Fragment implements LoginLogoutContract
 
     @OnClick(R.id.btnSair)
     public void sair(View view){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        long id = sharedPreferences.getLong(Constants.ID_USUARIO,0);
+        if (id > 0){
+            editor.putLong(Constants.ID_USUARIO, 0).commit();
+            showMessage(getString(R.string.logout_sucesso));
+        } else {
+            showMessage(getString(R.string.usuario_nao_logado));
+        }
+
 
     }
 

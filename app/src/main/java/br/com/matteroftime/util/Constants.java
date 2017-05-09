@@ -13,4 +13,5 @@ public class Constants {
     public static final String EMAIL = "email";
     public static final String SENHA = "senha";
     public static final String ID_MUSICA = "id_musica";
+    public static final String ID_USUARIO = "usuario_id";
 }

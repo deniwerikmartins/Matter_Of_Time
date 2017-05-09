@@ -148,32 +148,38 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     @OnClick(R.id.btnEnviarMusica)
     public void enviarMusica(View view){
         //recuperar usuario e senha - if
-        long id = sharedPreferences.getLong(Constants.ID_MUSICA, 0);
-        if (id > 0){
-            musicaUpload = presenter.getMusica(id);
-        } else if (id == 0) {
+        long musicaId = sharedPreferences.getLong(Constants.ID_MUSICA, 0);
+        long usuarioId = sharedPreferences.getLong(Constants.ID_USUARIO,0);
+        if (musicaId == 0) {
             showMessage(getString(R.string.sem_musica));
+        } else if (usuarioId == 0){
+            showMessage(getString(R.string.login_nao_realizado));
         }
-
-        if (!musicaUpload.getNome().equals("")) {
-            uploadMusicFragment = UploadMusicFragment.newInstance(0/*, email.getText().toString(), senha.getText().toString()*/);
-            uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+        if (musicaId > 0 && usuarioId > 0){
+            musicaUpload = presenter.getMusica(musicaId);
+            if (!musicaUpload.getNome().equals("") && usuarioId > 0) {
+                uploadMusicFragment = UploadMusicFragment.newInstance(0, usuarioId);
+                //uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
+                uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+            }
         }
-
     }
 
     @OnClick(R.id.btnAtualizarMusica)
     public void atualizarMusica(View view){
         //recuperar usuario e senha - if
 
-        long id = sharedPreferences.getLong(Constants.ID_MUSICA, 0);
-        if (id > 0){
-            musicaUpload = presenter.getMusica(id);
-        } else if (id == 0) {
+        long musicaId = sharedPreferences.getLong(Constants.ID_MUSICA, 0);
+        long usuarioId = sharedPreferences.getLong(Constants.ID_USUARIO,0);
+        if (musicaId > 0){
+            musicaUpload = presenter.getMusica(musicaId);
+        } else if (musicaId == 0) {
             showMessage(getString(R.string.sem_musica));
+        } else if (usuarioId == 0){
+            showMessage(getString(R.string.login_nao_realizado));
         }
-        if (!musicaUpload.getNome().equals("")) {
-            uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId()/*, email.getText().toString(), senha.getText().toString()*/);
+        if (!musicaUpload.getNome().equals("") && usuarioId > 0) {
+            uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
             uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
         }
 

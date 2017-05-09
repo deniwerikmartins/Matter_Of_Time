@@ -62,28 +62,28 @@ public class UploadMusicPresenter implements UploadMusicContract.Action, OnDatab
 
 
     @Override
-    public void enviaMusica(Musica musica, final Context context, final String email, final String senha) {
+    public void enviaMusica(Musica musica, final Context context, long usuarioId) {
         RealmList<Compasso> comps = new RealmList<>();
         comps = musica.getCompassos();
         musica.setCompassos(null);
         musica.setCompassos(comps);
         if (view.isEditMode()){
-            atualizaMusica(musica, context, email, senha);
+            atualizaMusica(musica, context, usuarioId);
         } else {
-            salvaMusica(musica, context, email, senha);
+            salvaMusica(musica, context, usuarioId);
         }
     }
 
     @Override
-    public void salvaMusica(Musica musica, Context context, String email, String senha) {
-        musica.setCompassos(null);
-        repository.salvaMusica(musica, context, this, email, senha);
+    public void salvaMusica(Musica musica, Context context, long usuarioId) {
+        //musica.setCompassos(null);
+        repository.salvaMusica(musica, context, this, usuarioId);
 
     }
 
     @Override
-    public void atualizaMusica(Musica musica, Context context, String email, String senha) {
-        repository.atualizaMusica(musica, context, this, email, senha);
+    public void atualizaMusica(Musica musica, Context context, long usuarioId) {
+        repository.atualizaMusica(musica, context, this, usuarioId);
     }
 
     @Override

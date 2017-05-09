@@ -48,18 +48,16 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         // Required empty public constructor
     }
 
-    public static UploadMusicFragment newInstance(long id/*, String email, String senha*/){
+    public static UploadMusicFragment newInstance(long musicaId, long usuarioId){
         UploadMusicFragment fragment = new UploadMusicFragment();
-        if (id == 0){
+        if (musicaId == 0){
             Bundle args = new Bundle();
-            /*args.putString(Constants.SENHA, senha);
-            args.putString(Constants.EMAIL, email);*/
+            args.putLong(Constants.ID_USUARIO, usuarioId);
             fragment.setArguments(args);
-        } else if (id > 0){
+        } else if (musicaId > 0){
             Bundle args = new Bundle();
-            args.putLong(Constants.COLUMN_ID, id);
-            /*args.putString(Constants.EMAIL, email);
-            args.putString(Constants.SENHA, senha);*/
+            args.putLong(Constants.ID_MUSICA, musicaId); //COLUMN_ID
+            args.putLong(Constants.ID_USUARIO, usuarioId);
             fragment.setArguments(args);
         }
         return fragment;
@@ -82,8 +80,8 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
             dialogFragment.setView(rootView);
             ButterKnife.bind(this, rootView);
 
-            if (getArguments() != null && getArguments().containsKey(Constants.COLUMN_ID)) {
-                presenter.checkStatus(getArguments().getLong(Constants.COLUMN_ID));
+            if (getArguments() != null && getArguments().containsKey(Constants.ID_MUSICA)) {
+                presenter.checkStatus(getArguments().getLong(Constants.ID_MUSICA));
             }
 
             View titleView = inflater.inflate(R.layout.dialog_title, null);
@@ -133,8 +131,8 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
                 public void onClick(View v) {
                     Context context = getActivity().getBaseContext();
 
-
-                    presenter.enviaMusica(musica, context, getArguments().getString(Constants.EMAIL), getArguments().getString(Constants.SENHA));
+                    long usuarioId = sharedPreferences.getLong(Constants.ID_USUARIO, 0);
+                    presenter.enviaMusica(musica, context, usuarioId);
 
                     dismiss();
                 }

@@ -12,13 +12,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.Normalizer;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.uploadMusic.UploadMusicContract;
 import br.com.matteroftime.util.Constants;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -37,12 +40,21 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
     }
 
     @Override
-    public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final String email, final String senha) {
-        final File file = new File("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
-        final String nome = musica.getNome();
+    public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final long usuarioId) {
+        //musica.setId(0);
+        String nome = musica.getNome();
+        nome = nome.trim();
+        nome = nome.replaceAll(" ","");
+        nome = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        final File file = new File("data/data/br.com.matteroftime/"+nome+"_music.met");
+
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(Constants.EMAIL, email);
-        jsonObject.addProperty(Constants.SENHA, senha);
+
+        RealmList<Compasso> comps = new RealmList<>();
+        comps = musica.getCompassos();
+        musica.setCompassos(null);
+        //musica.setCompassos(comps);
+
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -56,8 +68,9 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             Future<File> uploading;
             uploading = Ion.with(context)
                     .load("http://matteroftime.com.br/inserir.php")
-                    .setMultipartParameter("nome", nome)
-                    .setMultipartFile("archive", file)
+                    .setMultipartParameter(Constants.ID_USUARIO, String.valueOf(usuarioId))
+                    .setMultipartParameter("musica", nome)
+                    .setMultipartFile("caminho", file)
                     .write(echoedFile)
                     .setCallback(new FutureCallback<File>() {
                         @Override
@@ -79,15 +92,14 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
     }
 
     @Override
-    public void atualizaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final String email, final String senha) {
+    public void atualizaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final long usuarioId) {
         final File file = new File("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
         final String nome = musica.getNome();
         final long id = musica.getId();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(Constants.ID_MUSICA, musica.getId());
-        jsonObject.addProperty(Constants.EMAIL, email);
-        jsonObject.addProperty(Constants.SENHA, senha);
+
 
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(file);

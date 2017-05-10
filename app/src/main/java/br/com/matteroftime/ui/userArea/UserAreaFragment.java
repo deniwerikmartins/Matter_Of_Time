@@ -157,10 +157,13 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         }
         if (musicaId > 0 && usuarioId > 0){
             musicaUpload = presenter.getMusica(musicaId);
-            if (!musicaUpload.getNome().equals("") && usuarioId > 0) {
+            if (musicaUpload.getCompassos().size() == 0){
+                showMessage(getString(R.string.sem_compasso));
+            } else if (!musicaUpload.getNome().equals("")) {
                 uploadMusicFragment = UploadMusicFragment.newInstance(0, usuarioId);
                 //uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
                 uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+                //uploadMusicFragment.dismiss();
             }
         }
     }
@@ -199,6 +202,9 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         } else {
             presenter.pesquisaMusica(pesquisarMusica.getText().toString(), context);
         }
+
+
+
 
         /*availableMusics = new ArrayList<>();
         showMusicas(availableMusics);*/

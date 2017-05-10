@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +40,8 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
 
     @Override
     public void pesquisaMusica(String nomeMusica, Context context) {
-        List<Musica> availableMusics = repository.pesquisaMusica(nomeMusica, this, context);
+        repository.pesquisaMusica(nomeMusica, this, context);
+        List<Musica> availableMusics = new ArrayList<>();
         if (availableMusics != null && availableMusics.size() > 0){
             view.hideEmptyText();
             view.showMusicas(availableMusics);

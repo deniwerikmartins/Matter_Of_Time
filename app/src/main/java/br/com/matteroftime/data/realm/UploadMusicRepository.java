@@ -42,7 +42,7 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
     }
 
     @Override
-    public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final long usuarioId) {
+    public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final long usuarioId){
         musica.setId(0);
         String nome = musica.getNome();
         nome = nome.trim();
@@ -59,7 +59,7 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
 
         musica.setCompassosList(compassosList);
         musica.setCompassos(null);
-        Future<JsonObject> uploading;
+        //Future<JsonObject> uploading;
 
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -70,9 +70,9 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            File echoedFile = context.getFileStreamPath("echo");
+            //File echoedFile = context.getFileStreamPath("echo");
 
-            uploading = Ion.with(context)
+            Future<JsonObject> jsonObjectFuture = Ion.with(context)
                     .load("https://matteroftime-redblood666.c9users.io/upload.php")
                     .setMultipartParameter(Constants.ID_USUARIO, String.valueOf(usuarioId))
                     .setMultipartParameter("musica", nome)
@@ -82,7 +82,16 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
                     .setCallback(new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
-                            if (result.get("result").getAsString().equals("NO")){
+                            /*try {
+                                Thread.sleep(10000);
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }*/
+                            if (result == null) {
+                                file.delete();
+                                listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
+                            } else if (result.get("result").getAsString().equals("NO")) {
+                                file.delete();
                                 listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
                             } else {
                                 file.delete();
@@ -98,8 +107,13 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             file.delete();
             e.printStackTrace();
         }
-        file.delete();
-        uploading = null;
+        //file.delete();
+        /*try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        //uploading = null;
     }
 
     @Override

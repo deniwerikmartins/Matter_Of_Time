@@ -89,6 +89,7 @@ public class UploadMusicPresenter implements UploadMusicContract.Action, OnDatab
     @Override
     public void onSQLOperationFailed(String error) {
         view.showMessage("error" + error);
+
     }
 
     @Override

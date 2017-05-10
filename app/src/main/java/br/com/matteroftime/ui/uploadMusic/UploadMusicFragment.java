@@ -135,6 +135,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
                     long usuarioId = sharedPreferences.getLong(Constants.ID_USUARIO, 0);
                     try{
                         presenter.enviaMusica(musica, context, usuarioId);
+                        showMessage(getString(R.string.sucesso_envio));
                     } catch (Exception e){
                         showMessage(getString(R.string.erro_envio));
                     }

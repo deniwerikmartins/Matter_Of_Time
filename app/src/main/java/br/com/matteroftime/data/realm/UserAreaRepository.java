@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import io.realm.RealmResults;
  */
 
 public class UserAreaRepository implements UserAreaContract.Repository {
+    List<Musica> musicas = new ArrayList<>();
 
     @Override
     public List<Musica> getAllMusics() {
@@ -53,14 +55,17 @@ public class UserAreaRepository implements UserAreaContract.Repository {
     }
 
     @Override
-    public List<Musica> pesquisaMusica(String nomeMusica, final OnDatabaseOperationCompleteListener listener, final Context context) {
-        final List<Musica> musicas = new ArrayList<>();
-        JsonObject json = new JsonObject();
-        json.addProperty("nome", nomeMusica);
+    public void pesquisaMusica(String nomeMusica, final OnDatabaseOperationCompleteListener listener, final Context context) {
+        nomeMusica = nomeMusica.trim();
+        nomeMusica = nomeMusica.toLowerCase();
+        nomeMusica = nomeMusica.replaceAll(" ", "");
+        nomeMusica = Normalizer.normalize(nomeMusica, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+
+
 
         Ion.with(context)
-                .load("http://matteroftime.com.br/pesquisar")
-                .setJsonObjectBody(json)
+                .load("https://matteroftime-redblood666.c9users.io/pesquisar.php")
+                .setBodyParameter("nomeMusica", nomeMusica)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -70,14 +75,14 @@ public class UserAreaRepository implements UserAreaContract.Repository {
                                 JsonObject jsonObject = result.get(i).getAsJsonObject();
                                 musicas.add(new Musica());
                                 musicas.get(i).setId(jsonObject.get("id").getAsLong());
-                                musicas.get(i).setNome(jsonObject.get("nome").getAsString());
+                                musicas.get(i).setNome(jsonObject.get("nm_musica").getAsString());
                             }
                         } else {
                             listener.onSQLOperationFailed(context.getString(R.string.sem_resultados));
                         }
                     }
                 });
-        return musicas;
+        //return musicas;
     }
 
     @Override

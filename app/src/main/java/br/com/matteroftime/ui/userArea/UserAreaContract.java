@@ -32,6 +32,7 @@ public interface UserAreaContract {
         Musica getMusica(long id);
         void pesquisaMusica(String nomeMusica, Context context);
         void baixaMusica(Musica musica, Context context);
+        void recebeListagemMusicas(List<Musica> listagemMusicas);
 
 
     }
@@ -42,7 +43,7 @@ public interface UserAreaContract {
 
         Musica getMusicById(long id);
 
-        void pesquisaMusica(String nomeMusica, OnDatabaseOperationCompleteListener listener, Context context);
+        void pesquisaMusica(String nomeMusica, OnDatabaseOperationCompleteListener listener, Context context, UserAreaContract.Actions presenter);
 
         void baixaMusica(Musica musica, OnDatabaseOperationCompleteListener listener, Context context);
     }

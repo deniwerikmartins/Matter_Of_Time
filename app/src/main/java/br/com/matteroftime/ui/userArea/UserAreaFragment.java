@@ -160,10 +160,16 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
             if (musicaUpload.getCompassos().size() == 0){
                 showMessage(getString(R.string.sem_compasso));
             } else if (!musicaUpload.getNome().equals("")) {
-                uploadMusicFragment = UploadMusicFragment.newInstance(0, usuarioId);
-                //uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
-                uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
-                //uploadMusicFragment.dismiss();
+                try {
+                    uploadMusicFragment = UploadMusicFragment.newInstance(0, usuarioId);
+                    //uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
+                    uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+                    //uploadMusicFragment.dismiss();
+                    //showMessage(getString(R.string.sucesso_envio));
+                } catch (Exception e){
+                    //showMessage(getString(R.string.erro_envio));
+                }
+
             }
         }
     }

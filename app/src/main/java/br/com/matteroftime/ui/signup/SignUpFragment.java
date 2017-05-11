@@ -102,4 +102,6 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
 
     }
 
+
+
 }

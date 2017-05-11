@@ -35,4 +35,14 @@ public class SignUpActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(screenTitle);
     }
 
+    @Override
+    public void onBackPressed() {
+        int count = getFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            finish();
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
 }

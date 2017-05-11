@@ -69,7 +69,7 @@ public class UserAreaRepository implements UserAreaContract.Repository {
         nomeMusica = nomeMusica.replaceAll(" ", "");
         nomeMusica = Normalizer.normalize(nomeMusica, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 
-        /*Ion.with(context)
+        Ion.with(context)
                 .load("https://matteroftime-redblood666.c9users.io/pesquisar.php")
                 .setBodyParameter("nomeMusica", nomeMusica)
                 .asJsonArray()
@@ -88,9 +88,9 @@ public class UserAreaRepository implements UserAreaContract.Repository {
                             listener.onSQLOperationFailed(context.getString(R.string.sem_resultados));
                         }
                     }
-                });*/
+                });
 
-        try{
+        /*try{
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("https://matteroftime-redblood666.c9users.io/pesquisar.php?");
             stringBuilder.append("nomeMusica=");
@@ -103,7 +103,7 @@ public class UserAreaRepository implements UserAreaContract.Repository {
             new HttpRequest().execute(jsonElements);
         } catch (Exception e){
 
-        }
+        }*/
 
         //return musicas;
     }

@@ -42,6 +42,8 @@ import io.realm.RealmResults;
 
 public class UserAreaRepository implements UserAreaContract.Repository {
     List<Musica> musicas = new ArrayList<>();
+    File file;
+    File file2;
 
     @Override
     public List<Musica> getAllMusics() {
@@ -110,14 +112,18 @@ public class UserAreaRepository implements UserAreaContract.Repository {
 
     @Override
     public void baixaMusica(Musica musica, final OnDatabaseOperationCompleteListener listener, final Context context) {
-        long id = musica.getId();
-        JsonObject json = new JsonObject();
-        json.addProperty("id", id);
+        long musicaId = musica.getId();
+        String id = String.valueOf(musicaId);
+        /*JsonObject json = new JsonObject();
+        json.addProperty("id", id);*/
         Future<File> downloading;
+
+
 
         downloading = Ion.with(context)
                 .load("http://matteroftime.com.br/download")
-                .setJsonObjectBody(json)
+                //.setJsonObjectBody(json)
+                .setBodyParameter("id", id)
                 .write(context.getFileStreamPath("archive_"+System.currentTimeMillis()+"_music.met"))
                 .setCallback(new FutureCallback<File>() {
                     @Override
@@ -126,15 +132,19 @@ public class UserAreaRepository implements UserAreaContract.Repository {
                             listener.onSQLOperationFailed(context.getString(R.string.erro_download));
                             return;
                         } else {
+                            file = result;
+
                             listener.onSQLOperationSucceded(context.getString(R.string.sucesso_baixar));
                         }
 
                     }
                 });
 
+        file2 = (File)downloading;
         Musica musica1 = new Musica();
         try {
-            FileInputStream fileInputStream = new FileInputStream("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
+            //FileInputStream fileInputStream = new FileInputStream("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
+            FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             musica1 = (Musica) objectInputStream.readObject();
             objectInputStream.close();
@@ -152,7 +162,7 @@ public class UserAreaRepository implements UserAreaContract.Repository {
         }
     }
 
-    private class HttpRequest extends AsyncTask<JsonArray, Void, JsonArray> {
+    /*private class HttpRequest extends AsyncTask<JsonArray, Void, JsonArray> {
 
         @Override
         protected JsonArray doInBackground(JsonArray... params) {
@@ -185,11 +195,11 @@ public class UserAreaRepository implements UserAreaContract.Repository {
         protected void onPostExecute(JsonArray result){
             if (result.size() > 0){
 
-                /*Toast.makeText(getBaseContext(), "Cliente cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getBaseContext(), ListarActivity.class));*/
+                Toast.makeText(getBaseContext(), "Cliente cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getBaseContext(), ListarActivity.class));
             } else {
-                /*Toast.makeText(getBaseContext(), "Erro ao cadastrar o cliente!", Toast.LENGTH_SHORT).show();*/
+                Toast.makeText(getBaseContext(), "Erro ao cadastrar o cliente!", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 }

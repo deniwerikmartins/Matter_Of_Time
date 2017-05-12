@@ -52,6 +52,61 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                             return;
                         } else {
                             file = result;
+                            ///////////////////////////////////////////////////////////////////////
+
+                            try {
+                                //file2 = (File)downloading;
+                                //FileInputStream fileInputStream = new FileInputStream("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
+                                FileInputStream fileInputStream = new FileInputStream(file); // file ou file 2
+                                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                                musica1 = (Musica) objectInputStream.readObject();
+                                objectInputStream.close();
+                                fileInputStream.close();
+                                listener.onSQLOperationSucceded(context.getString(R.string.sucesso_importar));
+                            } catch (FileNotFoundException ee) {
+                                ee.printStackTrace();
+                                listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
+                            } catch (IOException ee) {
+                                ee.printStackTrace();
+                                listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
+                            } catch (ClassNotFoundException ee) {
+                                ee.printStackTrace();
+                                listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
+                            }
+                            ////////////////////////////////////////////////////////////////////////
+
+                            final Realm realm = Realm.getDefaultInstance();
+                            final long idMusica = MatterOfTimeApplication.musicaPrimarykey.incrementAndGet();
+                            realm.executeTransactionAsync(new Realm.Transaction() {
+                                                              @Override
+                                                              public void execute(Realm backgroundRealm) {
+                                                                  musica1.setId(idMusica);
+                                                                  /*for (Compasso compasso : musica1.getCompassos()) {
+                                                                      compasso.setId(MatterOfTimeApplication.compassoPrimarykey.incrementAndGet());
+                                                                  }*/
+                                                                  for (Compasso compasso : musica1.getCompassosList()){
+                                                                      compasso.setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
+                                                                  }
+                                                                  backgroundRealm.copyToRealmOrUpdate(musica1);
+                                                              }
+                                                          }, new Realm.Transaction.OnSuccess() {
+                                                              @Override
+                                                              public void onSuccess() {
+                                                                  realm.close();
+                                                                  listener.onSQLOperationSucceded("Added");
+                                                              }
+                                                          }, new Realm.Transaction.OnError() {
+                                                              @Override
+                                                              public void onError(Throwable error) {
+                                                                  realm.close();
+                                                                  listener.onSQLOperationFailed(error.getLocalizedMessage());
+                                                              }
+                                                          }
+                            );
+
+
+
+
 
                             listener.onSQLOperationSucceded(context.getString(R.string.sucesso_baixar));
                         }
@@ -61,51 +116,6 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
 
 
 
-        try {
-            file2 = (File)downloading;
-            //FileInputStream fileInputStream = new FileInputStream("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
-            FileInputStream fileInputStream = new FileInputStream(file); // file ou file 2
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            musica1 = (Musica) objectInputStream.readObject();
-            objectInputStream.close();
-            fileInputStream.close();
-            listener.onSQLOperationSucceded(context.getString(R.string.sucesso_importar));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
-        } catch (IOException e) {
-            e.printStackTrace();
-            listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
-        }
-
-        final Realm realm = Realm.getDefaultInstance();
-        final long idMusica = MatterOfTimeApplication.musicaPrimarykey.incrementAndGet();
-        realm.executeTransactionAsync(new Realm.Transaction() {
-                                          @Override
-                                          public void execute(Realm backgroundRealm) {
-                                              musica1.setId(idMusica);
-                                              for (Compasso compasso : musica1.getCompassos()) {
-                                                  compasso.setId(MatterOfTimeApplication.compassoPrimarykey.incrementAndGet());
-                                              }
-                                              backgroundRealm.copyToRealmOrUpdate(musica1);
-                                          }
-                                      }, new Realm.Transaction.OnSuccess() {
-                                          @Override
-                                          public void onSuccess() {
-                                              realm.close();
-                                              listener.onSQLOperationSucceded("Added");
-                                          }
-                                      }, new Realm.Transaction.OnError() {
-                                          @Override
-                                          public void onError(Throwable error) {
-                                              realm.close();
-                                              listener.onSQLOperationFailed(error.getLocalizedMessage());
-                                          }
-                                      }
-        );
     }
 
     @Override

@@ -27,6 +27,7 @@ import java.util.List;
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.downloadMusic.DownloadMusicFragment;
 import br.com.matteroftime.ui.selectMusic.SelectMusicDialogFragment;
 import br.com.matteroftime.ui.uploadMusic.UploadMusicFragment;
 import br.com.matteroftime.util.Constants;
@@ -45,6 +46,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     private UserAreaContract.Actions presenter;
     private SelectMusicDialogFragment selectMusicDialogFragment;
     private UploadMusicFragment uploadMusicFragment;
+    private DownloadMusicFragment downloadMusicFragment;
     private Musica musicaUpload;
     private Musica musicaDownload;
     private Context context;
@@ -108,7 +110,8 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     public void onSelectMusic(Musica musicaSelecionada) {
         musicaDownload = musicaSelecionada;
         musicaBaixar.setText(musicaDownload.getNome());
-        presenter.baixaMusica(musicaDownload, context);
+
+        //presenter.baixaMusica(musicaDownload, context);
     }
 
     @Override
@@ -162,7 +165,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
             } else if (!musicaUpload.getNome().equals("")) {
                 try {
                     uploadMusicFragment = UploadMusicFragment.newInstance(0, usuarioId);
-                    //uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
+                    uploadMusicFragment.recebeUserAreaView(this);
                     uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
                     //showMessage(getString(R.string.sucesso_envio));
                 } catch (Exception e){
@@ -219,6 +222,14 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     @OnClick(R.id.btnBaixarMusica)
     public void baixarMusica(View view){
+        if (musicaDownload.getNome() == null){
+            showMessage(getString(R.string.sem_musica));
+        } else {
+            downloadMusicFragment = DownloadMusicFragment.newInstance(musicaDownload, adapter);
+            downloadMusicFragment.recebeUserAreaView(this);
+            downloadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+
+        }
 
     }
 

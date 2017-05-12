@@ -53,7 +53,7 @@
     <string name="nome">Nome</string>
     <string name="atualizar_musica">Atualizar música</string>
     <string name="pesquisar">Pesquisar</string>
-    <string name="enviando_musica">Enviar música</string>
+    <string name="enviando_musica">Enviar música: </string>
     <string name="enviar">Enviar</string>
     <string name="cancelar">Cancelar</string>
     <string name="sucesso_envio">Música enviada com sucesso</string>
@@ -88,5 +88,7 @@
     <string name="logout_sucesso">Logout realizado com sucesso</string>
     <string name="usuario_nao_logado">Login não efetuado</string>
     <string name="login_nao_realizado">Login não realizado</string>
+    <string name="baixando_musica">Baixar música: </string>
+    <string name="sucesso_download">Download realizado com sucesso</string>
 
 </resources>

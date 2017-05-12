@@ -1,4 +1,4 @@
-package br.com.matteroftime.ui.uploadMusic;
+package br.com.matteroftime.ui.downloadMusic;
 
 
 import android.app.AlertDialog;
@@ -6,10 +6,11 @@ import android.app.Dialog;
 import android.app.DialogFragment; //import que sendo v4 dá tilt
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import br.com.matteroftime.R;
-import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.uploadMusic.UploadMusicContract;
+import br.com.matteroftime.ui.userArea.UserAreaAdapter;
 import br.com.matteroftime.ui.userArea.UserAreaContract;
 import br.com.matteroftime.ui.userArea.UserAreaFragment;
 import br.com.matteroftime.util.Constants;
@@ -30,50 +34,32 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UploadMusicFragment extends DialogFragment implements UploadMusicContract.View{
-
+public class DownloadMusicFragment extends DialogFragment implements DownloadMusicContract.View {
 
     private View rootView;
-    private UploadMusicContract.Action presenter;
-    private Musica musica;
-    private boolean editMode = false;
+    private DownloadMusicContract.Action presenter;
+    private static Musica musica;
+    private static UserAreaAdapter adapter;
     private UserAreaContract.View userAreaView;
 
-
-    private SharedPreferences sharedPreferences;
-
-    @BindView(R.id.txtNomeMusicaEnvio) TextView nomeMusicaEnvio;
+    @BindView(R.id.txtNomeMusicaBaixar) TextView nomeMusicaBaixar;
 
 
-    public UploadMusicFragment() {
+    public DownloadMusicFragment() {
         // Required empty public constructor
     }
 
-    public static UploadMusicFragment newInstance(long musicaId, long usuarioId){
-        UploadMusicFragment fragment = new UploadMusicFragment();
-        if (musicaId == 0){
-            Bundle args = new Bundle();
-            args.putLong(Constants.ID_USUARIO, usuarioId);
-            fragment.setArguments(args);
-        } else if (musicaId > 0){
-            Bundle args = new Bundle();
-            args.putLong(Constants.ID_MUSICA, musicaId); //COLUMN_ID
-            args.putLong(Constants.ID_USUARIO, usuarioId);
-            fragment.setArguments(args);
-        }
+    public static DownloadMusicFragment newInstance(Musica musicaSelecionada, UserAreaAdapter adapterUserArea){
+        DownloadMusicFragment fragment = new DownloadMusicFragment();
+        musica = musicaSelecionada;
+        adapter = adapterUserArea;
         return fragment;
-    }
-
-    @Override
-    public void recebeUserAreaView(UserAreaFragment userAreaFragment) {
-        this.userAreaView = userAreaFragment;
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new UploadMusicPresenter(this);
+        presenter = new DownloadMusicPresenter(this);
     }
 
     @Override
@@ -83,46 +69,30 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         if (savedInstanceState == null) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            rootView = inflater.inflate(R.layout.fragment_upload_music, null);
+            rootView = inflater.inflate(R.layout.fragment_download_music, null);
             dialogFragment.setView(rootView);
             ButterKnife.bind(this, rootView);
 
-            if (getArguments() != null && getArguments().containsKey(Constants.ID_MUSICA)) {
-                presenter.checkStatus(getArguments().getLong(Constants.ID_MUSICA));
-            }
-
             View titleView = inflater.inflate(R.layout.dialog_title, null);
             TextView titleText = (TextView)titleView.findViewById(R.id.txt_view_dialog_title);
-            titleText.setText(editMode ? getString(R.string.atualizar_musica) : getString(R.string.enviar));
+            titleText.setText(getString(R.string.baixar_musica));
             dialogFragment.setCustomTitle(titleView);
 
-            dialogFragment.setPositiveButton(editMode ? getString(R.string.atualizar_musica) : getString(R.string.enviar), new DialogInterface.OnClickListener() {
+            dialogFragment.setPositiveButton(getString(R.string.baixar_musica), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
+
             dialogFragment.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-
+            nomeMusicaBaixar.setText(musica.getNome());
         }
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        long id = sharedPreferences.getLong(Constants.ID_MUSICA, 0);
-        if (id > 0){
-            musica = presenter.getMusica(id);
-            nomeMusicaEnvio.setText(musica.getNome());
-        } else {
-           showMessage(getString(R.string.sem_musica));
-        }
-
-
-
         return dialogFragment.create();
     }
 
@@ -137,15 +107,11 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
                 @Override
                 public void onClick(View v) {
                     Context context = getActivity().getBaseContext();
-
-                    long usuarioId = sharedPreferences.getLong(Constants.ID_USUARIO, 0);
-                    try{
-                        presenter.enviaMusica(musica, context, usuarioId);
-                        displayMessage(getString(R.string.sucesso_envio));
-                        userAreaView.showMessage(getString(R.string.sucesso_envio));
+                    try {
+                        presenter.downloadMusica(musica, context);
+                        userAreaView.showMessage(getString(R.string.sucesso_download));
                     } catch (Exception e){
-                        displayMessage(getString(R.string.erro_envio));
-                        userAreaView.showMessage(getString(R.string.erro_envio));
+                        userAreaView.showMessage(getString(R.string.erro_download));
                     }
                     dismiss();
                 }
@@ -159,18 +125,8 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
                     dismiss();
                 }
             });
+
         }
-    }
-
-    @Override
-    public void setEditMode(boolean editMode) {
-        this.editMode = editMode;
-
-    }
-
-    @Override
-    public void displayMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -178,12 +134,25 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         showToastMessage(message);
     }
 
+    @Override
+    public void displayMessage(String message) {
+        //Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_SHORT).show();
+        userAreaView.showMessage(message);
+    }
+
     private void showToastMessage(String message) {
         Snackbar.make(rootView.getRootView(),message, Snackbar.LENGTH_SHORT).show();
     }
 
+
     @Override
-    public boolean isEditMode() {
-        return editMode;
+    public void recebeUserAreaView(UserAreaFragment userAreaFragment) {
+        this.userAreaView = userAreaFragment;
+
+    }
+
+    @Override
+    public void showMusics(List<Musica> availableMusics) {
+        adapter.replaceData(availableMusics);
     }
 }

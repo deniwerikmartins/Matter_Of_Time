@@ -44,6 +44,10 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
     @Override
     public void salvaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final long usuarioId){
         musica.setId(0);
+        for (Compasso compasso: musica.getCompassos()) {
+            compasso.setId(0);
+        }
+
         String nome = musica.getNome();
         nome = nome.trim();
         nome = nome.toLowerCase();

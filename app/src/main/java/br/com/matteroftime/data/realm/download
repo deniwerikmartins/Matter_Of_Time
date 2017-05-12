@@ -91,3 +91,23 @@ public class ProgressBarDownload extends Activity {
         progressBar.setProgress(0);
     }
 }
+===========================
+downloading = Ion.with(getActivity())
+            .load(url)
+            .progressBar(mProgressBar)
+            .write(destinationFile)
+            .withResponse() // response will incapsulates the result file
+            .setCallback(new FutureCallback<Response<File>>()
+                @Override
+                public void onCompleted(Exception e, Response<File> response) {
+                    File result = null;
+                    if (e != null || response.getHeaders().code() != 200)) { // check response headers
+                        // an error was occurred
+                        // ...
+                    } else {
+                        // file was successfully downloaded
+                        result = response.getResult();
+                        // ...
+                    }
+            });
+========================================================================================================

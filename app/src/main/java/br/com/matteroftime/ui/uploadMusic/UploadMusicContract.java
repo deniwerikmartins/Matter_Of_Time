@@ -4,6 +4,7 @@ import android.content.Context;
 
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.userArea.UserAreaFragment;
 
 /**
  * Created by RedBlood on 23/04/2017.
@@ -12,13 +13,11 @@ import br.com.matteroftime.models.Musica;
 public interface UploadMusicContract {
 
     interface View{
-
         void setEditMode(boolean editMode);
         void showMessage(String message);
         void displayMessage(String message);
         boolean isEditMode();
-
-
+        void recebeUserAreaView(UserAreaFragment userAreaFragment);
     }
 
     interface Action{
@@ -33,12 +32,8 @@ public interface UploadMusicContract {
     }
 
     interface Repository{
-
         Musica getMusicById(long id);
         void salvaMusica(Musica musica, Context context, OnDatabaseOperationCompleteListener listener, long usuarioId);
         void atualizaMusica(Musica musica, Context context, OnDatabaseOperationCompleteListener listener, long usuarioId);
-
-
-
     }
 }

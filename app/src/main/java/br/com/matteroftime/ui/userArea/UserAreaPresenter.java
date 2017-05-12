@@ -61,10 +61,6 @@ public class UserAreaPresenter implements UserAreaContract.Actions, OnDatabaseOp
 
     }
 
-    @Override
-    public void baixaMusica(Musica musica, Context context) {
-        repository.baixaMusica(musica, this, context);
-    }
 
     @Override
     public void onSQLOperationFailed(String error) {

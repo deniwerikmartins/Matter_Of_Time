@@ -137,7 +137,7 @@ public class EditRepository implements EditContract.Repository{
     public void addMusic(final Musica musica, final OnDatabaseOperationCompleteListener listener) {
         final Realm realm = Realm.getDefaultInstance();
         final long id = MatterOfTimeApplication.musicaPrimarykey.incrementAndGet();
-        long idCompasso = MatterOfTimeApplication.compassoPrimarykey.incrementAndGet();
+
         realm.executeTransactionAsync(new Realm.Transaction() {
                                           @Override
                                           public void execute(Realm backgroundRealm) {

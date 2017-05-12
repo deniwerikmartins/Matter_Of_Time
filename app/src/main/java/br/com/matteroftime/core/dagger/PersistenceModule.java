@@ -2,12 +2,15 @@ package br.com.matteroftime.core.dagger;
 
 import android.content.Context;
 
+import br.com.matteroftime.data.realm.DownloadMusicRepository;
 import br.com.matteroftime.data.realm.EditRepository;
 import br.com.matteroftime.data.realm.LoginLogoutRepository;
 import br.com.matteroftime.data.realm.PlayRepository;
 import br.com.matteroftime.data.realm.SignUpRepository;
 import br.com.matteroftime.data.realm.UploadMusicRepository;
 import br.com.matteroftime.data.realm.UserAreaRepository;
+import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.downloadMusic.DownloadMusicContract;
 import br.com.matteroftime.ui.edit.EditContract;
 import br.com.matteroftime.ui.loginlogout.LoginLogoutContract;
 import br.com.matteroftime.ui.play.PlayContract;
@@ -51,5 +54,10 @@ public class PersistenceModule {
     @Provides
     public LoginLogoutContract.Repository providesLoginLogOutRepository(Context context){
         return new LoginLogoutRepository();
+    }
+
+    @Provides
+    public DownloadMusicContract.Repository providesDownloadMusicRepository(Context context){
+        return new DownloadMusicRepository();
     }
 }

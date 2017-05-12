@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import br.com.matteroftime.common.MainActivity;
 import br.com.matteroftime.ui.addMusic.AddMusicPresenter;
+import br.com.matteroftime.ui.downloadMusic.DownloadMusicPresenter;
 import br.com.matteroftime.ui.edit.EditPresenter;
 import br.com.matteroftime.ui.loginlogout.LoginLogoutFragment;
 import br.com.matteroftime.ui.loginlogout.LoginLogoutPresenter;
@@ -37,4 +38,5 @@ public interface AppComponent {
     void inject(LoginLogoutFragment loginLogoutFragment);
     void inject(SignUpPresenter signUpPresenter);
     void inject(LoginLogoutPresenter loginLogoutPresenter);
+    void inject(DownloadMusicPresenter downloadMusicPresenter);
 }

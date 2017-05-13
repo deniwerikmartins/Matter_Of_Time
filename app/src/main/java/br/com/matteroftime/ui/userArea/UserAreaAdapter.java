@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.matteroftime.R;
@@ -58,9 +59,11 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
                 holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));*/
+
             } catch (Exception e){
                 e.printStackTrace();
             }
+            holder = null;
         }
     }
 
@@ -100,6 +103,17 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
         public void onClick(View v) {
             Musica musicaSelecionada = musicas.get(getLayoutPosition());
             listener.onSelectMusic(musicaSelecionada);
+        }
+    }
+
+    public void clear() {
+        int size = this.musicas.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                this.musicas.remove(0);
+            }
+
+            this.notifyItemRangeRemoved(0, size);
         }
     }
 }

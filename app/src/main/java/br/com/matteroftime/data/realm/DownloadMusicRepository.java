@@ -20,6 +20,7 @@ import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.downloadMusic.DownloadMusicContract;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -84,9 +85,13 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                                                                   /*for (Compasso compasso : musica1.getCompassos()) {
                                                                       compasso.setId(MatterOfTimeApplication.compassoPrimarykey.incrementAndGet());
                                                                   }*/
+                                                                  RealmList<Compasso> compassos = new RealmList<Compasso>();
                                                                   for (Compasso compasso : musica1.getCompassosList()){
                                                                       compasso.setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
+                                                                      compassos.add(compasso);
                                                                   }
+                                                                  musica1.setCompassos(compassos);
+                                                                  musica1.setCompassosList(null);
                                                                   backgroundRealm.copyToRealmOrUpdate(musica1);
                                                               }
                                                           }, new Realm.Transaction.OnSuccess() {

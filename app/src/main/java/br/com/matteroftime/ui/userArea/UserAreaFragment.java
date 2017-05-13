@@ -208,11 +208,20 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     public void pesquisarMusica(View view){
         //pesquisar no banco
 //        List<Musica> availableMusics;
+
+        /*adapter = new UserAreaAdapter(tempMusicas, getContext(), this);*/
+        //adapter = null;
+
+
+        /*userAreaRecyclerView.removeAllViews();
+        userAreaRecyclerView.removeAllViewsInLayout();*/
+        adapter.clear();
         if (pesquisarMusica.getText().toString().isEmpty()){
             showMessage(getString(R.string.informe_musica));
         } else {
             presenter.pesquisaMusica(pesquisarMusica.getText().toString(), context);
         }
+
     }
 
     @Override

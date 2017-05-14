@@ -1,5 +1,6 @@
 package br.com.matteroftime.data.realm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.matteroftime.core.MatterOfTimeApplication;
@@ -8,7 +9,10 @@ import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.edit.EditContract;
 import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by RedBlood on 10/04/2017.
@@ -143,7 +147,7 @@ public class EditRepository implements EditContract.Repository{
                                           public void execute(Realm backgroundRealm) {
                                               musica.setId(id);
                                               for (Compasso compasso : musica.getCompassos()) {
-                                                  compasso.setId(MatterOfTimeApplication.compassoPrimarykey.incrementAndGet());
+                                                  compasso.setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
                                               }
                                               backgroundRealm.copyToRealmOrUpdate(musica);
                                           }
@@ -177,7 +181,22 @@ public class EditRepository implements EditContract.Repository{
         realm.executeTransactionAsync(new Realm.Transaction() {
                                           @Override
                                           public void execute(Realm backgroundRealm) {
-                                              backgroundRealm.copyToRealmOrUpdate(musica);
+
+                                              Musica managedMusic = backgroundRealm.where(Musica.class).equalTo("id", musica.getId()).findFirst();
+                                              managedMusic.setNome(musica.getNome());
+                                              managedMusic.setQtdCompassos(musica.getQtdCompassos());
+                                              managedMusic.setCompassos(null);
+                                              RealmList<Compasso> compassos = new RealmList<Compasso>();
+                                              for (int i = 0; i < musica.getQtdCompassos(); i++){
+                                                  Compasso compasso = backgroundRealm.createObject(Compasso.class, MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
+
+                                                  compassos.add(compasso);
+                                                  //compassos.get(i).setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
+                                              }
+                                              managedMusic.setCompassos(compassos);
+
+
+                                              backgroundRealm.copyToRealmOrUpdate(managedMusic);
                                           }
                                       }, new Realm.Transaction.OnSuccess() {
                                           @Override

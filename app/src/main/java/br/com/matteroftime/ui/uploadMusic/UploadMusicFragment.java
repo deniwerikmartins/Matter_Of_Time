@@ -9,17 +9,15 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.matteroftime.R;
-import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.userArea.UserAreaContract;
 import br.com.matteroftime.ui.userArea.UserAreaFragment;
@@ -38,6 +36,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
     private Musica musica;
     private boolean editMode = false;
     private UserAreaContract.View userAreaView;
+    private Context userAreaContext;
 
 
     private SharedPreferences sharedPreferences;
@@ -65,8 +64,10 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
     }
 
     @Override
-    public void recebeUserAreaView(UserAreaFragment userAreaFragment) {
+    public void recebeUserAreaView(UserAreaFragment userAreaFragment, Context context) {
         this.userAreaView = userAreaFragment;
+        userAreaContext = context;
+
 
     }
 
@@ -170,7 +171,10 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
 
     @Override
     public void displayMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
     }
 
     @Override
@@ -179,7 +183,10 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
     }
 
     private void showToastMessage(String message) {
-        Snackbar.make(rootView.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(rootView.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(userAreaContext, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package br.com.matteroftime.ui.userArea;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,8 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
 
     private List<Musica> musicas;
     private Context context;
+    private boolean shouldHighlightSelectedRow = false;
+    private int selectedPosition = 0;
     private final OnMusicSelectedListener listener;
 
     public UserAreaAdapter(List<Musica> musicas, Context context, OnMusicSelectedListener listener) {
@@ -55,6 +59,15 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
                 holder.barra.setVisibility(View.GONE);
                 holder.compassos.setVisibility(View.GONE);
                 holder.totalCompassos.setVisibility(View.GONE);
+                if (shouldHighlightSelectedRow){
+                    if (selectedPosition == position){
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    } else {
+                        holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                } else {
+                    holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                }
                 /*holder.bpm.setText(String.valueOf(musica.getCompassos().get(0).getBpm()));
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
@@ -63,7 +76,6 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
             } catch (Exception e){
                 e.printStackTrace();
             }
-            holder = null;
         }
     }
 
@@ -78,6 +90,7 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
 
     public void replaceData(List<Musica> musicas) {
         this.musicas = musicas;
+        shouldHighlightSelectedRow = false;
         notifyDataSetChanged();
     }
 
@@ -101,12 +114,16 @@ public class UserAreaAdapter extends RecyclerView.Adapter<UserAreaAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
+            shouldHighlightSelectedRow = true;
+            selectedPosition = getLayoutPosition();
             Musica musicaSelecionada = musicas.get(getLayoutPosition());
             listener.onSelectMusic(musicaSelecionada);
+            notifyDataSetChanged();
         }
     }
 
     public void clear() {
+        shouldHighlightSelectedRow = false;
         int size = this.musicas.size();
         if (size > 0) {
             for (int i = 0; i < size; i++) {

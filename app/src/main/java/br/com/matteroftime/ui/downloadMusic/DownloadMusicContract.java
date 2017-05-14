@@ -18,9 +18,7 @@ public interface DownloadMusicContract {
 
         void showMessage(String message);
         void displayMessage(String message);
-
-        void recebeUserAreaView(UserAreaFragment userAreaFragment);
-
+        void recebeUserAreaView(UserAreaFragment userAreaFragment, Context context);
         void showMusics(List<Musica> availableMusics);
     }
 

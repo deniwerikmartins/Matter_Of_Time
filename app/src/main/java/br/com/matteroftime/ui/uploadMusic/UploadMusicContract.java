@@ -17,7 +17,7 @@ public interface UploadMusicContract {
         void showMessage(String message);
         void displayMessage(String message);
         boolean isEditMode();
-        void recebeUserAreaView(UserAreaFragment userAreaFragment);
+        void recebeUserAreaView(UserAreaFragment userAreaFragment, Context context);
     }
 
     interface Action{

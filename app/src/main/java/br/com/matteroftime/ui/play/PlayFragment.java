@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -174,7 +176,10 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     }
 
     private void showToastMessage(String message) {
-        Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
     }
 
     @Override
@@ -195,8 +200,12 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @OnClick(R.id.btnOk)
     public void onClickOk(View view){
         if (tempos.getText().toString().isEmpty()){
+            tempos.setError(getString(R.string.obrigatorio));
+            tempos.requestFocus();
             this.showMessage(getString(R.string.tempo_necessario));
         } else if (bpm.getText().toString().isEmpty()){
+            bpm.setError(getString(R.string.obrigatorio));
+            bpm.requestFocus();
             this.showMessage(getString(R.string.bpm_necessario));
         } else {
             int t = Integer.parseInt(tempos.getText().toString());

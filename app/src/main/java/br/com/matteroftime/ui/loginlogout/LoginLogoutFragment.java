@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 
@@ -85,15 +87,24 @@ public class LoginLogoutFragment extends Fragment implements LoginLogoutContract
     }
 
     private void showToastMessage(String message) {
-        Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
     }
 
     @OnClick(R.id.btnEntrar)
     public void entrar(View view){
         if (email.getText().toString().isEmpty()){
+            email.setError(getString(R.string.obrigatorio));
+            email.requestFocus();
             showMessage(getString(R.string.email_necessario));
         } else if (senha.getText().toString().isEmpty()){
+            senha.setError(getString(R.string.obrigatorio));
+            senha.requestFocus();
             showMessage(getString(R.string.senha_necessaria));
+        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+            showMessage(getString(R.string.sem_conexao));
         } else {
             String mail = email.getText().toString();
             String pass = senha.getText().toString();
@@ -123,6 +134,8 @@ public class LoginLogoutFragment extends Fragment implements LoginLogoutContract
     @OnClick(R.id.btnEsqueciSenha)
     public void esqueciSenha(View view){
         if (email.getText().toString().isEmpty()){
+            email.setError(getString(R.string.obrigatorio));
+            email.requestFocus();
             showMessage(getString(R.string.email_necessario));
         } else {
             String mail = email.getText().toString();

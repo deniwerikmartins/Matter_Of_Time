@@ -1,6 +1,8 @@
 package br.com.matteroftime.ui.play;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,8 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
     private List<Musica> musicas;
     private Context context;
+    private boolean shouldHighlightSelectedRow = false;
+    private int selectedPosition = 0;
     private final OnMusicSelectedListener listener;
 
     public PlayAdapter(List<Musica> musicas, Context context, OnMusicSelectedListener listener) {
@@ -51,6 +55,15 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
                 holder.tempos.setText(String.valueOf(musica.getCompassos().get(0).getTempos()));
                 holder.nota.setText(String.valueOf(musica.getCompassos().get(0).getNota()));
                 holder.totalCompassos.setText(String.valueOf(musica.getCompassos().size()));
+                if (shouldHighlightSelectedRow){
+                    if (selectedPosition == position){
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    } else {
+                        holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                } else {
+                    holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -62,6 +75,15 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
                 holder.tempos.setText("0");
                 holder.nota.setText("0");
                 holder.totalCompassos.setText("0");
+                if (shouldHighlightSelectedRow){
+                    if (selectedPosition == position){
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    } else {
+                        holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                } else {
+                    holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -79,6 +101,7 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
     public void replaceData(List<Musica> musicas) {
         this.musicas = musicas;
+        shouldHighlightSelectedRow = false;
         notifyDataSetChanged();
     }
 
@@ -103,8 +126,12 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
 
         @Override
         public void onClick(View v) {
+            //shouldHighlightSelectedRow = true;
+            selectedPosition = getLayoutPosition();
             Musica musicaSelecionada = musicas.get(getLayoutPosition());
             listener.onSelectMusic(musicaSelecionada);
+            notifyDataSetChanged();
+            shouldHighlightSelectedRow = true;
         }
 
     }

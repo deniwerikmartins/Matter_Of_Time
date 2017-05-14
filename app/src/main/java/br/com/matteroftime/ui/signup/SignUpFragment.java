@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.StringDef;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
+import br.com.matteroftime.util.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,19 +82,30 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
     }
 
     private void showToastMessage(String message) {
-        Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(view.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
     }
 
     @OnClick(R.id.btnCadastrar)
     public void cadastar(View view){
         if (email.getText().toString().isEmpty()){
+            email.setError(getString(R.string.obrigatorio));
+            email.requestFocus();
             showMessage(getString(R.string.email_necessario));
         } else if(senha.getText().toString().isEmpty()){
+            senha.setError(getString(R.string.obrigatorio));
+            senha.requestFocus();
             showMessage(getString(R.string.senha_necessaria));
         } else if (confirmSenha.getText().toString().isEmpty()){
+            confirmSenha.setError(getString(R.string.obrigatorio));
+            confirmSenha.requestFocus();
             showMessage(getString(R.string.confirmacaoSenhaNecessaria));
         } else if (!senha.getText().toString().equals(confirmSenha.getText().toString())){
             showMessage(getString(R.string.senha_nao_confere));
+        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+            showMessage(getString(R.string.sem_conexao));
         } else {
             String mail = email.getText().toString();
             String pass = senha.getText().toString();

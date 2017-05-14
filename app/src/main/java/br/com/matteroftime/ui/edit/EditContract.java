@@ -24,6 +24,8 @@ public interface EditContract {
         void atualizaViewsMusica(Musica musica);
         void atualizaViewsCompasso(Musica musica, Compasso compasso);
         void atualizaNomeMusica(Musica musicaSelecionada);
+
+        void resetaNome();
     }
     public interface Actions{
         void loadMusics();

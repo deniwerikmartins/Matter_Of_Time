@@ -5,80 +5,100 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="left"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt_numero_musica"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="@dimen/text_size_xxnormal" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txt_nome_musica"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_padding_small"
-        android:text="TextView"
-        android:textSize="@dimen/text_size_xxnormal" />
+        <TextView
+            android:id="@+id/txt_numero_musica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="@dimen/text_size_xxnormal" />
 
-    <TextView
-        android:id="@+id/txt_BPM"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_padding_small"
-        android:text="TextView"
-        android:textSize="@dimen/text_size_xxnormal" />
+        <TextView
+            android:id="@+id/txt_nome_musica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="@dimen/text_size_xxnormal" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textoBPM"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_padding_tiny"
-        android:text="@string/bpm"
-        android:textSize="@dimen/text_size_xxnormal" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txt_tempos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_padding_small"
-        android:text="TextView"
-        android:textSize="@dimen/text_size_xxnormal" />
+        <TextView
+            android:id="@+id/txt_BPM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="@dimen/text_size_xxnormal" />
 
-    <TextView
-        android:id="@+id/txtBarra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_padding_small"
-        android:text="/"
-        android:textSize="@dimen/text_size_xxnormal" />
+        <TextView
+            android:id="@+id/textoBPM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_padding_tiny"
+            android:layout_weight="1"
+            android:text="@string/bpm"
+            android:textSize="@dimen/text_size_xxnormal" />
 
-    <TextView
-        android:id="@+id/txt_nota"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="false"
-        android:layout_marginLeft="@dimen/margin_padding_small"
-        android:text="TextView"
-        android:textSize="@dimen/text_size_xxnormal" />
+        <TextView
+            android:id="@+id/txt_tempos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="@dimen/text_size_xxnormal" />
 
-    <TextView
-        android:id="@+id/txtCompassos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_padding_small"
-        android:layout_weight="1"
-        android:gravity="end"
-        android:text="@string/total_de_compassos"
-        android:textSize="@dimen/text_size_xxnormal" />
+        <TextView
+            android:id="@+id/txtBarra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_weight="1"
+            android:text="/"
+            android:textSize="@dimen/text_size_xxnormal" />
 
-    <TextView
-        android:id="@+id/txtTotalCompassos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_padding_small"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="@dimen/text_size_xxnormal" />
+        <TextView
+            android:id="@+id/txt_nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="false"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="@dimen/text_size_xxnormal" />
+
+        <TextView
+            android:id="@+id/txtCompassos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="@string/total_de_compassos"
+            android:textSize="@dimen/text_size_xxnormal" />
+
+        <TextView
+            android:id="@+id/txtTotalCompassos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="@dimen/text_size_xxnormal" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -37,6 +37,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
             view.hideEmptyText();
             view.showMusics(availableMusics);
         } else {
+            view.resetaNome();
             view.showEmptyText();
         }
     }
@@ -87,6 +88,7 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     @Override
     public void updateMusica(Musica musica) {
         repository.updateMusic(musica,this);
+        //repository.atualizaMusica(musica);
         loadMusics();
     }
 

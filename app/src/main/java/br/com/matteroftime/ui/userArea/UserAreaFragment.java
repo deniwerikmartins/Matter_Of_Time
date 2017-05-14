@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,7 +138,10 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     }
 
     private void showToastMessage(String message) {
-        Snackbar.make(view.getRootView(), message, Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(view.getRootView(), message, Snackbar.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
     }
 
     @OnClick(R.id.btnSelecionarMusica)
@@ -158,20 +162,17 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         } else if (usuarioId == 0){
             showMessage(getString(R.string.login_nao_realizado));
         }
-        if (musicaId > 0 && usuarioId > 0){
+
+        if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+            showMessage(getString(R.string.sem_conexao));
+        } else if (musicaId > 0 && usuarioId > 0){
             musicaUpload = presenter.getMusica(musicaId);
             if (musicaUpload.getCompassos().size() == 0){
                 showMessage(getString(R.string.sem_compasso));
             } else if (!musicaUpload.getNome().equals("")) {
-                try {
                     uploadMusicFragment = UploadMusicFragment.newInstance(0, usuarioId);
-                    uploadMusicFragment.recebeUserAreaView(this);
+                    uploadMusicFragment.recebeUserAreaView(this, context);
                     uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
-                    //showMessage(getString(R.string.sucesso_envio));
-                } catch (Exception e){
-                    //showMessage(getString(R.string.erro_envio));
-                }
-
             }
         }
     }
@@ -206,18 +207,13 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
 
     @OnClick(R.id.btnPesquisar)
     public void pesquisarMusica(View view){
-        //pesquisar no banco
-//        List<Musica> availableMusics;
-
-        /*adapter = new UserAreaAdapter(tempMusicas, getContext(), this);*/
-        //adapter = null;
-
-
-        /*userAreaRecyclerView.removeAllViews();
-        userAreaRecyclerView.removeAllViewsInLayout();*/
         adapter.clear();
         if (pesquisarMusica.getText().toString().isEmpty()){
+            pesquisarMusica.setError(getString(R.string.obrigatorio));
+            pesquisarMusica.requestFocus();
             showMessage(getString(R.string.informe_musica));
+        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+            showMessage(getString(R.string.sem_conexao));
         } else {
             presenter.pesquisaMusica(pesquisarMusica.getText().toString(), context);
         }
@@ -233,13 +229,13 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     public void baixarMusica(View view){
         if (musicaDownload.getNome() == null){
             showMessage(getString(R.string.sem_musica));
+        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+            showMessage(getString(R.string.sem_conexao));
         } else {
             downloadMusicFragment = DownloadMusicFragment.newInstance(musicaDownload, adapter);
-            downloadMusicFragment.recebeUserAreaView(this);
+            downloadMusicFragment.recebeUserAreaView(this, context);
             downloadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
-
         }
-
     }
 
 

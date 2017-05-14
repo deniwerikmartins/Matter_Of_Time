@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
     private static Musica musica;
     private static UserAreaAdapter adapter;
     private UserAreaContract.View userAreaView;
+    private Context userAreaContext;
 
     @BindView(R.id.txtNomeMusicaBaixar) TextView nomeMusicaBaixar;
 
@@ -140,16 +142,25 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
         userAreaView.showMessage(message);
     }
 
+
+
     private void showToastMessage(String message) {
-        Snackbar.make(rootView.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(rootView.getRootView(),message, Snackbar.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
     }
 
 
     @Override
-    public void recebeUserAreaView(UserAreaFragment userAreaFragment) {
+    public void recebeUserAreaView(UserAreaFragment userAreaFragment, Context context) {
         this.userAreaView = userAreaFragment;
-
+        userAreaContext = context;
     }
+
+
+
+
 
     @Override
     public void showMusics(List<Musica> availableMusics) {

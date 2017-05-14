@@ -31,7 +31,7 @@
     <string name="ordem_necessaria">Número na ordem da playlist necessário</string>
     <string name="sem_contagem">Tempos para pré-contagem inválido</string>
     <string name="repeticoes">Repetições</string>
-    <string name="tamanho_compassos">Seu compasso possui</string>
+    <string name="tamanho_compassos">Sua música possui </string>
     <string name="compassos">compassos</string>
     <string name="sem_musica">Sem musica selecionada</string>
     <string name="sem_compasso">Sem compasso selecionado</string>
@@ -90,5 +90,8 @@
     <string name="login_nao_realizado">Login não realizado</string>
     <string name="baixando_musica">Baixar música: </string>
     <string name="sucesso_download">Download realizado com sucesso</string>
+    <string name="sem_conexao">Sem conexão de internet</string>
+    <string name="obrigatorio">Obrigatório</string>
+    <string name="repeticoes_necessaria">Repetições necessária</string>
 
 </resources>

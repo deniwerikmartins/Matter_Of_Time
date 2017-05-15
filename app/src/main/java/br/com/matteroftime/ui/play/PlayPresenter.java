@@ -1,6 +1,8 @@
 package br.com.matteroftime.ui.play;
 
+import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -29,6 +31,7 @@ public class PlayPresenter implements PlayContract.Actions{
     Play play;
     Musica musica;
     Musica musicaCompasso;
+    Thread thread;
 
 
     public PlayPresenter(PlayContract.View view) {
@@ -50,23 +53,42 @@ public class PlayPresenter implements PlayContract.Actions{
 
     @Override
     public void play(Context context) {
-        play = new Play(context, this);
-        musica.defineIntervalo(musica.getCompassos());
         if (musica == null){
             view.showMessage(context.getString(R.string.sem_musica));
-        } else if (musica.isCompasso() == false){
-            play.execute(musica);
+        } else if (musica.getNome() == ""){
+            view.showMessage(context.getString(R.string.sem_musica));
         } else {
-            //chamar execução infinita
-            play.execute(musica);
+
+            musica.defineIntervalo(musica.getCompassos());
+
+            play = new Play(context, this, musica);
+            play.setPriority(Thread.MAX_PRIORITY);
+
+            /*thread = new Thread(play);
+            thread.setPriority(Thread.MAX_PRIORITY);*/
+
+            play.start();
+            //thread.start();
+
         }
+
+
 
     }
 
     @Override
     public void stop() {
-        if (play != null){
-            play.cancel();
+        if (thread != null){
+            //play.cancel();
+            //thread.interrupt();
+            //thread.stop();
+            //thread.destroy();
+
+            //play.cancel();
+            //play.interrupt();
+            //play.stop();
+            play.destroy();
+
         } else {
             return;
         }
@@ -84,14 +106,11 @@ public class PlayPresenter implements PlayContract.Actions{
         compasso.setTempos(tempos);
         compasso.setNota(nota);
         compasso.setBpm(bpm);
-        compasso.setRepeticoes(20);
-        //compasso.setId(1);
         RealmList<Compasso> compassos = new RealmList<>();
         compassos.add(compasso);
         musica = new Musica();
         musica.setCompassos(compassos);
         musica.setCompasso(true);
-        //musica.defineIntervalo(musica.getCompassos());
         this.defineMusica(musica);
         bus.post(new MusicListChangedEvent());
     }

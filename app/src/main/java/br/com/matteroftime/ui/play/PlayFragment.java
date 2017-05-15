@@ -29,7 +29,9 @@ import com.squareup.otto.Subscribe;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -42,6 +44,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.RealmList;
+
+import static br.com.matteroftime.R.string.compasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,6 +81,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @BindView(R.id.txtNomeMusica) TextView nomeMusica;
     @BindView(R.id.txtRepeticoesAtual) TextView repeticoesAtual;
     @BindView(R.id.txtRepeticoesTotal) TextView repeticoesTotal;
+    @BindView(R.id.txtRepeticoesProximo) TextView repeticoesProximo;
     @Inject Bus bus = new Bus();
 
     public PlayFragment() {
@@ -184,12 +189,49 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @Override
     public void onSelectMusic(Musica musicaSelecionada) {
-        musica = musicaSelecionada;
-        presenter.defineMusica(musicaSelecionada);
-        nomeMusica.setText(musica.getNome());
-        repeticoesTotal.setText(String.valueOf(musica.getCompassos().get(0).getRepeticoes()));
-        atualizaViewsMusica(0);
 
+
+        boolean ok = false;
+
+        for (int i = 0; i < musicaSelecionada.getCompassos().size(); i++){
+            if (musicaSelecionada.getCompassos().get(i).getTempos() == 0){
+                showMessage(getString(R.string.o_compasso) + " " +String.valueOf(i+1)+ " " + getString(R.string.compassos_nao_definidos));
+                ok = false;
+                return;
+            } else if(musicaSelecionada.getCompassos().get(i).getRepeticoes() == 0){
+                showMessage(getString(R.string.o_compasso) + " " + String.valueOf(i+1)+ " "  + getString(R.string.repeticoes_nao_definidos));
+                ok = false;
+                return;
+            }  else if(musicaSelecionada.getCompassos().get(i).getBpm() == 0){
+                showMessage(getString(R.string.o_compasso) + " " +String.valueOf(i+1)+ " "  + getString(R.string.bpm_nao_definido));
+                ok = false;
+                return;
+            } else if(musicaSelecionada.getCompassos().get(i).getOrdem() < 0) {
+                showMessage(getString(R.string.o_compasso) + " " +String.valueOf(i+1)+ " "  + getString(R.string.ordem_nao_definida));
+                ok = false;
+                return;
+            } else {
+                ok = true;
+            }
+        }
+
+        if (ok == true){
+            musica = musicaSelecionada;
+            presenter.defineMusica(musica);
+            nomeMusica.setText(musica.getNome());
+            repeticoesTotal.setText(String.valueOf(musica.getCompassos().get(0).getRepeticoes()));
+
+            ListIterator listIterator = musica.getCompassos().listIterator();
+
+            if (listIterator.hasNext()){
+                listIterator.next();
+                if (listIterator.hasNext()){
+                    Compasso compasso = (Compasso) listIterator.next();
+                    repeticoesProximo.setText(String.valueOf(compasso.getRepeticoes()));
+                }
+            }
+            atualizaViewsMusica(0);
+        }
     }
 
     @Override
@@ -214,7 +256,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             bpmAtual.setText(String.valueOf(b));
             temposAtual.setText(String.valueOf(t));
             notaAtual.setText(String.valueOf(nota));
-            nomeMusica.setText(getString(R.string.compasso));
+            nomeMusica.setText(getString(compasso));
             bus.post(new MusicListChangedEvent());
         }
 

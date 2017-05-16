@@ -8,9 +8,12 @@ import android.os.Message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import br.com.matteroftime.R;
+import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.util.Constants;
 
 /**
  * Created by RedBlood on 14/05/2017.
@@ -49,7 +52,7 @@ public class Play extends Thread implements Runnable{
     public void run() {
         super.run();
 
-
+        //COMPASSO
         if (musica.isCompasso() == true){
             intervalo = (long)musica.getCompassos().get(0).getIntervalo();
             while (true){
@@ -90,7 +93,7 @@ public class Play extends Thread implements Runnable{
             }
 
         }
-
+        //PRÉ-CONTAGEM
         else if (musica.isCompasso() == false){
 
             long temposleep[] = new long[musica.getCompassos().size()];
@@ -134,8 +137,40 @@ public class Play extends Thread implements Runnable{
 
                 }
             }
+
+            //MÚSICA
             for (int i = 0; i < musica.getCompassos().size(); i++){
+                ListIterator listIterator = musica.getCompassos().listIterator();
+                Compasso compasso = new Compasso();
+                if (i == 0){
+                    if (listIterator.hasNext()){
+                        listIterator.next();
+                        if (listIterator.hasNext()){
+                            compasso = (Compasso) listIterator.next();
+                        }
+                    }
+                } else {
+                    listIterator.next();
+                }
+
+
+                    message = Message.obtain();
+                    message.what = 1;
+                    data = new Bundle();
+                    data.putInt(Constants.COMPASSO_PROXIMO_BPM, compasso.getBpm());
+                    data.putInt(Constants.COMPASSO_PROXIMO_TEMPOS, compasso.getTempos());
+                    data.putInt(Constants.COMPASSO_PROXIMO_NOTA, compasso.getNota());
+                    message.setData(data);
+                    handler.sendMessage(message);
+
                 for (int j = 0; j < musica.getCompassos().get(i).getRepeticoes(); j++){
+                    message = Message.obtain();
+                    message.what = 2;
+                    data = new Bundle();
+                    data.putInt(Constants.COMPASSO_REPETICOES_ATUAL, j+1);
+                    data.putInt(Constants.COMPASSO_REPETICOES_TOTAL, musica.getCompassos().get(i).getRepeticoes());
+                    message.setData(data);
+                    handler.sendMessage(message);
                     for (tempoAtual = 0; tempoAtual <= musica.getCompassos().get(i).getTempos(); tempoAtual++){
                         if (tempoAtual == 0){
                             tempoAtual += 1;
@@ -145,7 +180,15 @@ public class Play extends Thread implements Runnable{
                         if (tempoAtual == 1){
                             clickForte();
                             message = Message.obtain();
+                            message.what = 0;
+                            data = new Bundle();
+                            data.putInt(Constants.COMPASSO_ATUAL_BPM, musica.getCompassos().get(i).getBpm());
+                            data.putInt(Constants.COMPASSO_ATUAL_TEMPOS, musica.getCompassos().get(i).getTempos());
+                            data.putInt(Constants.COMPASSO_ATUAL_NOTA, musica.getCompassos().get(i).getNota());
+                            data.putInt(Constants.COMPASSO_ATUAL_TEMPO_ATUAL, tempoAtual);
+                            data.putInt(Constants.COMPASSO_ATUAL_TEMPO_TOTAL, musica.getCompassos().get(i).getTempos());
                             message.arg1 = tempoAtual;
+                            message.setData(data);
                             handler.sendMessage(message);
                             try {
                                 sleep(temposleep[i]);
@@ -158,7 +201,15 @@ public class Play extends Thread implements Runnable{
                         } else {
                             clickFraco();
                             message = Message.obtain();
+                            message.what = 0;
+                            data = new Bundle();
+                            data.putInt(Constants.COMPASSO_ATUAL_BPM, musica.getCompassos().get(i).getBpm());
+                            data.putInt(Constants.COMPASSO_ATUAL_TEMPOS, musica.getCompassos().get(i).getTempos());
+                            data.putInt(Constants.COMPASSO_ATUAL_NOTA, musica.getCompassos().get(i).getNota());
+                            data.putInt(Constants.COMPASSO_ATUAL_TEMPO_ATUAL, tempoAtual);
+                            data.putInt(Constants.COMPASSO_ATUAL_TEMPO_TOTAL, musica.getCompassos().get(i).getTempos());
                             message.arg1 = tempoAtual;
+                            message.setData(data);
                             handler.sendMessage(message);
                             try {
                                 sleep(temposleep[i]);

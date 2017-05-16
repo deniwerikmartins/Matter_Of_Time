@@ -1,6 +1,7 @@
 package br.com.matteroftime.ui.play;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface PlayContract {
 
     public interface Actions{
         public void loadMusics();
-        public void play(Context context);
+        public void play(Context context, Handler handler);
         public void stop();
         public void defineMusica(Musica musicaSelecionada);
         public void criaCompasso(int bpm, int tempos, int nota);

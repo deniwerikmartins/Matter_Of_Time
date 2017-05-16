@@ -2,6 +2,9 @@ package br.com.matteroftime.ui.play;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +22,24 @@ public class Play extends Thread implements Runnable{
     private PlayContract.Actions pa;
     private long intervalo;
     Musica musica;
+    Handler handler;
+    Message message;
+    Bundle data;
 
     public int tempoAtual;
     MediaPlayer clickForte;
     MediaPlayer clickFraco;
 
 
-    public Play(Context context, PlayContract.Actions pa, Musica musica) {
+    public Play(Context context, PlayContract.Actions pa, Musica musica, Handler handler) {
         this.context = context;
         this.pa = pa;
         clickForte = MediaPlayer.create(context, R.raw.clickforte);
         clickFraco = MediaPlayer.create(context, R.raw.clickfraco);
         this.musica = musica;
+        this.handler = handler;
+        message = Message.obtain();
+        data = new Bundle();
     }
 
 
@@ -53,17 +62,27 @@ public class Play extends Thread implements Runnable{
 
                     if (tempoAtual == 1){
                         clickForte();
+                        message = Message.obtain();
+                        message.arg1 = tempoAtual;
+                        handler.sendMessage(message);
                         try {
                             sleep(intervalo);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            return;
+                            //e.printStackTrace();
+
                         }
                     } else {
                         clickFraco();
+                        message = Message.obtain();
+                        message.arg1 = tempoAtual;
+                        handler.sendMessage(message);
                         try {
                             sleep(intervalo);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            return;
+                            //e.printStackTrace();
+
                         }
                     }
                 }
@@ -91,17 +110,25 @@ public class Play extends Thread implements Runnable{
 
                     if (tempoAtual == 1){
                         clickForte();
+                        message = Message.obtain();
+                        message.arg1 = tempoAtual;
+                        handler.sendMessage(message);
                         try {
                             sleep(intervalo);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            return;
+                            // e.printStackTrace();
                         }
                     } else {
                         clickFraco();
+                        message = Message.obtain();
+                        message.arg1 = tempoAtual;
+                        handler.sendMessage(message);
                         try {
                             sleep(intervalo);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            return;
+                            //e.printStackTrace();
                         }
                     }
 
@@ -117,18 +144,28 @@ public class Play extends Thread implements Runnable{
 
                         if (tempoAtual == 1){
                             clickForte();
+                            message = Message.obtain();
+                            message.arg1 = tempoAtual;
+                            handler.sendMessage(message);
                             try {
                                 sleep(temposleep[i]);
 
                             } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                return;
+                                //e.printStackTrace();
+
                             }
                         } else {
                             clickFraco();
+                            message = Message.obtain();
+                            message.arg1 = tempoAtual;
+                            handler.sendMessage(message);
                             try {
                                 sleep(temposleep[i]);
                             } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                return;
+                                //e.printStackTrace();
+
                             }
                         }
                     }

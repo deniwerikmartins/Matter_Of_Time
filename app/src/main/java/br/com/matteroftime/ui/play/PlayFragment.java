@@ -4,6 +4,8 @@ package br.com.matteroftime.ui.play;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -60,6 +62,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private int nota;
     private String select;
     private Musica musica;
+    Handler handler;
 
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
@@ -95,6 +98,14 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_play, container, false);
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                //super.handleMessage(msg);
+                repeticoesAtual.setText(String.valueOf(msg.arg1));
+
+            }
+        };
 
         ButterKnife.bind(this, view);
         presenter = new PlayPresenter(this);
@@ -264,7 +275,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @OnClick(R.id.btnPlay)
     public void tocar(View view){
-        presenter.play(getContext());
+        presenter.play(getContext(), handler);
     }
 
 

@@ -3,6 +3,7 @@ package br.com.matteroftime.ui.play;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -52,7 +53,7 @@ public class PlayPresenter implements PlayContract.Actions{
     }
 
     @Override
-    public void play(Context context) {
+    public void play(Context context, Handler handler) {
         if (musica == null){
             view.showMessage(context.getString(R.string.sem_musica));
         } else if (musica.getNome() == ""){
@@ -61,7 +62,7 @@ public class PlayPresenter implements PlayContract.Actions{
 
             musica.defineIntervalo(musica.getCompassos());
 
-            play = new Play(context, this, musica);
+            play = new Play(context, this, musica, handler);
             play.setPriority(Thread.MAX_PRIORITY);
 
             /*thread = new Thread(play);
@@ -78,16 +79,16 @@ public class PlayPresenter implements PlayContract.Actions{
 
     @Override
     public void stop() {
-        if (thread != null){
+        if (play != null){
             //play.cancel();
             //thread.interrupt();
             //thread.stop();
             //thread.destroy();
 
             //play.cancel();
-            //play.interrupt();
+            play.interrupt();
             //play.stop();
-            play.destroy();
+            //play.destroy();
 
         } else {
             return;

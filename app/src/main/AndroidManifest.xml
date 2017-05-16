@@ -18,6 +18,7 @@
         <activity
             android:name=".common.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +29,7 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait"
             android:parentActivityName=".common.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -37,6 +39,7 @@
         <activity
             android:name=".ui.loginlogout.LoginLogoutActivity"
             android:label="@string/title_activity_login_logout"
+            android:screenOrientation="portrait"
             android:parentActivityName=".common.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

@@ -133,10 +133,12 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                         String compassoProximoBPM = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_BPM));
                         String compassoProximoTempos = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_TEMPOS));
                         String compassoProximoNota = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_NOTA));
+                        String compassoProximoRepeticoes = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_REPETICOES));
 
                         proxBpm.setText(compassoProximoBPM);
                         proxTempos.setText(compassoProximoTempos);
                         proxNota.setText(compassoProximoNota);
+                        repeticoesProximo.setText(compassoProximoRepeticoes);
                         break;
                     case 2:
                         String compassoRepeticoesAtual = String.valueOf(data.getInt(Constants.COMPASSO_REPETICOES_ATUAL));
@@ -145,7 +147,28 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                         repeticoesCompassoAtual.setText(compassoRepeticoesAtual);
                         repeticoesCompassoTotal.setText(compassoRepeticoesTotal);
                         break;
+                    case 3:
+                        proxBpm.setText(String.valueOf(msg.arg2));
+                        proxTempos.setText(String.valueOf(msg.arg1));
+                        proxNota.setText(String.valueOf(msg.arg1));
+                        repeticoesProximo.setText(String.valueOf(msg.arg2));
+                        break;
+                    case 4:
+                        repeticoesAtual.setText(String.valueOf(msg.arg1));
+                        repeticoesTotal.setText(String.valueOf(msg.arg2));
+                        break;
+                    case 5:
+                        String compassoAtualBPMCompasso = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_BPM));
+                        String compassoAtualTempoTotalCompasso = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_TEMPO_TOTAL));
+                        String compassoAtualNotaCompasso = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_NOTA));
+                        String compassoAtualTempoAtualCompasso = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_TEMPO_ATUAL));
 
+                        bpmAtual.setText(compassoAtualBPMCompasso);
+                        temposAtual.setText(compassoAtualTempoTotalCompasso);
+                        notaAtual.setText(compassoAtualNotaCompasso);
+                        repeticoesAtual.setText(compassoAtualTempoAtualCompasso);
+                        repeticoesTotal.setText(compassoAtualTempoTotalCompasso);
+                        break;
                 }
 
 

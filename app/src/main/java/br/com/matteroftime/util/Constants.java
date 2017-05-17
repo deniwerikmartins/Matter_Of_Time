@@ -30,6 +30,7 @@ public class Constants {
     public static final String COMPASSO_PROXIMO_BPM = "Compasso_Proximo_BPM";
     public static final String COMPASSO_PROXIMO_TEMPOS = "Compasso_Proximo_Tempos";
     public static final String COMPASSO_PROXIMO_NOTA = "Compasso_Proximo_Nota";
+    public static final String COMPASSO_PROXIMO_REPETICOES = "Compasso_Proximo_Repeticoes";
 
 
 

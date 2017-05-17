@@ -70,7 +70,13 @@ public class Play extends Thread implements Runnable{
                     if (tempoAtual == 1){
                         clickForte();
                         message = Message.obtain();
-                        message.arg1 = tempoAtual;
+                        message.what = 5;
+                        data = new Bundle();
+                        data.putInt(Constants.COMPASSO_ATUAL_BPM, musica.getCompassos().get(0).getBpm());
+                        data.putInt(Constants.COMPASSO_ATUAL_TEMPO_TOTAL, musica.getCompassos().get(0).getTempos());
+                        data.putInt(Constants.COMPASSO_ATUAL_NOTA, musica.getCompassos().get(0).getNota());
+                        data.putInt(Constants.COMPASSO_ATUAL_TEMPO_ATUAL, tempoAtual);
+                        message.setData(data);
                         handler.sendMessage(message);
                         try {
                             sleep(intervalo);
@@ -82,7 +88,12 @@ public class Play extends Thread implements Runnable{
                     } else {
                         clickFraco();
                         message = Message.obtain();
-                        message.arg1 = tempoAtual;
+                        message.what = 5;
+                        data.putInt(Constants.COMPASSO_ATUAL_BPM, musica.getCompassos().get(0).getBpm());
+                        data.putInt(Constants.COMPASSO_ATUAL_TEMPO_TOTAL, musica.getCompassos().get(0).getTempos());
+                        data.putInt(Constants.COMPASSO_ATUAL_NOTA, musica.getCompassos().get(0).getNota());
+                        data.putInt(Constants.COMPASSO_ATUAL_TEMPO_ATUAL, tempoAtual);
+                        message.setData(data);
                         handler.sendMessage(message);
                         try {
                             sleep(intervalo);
@@ -97,14 +108,14 @@ public class Play extends Thread implements Runnable{
             }
 
         }
-        //PRÉ-CONTAGEM
+        //PRÉ-PRÉ-CONTAGEM
         else if (musica.isCompasso() == false){
 
             long temposleep[] = new long[musica.getCompassos().size()];
             for (int i = 0; i < musica.getCompassos().size(); i++){
                 temposleep[i] = (long) musica.getCompassos().get(i).getIntervalo();
             }
-
+            //PRÉ-CONTAGEM
             if (musica.isPreContagem() == true){
                 intervalo = (long)musica.getCompassos().get(0).getIntervalo();
                 for (tempoAtual = 0; tempoAtual <= musica.getTemposContagem();
@@ -118,7 +129,9 @@ public class Play extends Thread implements Runnable{
                     if (tempoAtual == 1){
                         clickForte();
                         message = Message.obtain();
+                        message.what = 4;
                         message.arg1 = tempoAtual;
+                        message.arg2 = musica.getTemposContagem();
                         handler.sendMessage(message);
                         try {
                             sleep(intervalo);
@@ -129,7 +142,9 @@ public class Play extends Thread implements Runnable{
                     } else {
                         clickFraco();
                         message = Message.obtain();
+                        message.what = 4;
                         message.arg1 = tempoAtual;
+                        message.arg2 = musica.getTemposContagem();
                         handler.sendMessage(message);
                         try {
                             sleep(intervalo);
@@ -160,6 +175,7 @@ public class Play extends Thread implements Runnable{
                     data.putInt(Constants.COMPASSO_PROXIMO_BPM, compasso.getBpm());
                     data.putInt(Constants.COMPASSO_PROXIMO_TEMPOS, compasso.getTempos());
                     data.putInt(Constants.COMPASSO_PROXIMO_NOTA, compasso.getNota());
+                    data.putInt(Constants.COMPASSO_PROXIMO_REPETICOES, compasso.getRepeticoes());
                     message.setData(data);
                     handler.sendMessage(message);
 
@@ -223,6 +239,11 @@ public class Play extends Thread implements Runnable{
                     }
                 }
             }
+            message = Message.obtain();
+            message.what = 3;
+            message.arg1 = 0;
+            message.arg2 = 000;
+            handler.sendMessage(message);
         }
     }
 

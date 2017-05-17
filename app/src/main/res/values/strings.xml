@@ -100,5 +100,7 @@
     <string name="ordem_nao_definida"> não foi confirmado</string>
 
     <string name="icon">Icon</string>
+    <string name="compasso_confirmado">Compasso Confirmado</string>
+    <string name="musica_confirmada">Musica confirmada</string>
 
 </resources>

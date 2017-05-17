@@ -56,7 +56,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private String select;
     private Musica musica;
     Handler handler;
-    AnimationDrawable animationDrawable;
+    //AnimationDrawable animationDrawable;
 
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
@@ -72,8 +72,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @BindView(R.id.btnOk) ImageButton imgBtnOk;
     @BindView(R.id.btnPlay) ImageButton imgBtnPlay;
     @BindView(R.id.btnStop) ImageButton imgBtnStop;
-    @BindView(R.id.imgClick) ImageView imgClick;
-    @BindView(R.id.imgStop) ImageView imgStop;
+    @BindView(R.id.imgClick1) ImageView imgClick1;
+    @BindView(R.id.imgClick2) ImageView imgClick2;
     @BindView(R.id.empty_text) TextView emptyText;
     @BindView(R.id.txtNomeMusica) TextView nomeMusica;
     @BindView(R.id.txtRepeticoesAtual) TextView repeticoesAtual;
@@ -95,8 +95,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
         view = inflater.inflate(R.layout.fragment_play, container, false);
         ButterKnife.bind(this, view);
-        imgStop.setBackgroundResource(R.drawable.img_click_animation);
-        animationDrawable = (AnimationDrawable) imgStop.getBackground();
+        /*imgStop.setBackgroundResource(R.drawable.img_click_animation);
+        animationDrawable = (AnimationDrawable) imgStop.getBackground();*/
 
 
         handler = new Handler(){
@@ -106,7 +106,17 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                 Bundle data = msg.getData();
                 switch (msg.what){
                     case 0:
-                        animationDrawable.start();
+                        //animationDrawable.start();
+                        if (imgClick1.getVisibility() == View.VISIBLE){
+                            imgClick1.setVisibility(View.INVISIBLE);
+                        }else{
+                            imgClick1.setVisibility(View.VISIBLE);
+                        }
+                        if (imgClick1.getVisibility() == View.VISIBLE){
+                            imgClick2.setVisibility(View.INVISIBLE);
+                        } else {
+                            imgClick2.setVisibility(View.VISIBLE);
+                        }
                         String compassoAtualBPM = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_BPM));
                         String compassoAtualTempos = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_TEMPOS));
                         String compassoAtualNota = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_NOTA));
@@ -306,6 +316,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             notaAtual.setText(String.valueOf(nota));
             nomeMusica.setText(getString(compasso));
             bus.post(new MusicListChangedEvent());
+            showMessage(getString(R.string.compasso_confirmado));
         }
 
     }

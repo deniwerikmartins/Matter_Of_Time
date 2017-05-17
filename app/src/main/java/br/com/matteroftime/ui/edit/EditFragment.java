@@ -366,6 +366,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 atualizaViewsMusica(musica);
                 bus.post(new MusicListChangedEvent());
+                showMessage(getString(R.string.musica_confirmada));
             }
         } else if (contagem == false){
             if (ord - 1 < 0){
@@ -379,6 +380,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 atualizaViewsMusica(musica);
                 bus.post(new MusicListChangedEvent());
+                showMessage(getString(R.string.musica_confirmada));
             }
         }
     }
@@ -486,12 +488,11 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             showMessage(getString(R.string.compasso_inexistente));
         } else {
             musica.getCompassos().remove(ord - 1);
-            presenter.updateMusica(musica);
+            presenter.atualizaMusica(musica);
+            //presenter.updateMusica(musica);
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
-            Toast toast = Toast.makeText(getContext(), getString(R.string.tamanho_compassos) + " " + String.valueOf(musica.getCompassos().size())
-                    + " " +getString(R.string.compassos), Toast.LENGTH_SHORT );
-            toast.show();
+            showMessage(getString(R.string.tamanho_compassos) +  " " +String.valueOf(musica.getCompassos().size())+ " " + getString(R.string.compassos));
             bus.post(new MusicListChangedEvent());
         }
     }
@@ -504,10 +505,11 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             Compasso compasso = new Compasso();
             compasso.setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
             musica.getCompassos().add(compasso);
-            presenter.updateMusica(musica);
+            presenter.atualizaMusica(musica);
+            //presenter.updateMusica(musica);
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);
-            showMessage(getString(R.string.tamanho_compassos) + String.valueOf(musica.getCompassos().size()) + getString(R.string.compassos));
+            showMessage(getString(R.string.tamanho_compassos) + " " +String.valueOf(musica.getCompassos().size())+ " " + getString(R.string.compassos));
             bus.post(new MusicListChangedEvent());
         }
     }

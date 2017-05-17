@@ -1,13 +1,10 @@
 package br.com.matteroftime.ui.play;
 
 
-import android.app.Activity;
-import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,10 +24,7 @@ import android.widget.Toast;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -46,7 +39,6 @@ import br.com.matteroftime.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.RealmList;
 
 import static br.com.matteroftime.R.string.compasso;
 
@@ -64,6 +56,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private String select;
     private Musica musica;
     Handler handler;
+    AnimationDrawable animationDrawable;
 
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
@@ -101,6 +94,11 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_play, container, false);
+        ButterKnife.bind(this, view);
+        imgStop.setBackgroundResource(R.drawable.img_click_animation);
+        animationDrawable = (AnimationDrawable) imgStop.getBackground();
+
+
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -108,6 +106,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                 Bundle data = msg.getData();
                 switch (msg.what){
                     case 0:
+                        animationDrawable.start();
                         String compassoAtualBPM = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_BPM));
                         String compassoAtualTempos = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_TEMPOS));
                         String compassoAtualNota = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_NOTA));
@@ -145,7 +144,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             }
         };
 
-        ButterKnife.bind(this, view);
+
         presenter = new PlayPresenter(this);
         bus.register(this);
 

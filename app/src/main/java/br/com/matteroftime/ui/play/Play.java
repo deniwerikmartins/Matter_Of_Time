@@ -25,9 +25,11 @@ public class Play extends Thread implements Runnable{
     private PlayContract.Actions pa;
     private long intervalo;
     Musica musica;
+    Compasso compasso;
     Handler handler;
     Message message;
     Bundle data;
+    ListIterator listIterator;
 
     public int tempoAtual;
     MediaPlayer clickForte;
@@ -40,9 +42,11 @@ public class Play extends Thread implements Runnable{
         clickForte = MediaPlayer.create(context, R.raw.clickforte);
         clickFraco = MediaPlayer.create(context, R.raw.clickfraco);
         this.musica = musica;
+        compasso = new Compasso();
         this.handler = handler;
         message = Message.obtain();
         data = new Bundle();
+        listIterator = this.musica.getCompassos().listIterator();
     }
 
 
@@ -140,17 +144,13 @@ public class Play extends Thread implements Runnable{
 
             //MÚSICA
             for (int i = 0; i < musica.getCompassos().size(); i++){
-                ListIterator listIterator = musica.getCompassos().listIterator();
-                Compasso compasso = new Compasso();
-                if (i == 0){
-                    if (listIterator.hasNext()){
-                        listIterator.next();
-                        if (listIterator.hasNext()){
-                            compasso = (Compasso) listIterator.next();
-                        }
+
+                //Compasso compasso = new Compasso();
+                if (listIterator.hasNext()){
+                    compasso = (Compasso) listIterator.next();
+                    if (listIterator.nextIndex() == i+1 && listIterator.hasNext()){
+                        compasso = (Compasso) listIterator.next();
                     }
-                } else {
-                    listIterator.next();
                 }
 
 
@@ -171,6 +171,7 @@ public class Play extends Thread implements Runnable{
                     data.putInt(Constants.COMPASSO_REPETICOES_TOTAL, musica.getCompassos().get(i).getRepeticoes());
                     message.setData(data);
                     handler.sendMessage(message);
+
                     for (tempoAtual = 0; tempoAtual <= musica.getCompassos().get(i).getTempos(); tempoAtual++){
                         if (tempoAtual == 0){
                             tempoAtual += 1;

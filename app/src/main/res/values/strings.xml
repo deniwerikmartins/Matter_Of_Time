@@ -99,4 +99,6 @@
     <string name="bpm_nao_definido"> não possui o valor de BPM definido</string>
     <string name="ordem_nao_definida"> não foi confirmado</string>
 
+    <string name="icon">Icon</string>
+
 </resources>

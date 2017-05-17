@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selected"
+    android:oneshot="true" >
+
+    <item
+        android:drawable="@android:drawable/presence_online"
+        android:duration="487"/>
+    <item
+        android:drawable="@android:drawable/presence_invisible"
+        android:duration="487"/>
+
+
+</animation-list>

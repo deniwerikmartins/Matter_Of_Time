@@ -63,15 +63,15 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
             }
             View titleView = inflater.inflate(R.layout.dialog_title, null);
             TextView titleText = (TextView)titleView.findViewById(R.id.txt_view_dialog_title);
-            titleText.setText(editMode ? "Update Music" : "Add Music");
+            titleText.setText(editMode ? getString(R.string.atualizar_musica) : getString(R.string.adicionar_musica));
             dialogFragment.setCustomTitle(titleView);
-            dialogFragment.setPositiveButton(editMode ? "Update" : "Add", new DialogInterface.OnClickListener() {
+            dialogFragment.setPositiveButton(editMode ? getString(R.string.atualizar) : getString(R.string.adicionar), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-            dialogFragment.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            dialogFragment.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

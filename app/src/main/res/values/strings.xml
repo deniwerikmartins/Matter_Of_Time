@@ -38,7 +38,7 @@
     <string name="compasso_inexistente">Compasso inexistente</string>
     <string name="musica_inexistente">Musica inexistente</string>
     <string name="posicao_invalida">Posição para musica inválida</string>
-    <string name="total_de_compassos">Compassos:</string>
+    <string name="total_de_compassos">Compassos</string>
     <string name="sem_posicao">Sem posição selecionada</string>
     <string name="usuario">Usuário</string>
     <string name="email">E-mail</string>
@@ -46,20 +46,20 @@
     <string name="senha">Senha</string>
     <string name="digite_senha">Digite sua senha</string>
     <string name="enviar_musica">Enviar música</string>
-    <string name="selecionar_musica">Selecionar Musica</string>
+    <string name="selecionar_musica">Selecionar Música</string>
     <string name="baixar_musica">Baixar música</string>
     <string name="musica">Música</string>
     <string name="baixar">Baixar</string>
     <string name="nome">Nome</string>
     <string name="atualizar_musica">Atualizar música</string>
     <string name="pesquisar">Pesquisar</string>
-    <string name="enviando_musica">Enviar música: </string>
+    <string name="enviando_musica">Enviar música</string>
     <string name="enviar">Enviar</string>
     <string name="cancelar">Cancelar</string>
     <string name="sucesso_envio">Música enviada com sucesso</string>
     <string name="erro_envio">Erro ao enviar música</string>
     <string name="informe_musica">Informe o nome da musica à ser pesquisada</string>
-    <string name="ok">Ok</string>
+    <string name="ok" translatable="false">Ok</string>
     <string name="sem_resultados">Sua busca não encontrou resultados</string>
     <string name="erro_download">Erro ao baixar música</string>
     <string name="sucesso_baixar">Sucesso ao baixar música</string>
@@ -71,8 +71,8 @@
     <string name="ordem_invalida">Ordem da música invalida</string>
     <string name="cadastro">Cadastro</string>
     <string name="loginlogout">Entrar / Sair</string>
-    <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="title_activity_login_logout">LoginLogoutActivity</string>
+    <string name="title_activity_sign_up" translatable="false">SignUpActivity</string>
+    <string name="title_activity_login_logout" translatable="false">LoginLogoutActivity</string>
     <string name="registro">Registro</string>
     <string name="confirme_senha">Confirme sua senha</string>
     <string name="cadastrar">Cadastrar</string>
@@ -82,14 +82,14 @@
     <string name="senha_nao_confere">Senhas não conferem</string>
     <string name="esqueci_senha">Esqueci minha senha</string>
     <string name="erro_cadastrar">Erro ao cadastrar usuário</string>
-    <string name="cadastro_sucesso">Casdastro realizado com sucesso</string>
-    <string name="login_sucesso">Login efetuado com sucesso</string>
-    <string name="ordem_igual">Há músicas com numero de ordenação igual</string>
-    <string name="logout_sucesso">Logout realizado com sucesso</string>
+    <string name="cadastro_sucesso">Cadastro realizado</string>
+    <string name="login_sucesso">Login efetuado</string>
+    <string name="ordem_igual">Há músicas com numero de ordenação iguais</string>
+    <string name="logout_sucesso">Logout realizado</string>
     <string name="usuario_nao_logado">Login não efetuado</string>
     <string name="login_nao_realizado">Login não realizado</string>
-    <string name="baixando_musica">Baixar música: </string>
-    <string name="sucesso_download">Download realizado com sucesso</string>
+    <string name="baixando_musica">Baixar música</string>
+    <string name="sucesso_download">Download realizado</string>
     <string name="sem_conexao">Sem conexão de internet</string>
     <string name="obrigatorio">Obrigatório</string>
     <string name="repeticoes_necessaria">Repetições necessária</string>
@@ -115,9 +115,14 @@
     <string name="sim">Sim</string>
     <string name="editar_musica">Editar música</string>
     <string name="adicionar">Adicionar</string>
-    <string name="adicionado">Adicionada</string>
+    <string name="adicionado">Adicionado</string>
     <string name="atualizado">Atualizado</string>
     <string name="deletado">Deletado</string>
     <string name="erro">Erro</string>
+    <string name="edit">Editar</string>
+    <string name="user_area">Área do usuário</string>
+    <string name="pesquisando">Pesquisando...</string>
+    <string name="adicionar_musica">Adicionar musica</string>
+    <string name="atualizar">Atualizar</string>
 
 </resources>

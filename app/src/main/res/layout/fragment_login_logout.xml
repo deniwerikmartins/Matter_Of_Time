@@ -26,7 +26,6 @@
                 android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/email" />
 
             <EditText
@@ -38,11 +37,17 @@
                 android:hint="@string/digite_email"
                 android:inputType="textEmailAddress" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/textView25"
+                android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/senha" />
 
             <EditText
@@ -53,7 +58,6 @@
                 android:ems="5"
                 android:hint="@string/digite_senha"
                 android:inputType="textPassword" />
-
         </LinearLayout>
 
         <Button
@@ -66,7 +70,8 @@
             android:id="@+id/btnEsqueciSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/esqueci_senha" />
+            android:text="@string/esqueci_senha"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -82,7 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/sair" />
+            android:text="@string/sair"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/btnSair"

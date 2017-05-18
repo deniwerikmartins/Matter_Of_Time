@@ -49,7 +49,7 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                     @Override
                     public void onCompleted(Exception e, File result) {
                         if (e != null){
-                            listener.onSQLOperationFailed(context.getString(R.string.erro_download));
+                            //listener.onSQLOperationFailed(context.getString(R.string.erro_download));
                             return;
                         } else {
                             file = result;

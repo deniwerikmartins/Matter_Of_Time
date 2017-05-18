@@ -29,6 +29,7 @@ import br.com.matteroftime.R;
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.downloadMusic.DownloadMusicFragment;
+import br.com.matteroftime.ui.edit.EditFragment;
 import br.com.matteroftime.ui.selectMusic.SelectMusicDialogFragment;
 import br.com.matteroftime.ui.uploadMusic.UploadMusicFragment;
 import br.com.matteroftime.util.Constants;
@@ -212,6 +213,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
             showMessage(getString(R.string.sem_conexao));
         } else {
+            showMessage(getString(R.string.pesquisando));
             presenter.pesquisaMusica(pesquisarMusica.getText().toString(), context);
         }
 
@@ -232,6 +234,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
             downloadMusicFragment = DownloadMusicFragment.newInstance(musicaDownload, adapter);
             downloadMusicFragment.recebeUserAreaView(this, context);
             downloadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+
         }
     }
 

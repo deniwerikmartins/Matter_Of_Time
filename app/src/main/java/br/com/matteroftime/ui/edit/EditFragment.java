@@ -1,10 +1,12 @@
 package br.com.matteroftime.ui.edit;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -515,6 +517,55 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             bus.post(new MusicListChangedEvent());
         }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        showMessage("detach");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        showMessage("attach");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        showMessage("pause");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showMessage("create");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        showMessage("destroy");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showMessage("start");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        showMessage("stop");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        showMessage("attach activity");
+    }
+
 
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){

@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import br.com.matteroftime.R;
 import br.com.matteroftime.ui.edit.EditFragment;
 import br.com.matteroftime.ui.play.PlayFragment;
 import br.com.matteroftime.ui.userArea.UserAreaFragment;
@@ -14,8 +15,11 @@ import br.com.matteroftime.ui.userArea.UserAreaFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    MainActivity mainActivity;
+
+    public ViewPagerAdapter(FragmentManager fm, MainActivity mainActivity) {
         super(fm);
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -27,9 +31,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 break;
             case 1:
                 selectedFragment = new EditFragment();
+
                 break;
             case 2:
                 selectedFragment = new UserAreaFragment();
+
                 break;
             default:
                 selectedFragment = new PlayFragment();
@@ -48,13 +54,13 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position){
             case 0:
-                title = "Play";
+                title = mainActivity.getString(R.string.play);
                 break;
             case 1:
-                title = "Edit";
+                title = mainActivity.getString(R.string.edit);
                 break;
             case 2:
-                title = "User Area";
+                title = mainActivity.getString(R.string.user_area);
                 break;
         }
         return title;

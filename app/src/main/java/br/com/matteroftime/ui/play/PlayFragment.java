@@ -1,10 +1,13 @@
 package br.com.matteroftime.ui.play;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -364,6 +367,54 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         }
 
     }
+
+    /*@Override
+    public void onDetach() {
+        super.onDetach();
+        showMessage("detach");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        showMessage("attach");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        showMessage("pause");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showMessage("create");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        showMessage("destroy");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showMessage("start");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        showMessage("stop");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        showMessage("attach activity");
+    }*/
 
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){

@@ -52,7 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/atualizar_musica" />
+            android:text="@string/atualizar_musica"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

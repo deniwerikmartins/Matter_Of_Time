@@ -44,8 +44,8 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
     @Override
     public void downloadMusica(Musica musica, Context context) {
         repository.downloadMusica(musica, this, context);
+        loadMusics();
         bus.post(new MusicListChangedEvent());
-
     }
 
     @Override

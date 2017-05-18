@@ -102,5 +102,6 @@
     <string name="icon">Icon</string>
     <string name="compasso_confirmado">Compasso Confirmado</string>
     <string name="musica_confirmada">Musica confirmada</string>
+    <string name="email_invalido">E-mail inválido</string>
 
 </resources>

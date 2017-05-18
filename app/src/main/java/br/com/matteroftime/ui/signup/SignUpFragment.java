@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.inject.Inject;
 
 import br.com.matteroftime.R;
@@ -108,9 +111,23 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
             showMessage(getString(R.string.sem_conexao));
         } else {
             String mail = email.getText().toString();
-            String pass = senha.getText().toString();
-            Context context = getActivity().getBaseContext();
-            presenter.cadastraUsuario(mail, pass, context);
+
+            //Stringp= "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\ .[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*| "(?:[\x01-\    x08 \x0b \x0c \x0e- \x1f \x21 \x23- \x5b \x5d- \x7f]|\\  [\ x01-\ x09\ x0b\ x0c\ x0e- \x7f])* ")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\ .)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?| \[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) \.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\    x08 \x0b \x0c \x0e- \x1f \x21- \x5a \x53- \x7f]|  \\[ \x01- \x09 \x0b \x0c \x0e- \x7f])+)\])";
+            //Pattern pattern = Pattern.compile("[a-zA-Z0-9]+[a-zA-Z0-9_.-]+@{1}[a-zA-Z0-9_.-]*\\.+[a-z]{2,4}");
+            //Pattern pattern = Pattern.compile("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,4}\n");
+            String p = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+            Pattern pattern = Pattern.compile(p);
+            Matcher matcher = pattern.matcher(mail);
+            boolean b = matcher.matches();
+            if (b == true){
+                String pass = senha.getText().toString();
+                Context context = getActivity().getBaseContext();
+                presenter.cadastraUsuario(mail, pass, context);
+            } else {
+                showMessage(getString(R.string.email_invalido));
+            }
+
+
         }
 
 

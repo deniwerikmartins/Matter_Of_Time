@@ -50,9 +50,9 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
 
         String nome = musica.getNome();
         nome = nome.trim();
-        nome = nome.toLowerCase();
+       /* nome = nome.toLowerCase();
         nome = nome.replaceAll(" ","");
-        nome = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        nome = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");*/
         final File file = new File("data/data/br.com.matteroftime/"+nome+"_music.met");
 
         List<Compasso> compassosList = new ArrayList<>();

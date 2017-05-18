@@ -67,9 +67,9 @@ public class UserAreaRepository implements UserAreaContract.Repository {
     @Override
     public void pesquisaMusica(String nomeMusica, final OnDatabaseOperationCompleteListener listener, final Context context, final UserAreaContract.Actions presenter) {
         nomeMusica = nomeMusica.trim();
-        nomeMusica = nomeMusica.toLowerCase();
+        /*nomeMusica = nomeMusica.toLowerCase();
         nomeMusica = nomeMusica.replaceAll(" ", "");
-        nomeMusica = Normalizer.normalize(nomeMusica, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        nomeMusica = Normalizer.normalize(nomeMusica, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");*/
 
         Ion.with(context)
                 .load("https://matteroftime-redblood666.c9users.io/pesquisar.php")

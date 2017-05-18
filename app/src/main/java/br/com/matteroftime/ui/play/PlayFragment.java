@@ -50,13 +50,12 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private View view;
     private PlayAdapter playAdapter;
     private PlayContract.Actions presenter;
-    //private Integer[] valorNotas = new Integer[]{1,2,4,8,16,32,64};
     private String[] valorNotas = new String[]{"Semibreve","Mímina","Seminima","Colcheia","Semicolcheia","Fusa","Semifusa"};
     private int nota;
     private String select;
     private Musica musica;
     Handler handler;
-    //AnimationDrawable animationDrawable;
+
 
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
@@ -95,8 +94,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
         view = inflater.inflate(R.layout.fragment_play, container, false);
         ButterKnife.bind(this, view);
-        /*imgStop.setBackgroundResource(R.drawable.img_click_animation);
-        animationDrawable = (AnimationDrawable) imgStop.getBackground();*/
 
 
         handler = new Handler(){
@@ -106,7 +103,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                 Bundle data = msg.getData();
                 switch (msg.what){
                     case 0:
-                        //animationDrawable.start();
                         if (imgClick1.getVisibility() == View.VISIBLE){
                             imgClick1.setVisibility(View.INVISIBLE);
                         }else{

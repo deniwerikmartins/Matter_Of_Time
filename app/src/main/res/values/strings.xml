@@ -103,5 +103,21 @@
     <string name="compasso_confirmado">Compasso Confirmado</string>
     <string name="musica_confirmada">Musica confirmada</string>
     <string name="email_invalido">E-mail inválido</string>
+    <string name="semibreve">Semibreve</string>
+    <string name="minima">Mímina</string>
+    <string name="seminima">Seminima</string>
+    <string name="colcheia">Colcheia</string>
+    <string name="semicolcheia">Semicolcheia</string>
+    <string name="fusa">Fusa</string>
+    <string name="semifusa">Semifusa</string>
+    <string name="deletar_musica">Deletar música?</string>
+    <string name="deletar">Deletar</string>
+    <string name="sim">Sim</string>
+    <string name="editar_musica">Editar música</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="adicionado">Adicionada</string>
+    <string name="atualizado">Atualizado</string>
+    <string name="deletado">Deletado</string>
+    <string name="erro">Erro</string>
 
 </resources>

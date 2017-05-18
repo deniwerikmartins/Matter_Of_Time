@@ -1,5 +1,7 @@
 package br.com.matteroftime.ui.edit;
 
+import android.content.Context;
+
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -64,8 +66,8 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     }
 
     @Override
-    public void addMusic(Musica musica) {
-        repository.addMusic(musica, this);
+    public void addMusic(Musica musica, Context context) {
+        repository.addMusic(musica, this, context);
         loadMusics();
     }
 
@@ -75,8 +77,8 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     }
 
     @Override
-    public void deleteMusic(Musica musica) {
-        repository.deleteMusic(musica,this);
+    public void deleteMusic(Musica musica, Context context) {
+        repository.deleteMusic(musica,this, context);
         loadMusics();
     }
 
@@ -86,8 +88,8 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     }
 
     @Override
-    public void updateMusica(Musica musica) {
-        repository.updateMusic(musica,this);
+    public void updateMusica(Musica musica, Context context) {
+        repository.updateMusic(musica,this, context);
         //repository.atualizaMusica(musica);
         loadMusics();
     }
@@ -99,8 +101,8 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
     }
 
     @Override
-    public void atualizarCompassodaMusica(Musica musica, Compasso compasso) {
-        repository.atualizaCompasso(musica, this ,compasso);
+    public void atualizarCompassodaMusica(Musica musica, Compasso compasso, Context context) {
+        repository.atualizaCompasso(musica, this ,compasso, context);
         loadMusics();
     }
 

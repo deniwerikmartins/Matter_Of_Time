@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,8 @@ import io.realm.RealmList;
 public class AddMusicDialogFragment extends DialogFragment  implements AddMusicContract.View  {
     private AddMusicContract.Action presenter;
     private boolean editMode = false;
+    private Context context;
+    private Context editContext;
     @BindView(R.id.edt_nome_da_musica) EditText edtNomeDaMusica;
     @BindView(R.id.edt_quantidade_compassos) EditText edtQtdCompassos;
     public AddMusicDialogFragment() {
@@ -128,6 +131,11 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
         Musica musica = new Musica();
         musica.setNome(edtNomeDaMusica.getText().toString());
         musica.setQtdCompassos(Integer.parseInt(edtQtdCompassos.getText().toString()));
-        presenter.ondAddMusicButtonClick(musica);
+        presenter.ondAddMusicButtonClick(musica, getActivity().getBaseContext());
     }
+
+   /* @Override
+    public void recebeContext(Context context) {
+        presenter.recebeContext(context);
+    }*/
 }

@@ -49,11 +49,13 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
         }
 
         String nome = musica.getNome();
+        String nomeSer;
         nome = nome.trim();
-       /* nome = nome.toLowerCase();
-        nome = nome.replaceAll(" ","");
-        nome = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");*/
-        final File file = new File("data/data/br.com.matteroftime/"+nome+"_music.met");
+        nomeSer = nome;
+        nomeSer = nomeSer.toLowerCase();
+        nomeSer = nomeSer.replaceAll(" ","");
+        nomeSer = Normalizer.normalize(nomeSer, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        final File file = new File("data/data/br.com.matteroftime/"+nomeSer+"_music.met");
 
         List<Compasso> compassosList = new ArrayList<>();
 
@@ -122,12 +124,28 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
 
     @Override
     public void atualizaMusica(Musica musica, final Context context, final OnDatabaseOperationCompleteListener listener, final long usuarioId) {
-        final File file = new File("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
-        final String nome = musica.getNome();
-        final long id = musica.getId();
+        musica.setId(0);
+        for (Compasso compasso: musica.getCompassos()) {
+            compasso.setId(0);
+        }
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(Constants.ID_MUSICA, musica.getId());
+        String nome = musica.getNome();
+        String nomeSer;
+        nome = nome.trim();
+        nomeSer = nome;
+        nomeSer = nomeSer.toLowerCase();
+        nomeSer = nomeSer.replaceAll(" ","");
+        nomeSer = Normalizer.normalize(nomeSer, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        final File file = new File("data/data/br.com.matteroftime/"+nomeSer+"_music.met");
+
+        List<Compasso> compassosList = new ArrayList<>();
+
+        for (Compasso compasso: musica.getCompassos()) {
+            compassosList.add(compasso);
+        }
+
+        musica.setCompassosList(compassosList);
+        musica.setCompassos(null);
 
 
         try{
@@ -139,43 +157,38 @@ public class UploadMusicRepository implements UploadMusicContract.Repository{
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            Ion.with(context)
-                    .load("http://matteroftime.com.br/login.php")
-                    .setJsonObjectBody(jsonObject)
+            //File echoedFile = context.getFileStreamPath("echo");
+
+            Future<JsonObject> jsonObjectFuture = Ion.with(context)
+                    .load("https://matteroftime-redblood666.c9users.io/update.php")
+                    .setMultipartParameter(Constants.ID_USUARIO, String.valueOf(usuarioId))
+                    .setMultipartParameter("musica", nome)
+                    .setMultipartFile("caminho", file)
                     .asJsonObject()
                     .setCallback(new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
-                            if (result.get("result").getAsString().equals("NO")){
+
+                            if (result == null) {
+                                file.delete();
+                                listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
+                            } else if (result.get("result").getAsString().equals("NO")) {
+                                file.delete();
                                 listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
                             } else {
-                                File echoedFile = context.getFileStreamPath("echo");
-                                Future<File> uploading;
-                                uploading = Ion.with(context)
-                                        .load("http://matteroftime.com.br/inserir.php")
-                                        .setMultipartParameter("nome", nome)
-                                        .setMultipartParameter(Constants.ID_MUSICA, String.valueOf(id))
-                                        .setMultipartFile("archive", file)
-                                        .write(echoedFile)
-                                        .setCallback(new FutureCallback<File>() {
-                                            @Override
-                                            public void onCompleted(Exception e, File result) {
-                                                if (e != null){
-                                                    listener.onSQLOperationFailed(context.getString(R.string.erro_envio));
-                                                } else {
-                                                    listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
-                                                }
-                                            }
-                                        });
-                                uploading = null;
+                                file.delete();
+                                listener.onSQLOperationSucceded(context.getString(R.string.sucesso_envio));
                             }
                         }
                     });
+
         } catch (FileNotFoundException e){
+            file.delete();
             e.printStackTrace();
         } catch (IOException e){
+            file.delete();
             e.printStackTrace();
         }
-        file.delete();
+
     }
 }

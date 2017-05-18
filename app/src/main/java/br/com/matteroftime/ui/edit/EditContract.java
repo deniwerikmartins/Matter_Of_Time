@@ -1,5 +1,7 @@
 package br.com.matteroftime.ui.edit;
 
+import android.content.Context;
+
 import java.util.List;
 
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
@@ -32,23 +34,23 @@ public interface EditContract {
         Musica getMusica(long id);
         void onAddMusicButtonClicked();
         void ondAddToEditButtonClicked(Musica musica);
-        void addMusic(Musica musica);
+        void addMusic(Musica musica, Context context);
         void onDeleteMusicButtonClicked(Musica musica);
-        void deleteMusic(Musica musica);
+        void deleteMusic(Musica musica, Context context);
         void onEditMusicaButtonClicked(Musica musica);
-        void updateMusica(Musica musica);
+        void updateMusica(Musica musica, Context context);
         List<Musica> getListaMusicas();
-        void atualizarCompassodaMusica(Musica musica, Compasso compasso);
+        void atualizarCompassodaMusica(Musica musica, Compasso compasso, Context context);
         void atualizaMusica(Musica musica);
     }
 
     public interface Repository{
         List<Musica> getAllMusics();
         Musica getMusicById(long id);
-        void deleteMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
-        void addMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
-        void updateMusic(Musica musica, OnDatabaseOperationCompleteListener listener);
-        void atualizaCompasso(Musica musica, OnDatabaseOperationCompleteListener listener, Compasso compasso);
+        void deleteMusic(Musica musica, OnDatabaseOperationCompleteListener listener, Context context);
+        void addMusic(Musica musica, OnDatabaseOperationCompleteListener listener, Context context);
+        void updateMusic(Musica musica, OnDatabaseOperationCompleteListener listener, Context context);
+        void atualizaCompasso(Musica musica, OnDatabaseOperationCompleteListener listener, Compasso compasso, Context context);
         void atualizaMusica(Musica musica);
     }
 }

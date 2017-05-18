@@ -2,15 +2,14 @@ package br.com.matteroftime.ui.edit;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +31,6 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import javax.inject.Inject;
@@ -47,8 +45,6 @@ import br.com.matteroftime.ui.addMusic.AddMusicDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
-import io.realm.RealmList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +54,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     private EditAdapter adapter;
     private EditContract.Actions presenter;
     private AddMusicDialogFragment addMusicDialogFragment;
-    private String[] valorNotas = new String[]{"Semibreve","Mímina","Seminima","Colcheia","Semicolcheia","Fusa","Semifusa"};
+    private String[] valorNotas;
     private int nota;
     private String select;
     private boolean contagem;
@@ -97,6 +93,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         view =  inflater.inflate(R.layout.fragment_edit, container, false);
         musica = new Musica();
         ButterKnife.bind(this, view);
+        valorNotas = new String[]{getString(R.string.semibreve),getString(R.string.minima),getString(R.string.seminima),getString(R.string.colcheia),getString(R.string.semicolcheia),getString(R.string.fusa),getString(R.string.semifusa)};
         bus.register(this);
         presenter = new EditPresenter(this);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -119,26 +116,27 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 select = (String)spinner.getSelectedItem();
-                switch (select){
-                    case "Semibreve":
+                int selectedItemPosition = spinner.getSelectedItemPosition();
+                switch (selectedItemPosition){
+                    case 0:
                         nota = 1;
                         break;
-                    case "Mímina":
+                    case 1:
                         nota = 2;
                         break;
-                    case "Seminima":
+                    case 2:
                         nota = 4;
                         break;
-                    case "Colcheia":
+                    case 3:
                         nota = 8;
                         break;
-                    case "Semicolcheia":
+                    case 4:
                         nota = 16;
                         break;
-                    case "Fusa":
+                    case 5:
                         nota = 32;
                         break;
-                    case "Semifusa":
+                    case 6:
                         nota = 64;
                         break;
                 }
@@ -193,13 +191,17 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @Override
     public void showAddMusicForm() {
         addMusicDialogFragment = AddMusicDialogFragment.newInstance(0);
+        //Context context = getContext();
         addMusicDialogFragment.show(getActivity().getFragmentManager(), "Dialog");
+        //addMusicDialogFragment.recebeContext(context);
     }
 
     @Override
     public void showEditMusicForm(Musica musica) {
         AddMusicDialogFragment dialog = AddMusicDialogFragment.newInstance(musica.getId());
+        //Context context = getContext();
         dialog.show(getActivity().getFragmentManager(), "Dialog");
+        //dialog.recebeContext(context);
     }
 
     @Override
@@ -208,16 +210,16 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View titleView = (View)inflater.inflate(R.layout.dialog_title,null);
         TextView titleText = (TextView) titleView.findViewById(R.id.txt_view_dialog_title);
-        titleText.setText("Delete Music?");
-        alertDialog.setMessage("Delete" + musica.getNome());
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        titleText.setText(getString(R.string.deletar_musica));
+        alertDialog.setMessage(getString(R.string.deletar) + musica.getNome());
+        alertDialog.setPositiveButton(getString(R.string.sim), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                presenter.deleteMusic(musica);
+                presenter.deleteMusic(musica, getActivity().getBaseContext());
                 dialog.dismiss();
             }
         });
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -277,7 +279,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     }
 
     private void showMusicContextMenu(final Musica musicaClicada) {
-        final String[] sortOptions = {"Edit Music", "Delete"};
+        final String[] sortOptions = {getString(R.string.editar_musica), getString(R.string.deletar)};
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View convertView = (View) inflater.inflate(R.layout.dialog_list, null);
@@ -292,7 +294,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (getActivity(), android.R.layout.simple_list_item_1,sortOptions);
         dialogList.setAdapter(adapter);
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -454,7 +456,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             compassos.set(compasso.getOrdem(), compasso);
             musica.setCompassos(compassos);*/
             //presenter.updateMusica(musica);
-            presenter.atualizarCompassodaMusica(musica, compasso);
+            presenter.atualizarCompassodaMusica(musica, compasso, getActivity().getBaseContext());
             //presenter.atualizarCompassodaMusica(musica, compasso);
             List<Musica> musicas = presenter.getListaMusicas();
             this.showMusics(musicas);

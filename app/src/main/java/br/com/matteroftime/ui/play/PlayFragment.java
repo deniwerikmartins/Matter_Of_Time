@@ -50,13 +50,11 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private View view;
     private PlayAdapter playAdapter;
     private PlayContract.Actions presenter;
-    private String[] valorNotas = new String[]{"Semibreve","Mímina","Seminima","Colcheia","Semicolcheia","Fusa","Semifusa"};
+    private String[] valorNotas;
     private int nota;
     private String select;
     private Musica musica;
     Handler handler;
-
-
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
     @BindView(R.id.edtTempos) EditText tempos;
@@ -93,8 +91,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_play, container, false);
+        valorNotas = new String[]{getString(R.string.semibreve),getString(R.string.minima),getString(R.string.seminima),getString(R.string.colcheia),getString(R.string.semicolcheia),getString(R.string.fusa),getString(R.string.semifusa)};
         ButterKnife.bind(this, view);
-
 
         handler = new Handler(){
             @Override
@@ -166,10 +164,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                         repeticoesTotal.setText(compassoAtualTempoTotalCompasso);
                         break;
                 }
-
-
                 //repeticoesAtual.setText(String.valueOf(msg.arg1));
-
             }
         };
 
@@ -184,7 +179,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         playlistRecyclerView.setLayoutManager(layoutManager);
         playlistRecyclerView.setAdapter(playAdapter);
 
-
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, valorNotas);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //spinner = (Spinner) spinner.findViewById(R.id.spn_notas);
@@ -195,29 +189,30 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //nota = (int)spinner.getSelectedItem();
                 select = (String)spinner.getSelectedItem();
-                switch (select){
-                                        case "Semibreve":
-                                                nota = 1;
-                                                break;
-                                        case "Mímina":
-                                                nota = 2;
-                                                break;
-                                        case "Seminima":
-                                                nota = 4;
-                                                break;
-                                        case "Colcheia":
-                                                nota = 8;
-                                                break;
-                                        case "Semicolcheia":
-                                                nota = 16;
-                                                break;
-                                        case "Fusa":
-                                                nota = 32;
-                                                break;
-                                        case "Semifusa":
-                                                nota = 64;
-                                                break;
-                                    }
+                int selectedItemPosition = spinner.getSelectedItemPosition();
+                switch (selectedItemPosition){
+                    case 0:
+                        nota = 1;
+                        break;
+                    case 1:
+                        nota = 2;
+                        break;
+                    case 2:
+                        nota = 4;
+                        break;
+                    case 3:
+                        nota = 8;
+                        break;
+                    case 4:
+                        nota = 16;
+                        break;
+                    case 5:
+                        nota = 32;
+                        break;
+                    case 6:
+                        nota = 64;
+                        break;
+                }
             }
 
             @Override

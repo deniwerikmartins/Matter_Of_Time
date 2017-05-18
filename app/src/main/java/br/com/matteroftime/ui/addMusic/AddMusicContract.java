@@ -1,5 +1,7 @@
 package br.com.matteroftime.ui.addMusic;
 
+import android.content.Context;
+
 import br.com.matteroftime.models.Musica;
 
 /**
@@ -12,12 +14,14 @@ public interface AddMusicContract {
         void setEditMode(boolean editMode);
         void displayMessage(String message);
 
+        //void recebeContext(Context context);
     }
 
     interface Action{
-        void ondAddMusicButtonClick(Musica musica);
+        void ondAddMusicButtonClick(Musica musica, Context context);
         void checkStatus(long id);
-        void saveMusic(Musica musica);
-        void updateMusic(Musica musica);
+        void saveMusic(Musica musica, Context context);
+        void updateMusic(Musica musica, Context context);
+        //void recebeContext(Context context);
     }
 }

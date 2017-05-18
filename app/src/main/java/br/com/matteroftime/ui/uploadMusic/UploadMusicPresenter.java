@@ -78,7 +78,6 @@ public class UploadMusicPresenter implements UploadMusicContract.Action, OnDatab
     public void salvaMusica(Musica musica, Context context, long usuarioId) {
         //musica.setCompassos(null);
         repository.salvaMusica(musica, context, this, usuarioId);
-
     }
 
     @Override
@@ -89,7 +88,6 @@ public class UploadMusicPresenter implements UploadMusicContract.Action, OnDatab
     @Override
     public void onSQLOperationFailed(String error) {
         view.showMessage("error" + error);
-
     }
 
     @Override

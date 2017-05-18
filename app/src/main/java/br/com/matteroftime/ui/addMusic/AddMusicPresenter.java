@@ -1,5 +1,7 @@
 package br.com.matteroftime.ui.addMusic;
 
+import android.content.Context;
+
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -20,6 +22,7 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
 
     private final AddMusicContract.View view;
     private long musicaId = 0;
+    private Context editContext;
     @Inject EditContract.Repository repository;
     @Inject Bus bus;
 
@@ -33,12 +36,12 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
 
 
     @Override
-    public void ondAddMusicButtonClick(Musica musica) {
+    public void ondAddMusicButtonClick(Musica musica, Context context) {
         if (musicaId > 0){
             musica.setId(musicaId);
-            updateMusic(musica);
+            updateMusic(musica, context);
         } else {
-            saveMusic(musica);
+            saveMusic(musica, context);
         }
 
     }
@@ -55,7 +58,7 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
     }
 
     @Override
-    public void saveMusic(Musica musica) {
+    public void saveMusic(Musica musica, Context context) {
 
         RealmList<Compasso> compassos = new RealmList<>();
 
@@ -66,20 +69,21 @@ public class AddMusicPresenter implements AddMusicContract.Action, OnDatabaseOpe
         musica.setCompassos(null);
         musica.setCompassos(compassos);
 
-        if (musicaId > 0){
-            musica.setId(musicaId);
-            updateMusic(musica);
-        } else {
-            repository.addMusic(musica, this);
-        }
+
+        repository.addMusic(musica, this, context);
+
     }
 
     @Override
-    public void updateMusic(Musica musica) {
+    public void updateMusic(Musica musica, Context context) {
         musica.setId(musicaId);
-        repository.updateMusic(musica, this);
+        repository.updateMusic(musica, this, context);
     }
 
+  /*  @Override
+    public void recebeContext(Context context) {
+        editContext = context;
+    }*/
 
     @Override
     public void onSQLOperationFailed(String error) {

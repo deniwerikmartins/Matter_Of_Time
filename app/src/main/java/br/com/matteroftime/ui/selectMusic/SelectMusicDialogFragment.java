@@ -91,16 +91,16 @@ public class SelectMusicDialogFragment extends DialogFragment implements SelectM
 
             View titleView = inflater.inflate(R.layout.dialog_title,null);
             TextView titleText = (TextView)titleView.findViewById(R.id.txt_view_dialog_title);
-            titleText.setText("Select Music");;
+            titleText.setText(getString(R.string.selecionar_musica));
             dialogFragment.setCustomTitle(titleView);
 
-            dialogFragment.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            dialogFragment.setPositiveButton(getString(R.string.adicionar), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-            dialogFragment.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            dialogFragment.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

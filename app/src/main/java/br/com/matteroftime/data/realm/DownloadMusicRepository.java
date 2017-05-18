@@ -98,7 +98,7 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                                                               @Override
                                                               public void onSuccess() {
                                                                   realm.close();
-                                                                  listener.onSQLOperationSucceded("Added");
+                                                                  listener.onSQLOperationSucceded(context.getString(R.string.adicionado));
                                                               }
                                                           }, new Realm.Transaction.OnError() {
                                                               @Override

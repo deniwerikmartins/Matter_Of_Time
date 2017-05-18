@@ -187,22 +187,19 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         } else if (usuarioId == 0){
             showMessage(getString(R.string.login_nao_realizado));
         }
-        if (musicaId > 0 && usuarioId > 0){
+
+        if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+            showMessage(getString(R.string.sem_conexao));
+        } else if (musicaId > 0 && usuarioId > 0){
             musicaUpload = presenter.getMusica(musicaId);
             if (musicaUpload.getCompassos().size() == 0){
                 showMessage(getString(R.string.sem_compasso));
             } else if (!musicaUpload.getNome().equals("")) {
-                try {
-                    uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
-                    uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
-                    //showMessage(getString(R.string.sucesso_envio));
-                } catch (Exception e){
-                    //showMessage(getString(R.string.erro_envio));
-                }
-
+                uploadMusicFragment = UploadMusicFragment.newInstance(musicaUpload.getId(), usuarioId);
+                uploadMusicFragment.recebeUserAreaView(this, context);
+                uploadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
             }
         }
-
     }
 
     @OnClick(R.id.btnPesquisar)

@@ -159,9 +159,6 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
     }
 
 
-
-
-
     @Override
     public void showMusics(List<Musica> availableMusics) {
         adapter.replaceData(availableMusics);

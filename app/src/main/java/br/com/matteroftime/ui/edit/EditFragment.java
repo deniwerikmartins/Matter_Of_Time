@@ -570,5 +570,8 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){
         presenter.loadMusics();
+        List<Musica> musicas = presenter.getListaMusicas();
+        adapter.replaceData(musicas);
+
     }
 }

@@ -21,6 +21,7 @@ import br.com.matteroftime.ui.edit.EditFragment;
 public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnDatabaseOperationCompleteListener{
 
     private final DownloadMusicContract.View view;
+    private EditFragment editFragment;
     @Inject DownloadMusicContract.Repository repository;
     @Inject Bus bus;
     private Musica musica;
@@ -31,7 +32,7 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
         //bus.register(this);
         EditFragment editFragment = new EditFragment();
 
-        bus.register(editFragment);
+        //bus.register(editFragment);
     }
 
 
@@ -46,12 +47,18 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
     }
 
     @Override
-    public void downloadMusica(Musica musica, Context context) {
+    public void downloadMusica(Musica musica, Context context, EditFragment editFr) {
         //bus.unregister(this);
-        //bus.register(EditFragment.class);
+        editFragment = editFr;
+        bus.register(editFragment);
         repository.downloadMusica(musica, this, context);
         loadMusics();
         bus.post(new MusicListChangedEvent());
+    }
+
+    @Override
+    public void recebeEditFragment(EditFragment editFragment) {
+        this.editFragment = editFragment;
     }
 
     @Override

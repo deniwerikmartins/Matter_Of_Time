@@ -24,6 +24,7 @@ import java.util.List;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.edit.EditFragment;
 import br.com.matteroftime.ui.uploadMusic.UploadMusicContract;
 import br.com.matteroftime.ui.userArea.UserAreaAdapter;
 import br.com.matteroftime.ui.userArea.UserAreaContract;
@@ -42,6 +43,7 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
     private static Musica musica;
     private static UserAreaAdapter adapter;
     private UserAreaContract.View userAreaView;
+    private EditFragment editFragment;
     private Context userAreaContext;
 
     @BindView(R.id.txtNomeMusicaBaixar) TextView nomeMusicaBaixar;
@@ -110,7 +112,7 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
                 public void onClick(View v) {
                     Context context = getActivity().getBaseContext();
                     try {
-                        presenter.downloadMusica(musica, context);
+                        presenter.downloadMusica(musica, context, editFragment);
                         userAreaView.showMessage(getString(R.string.sucesso_download));
                     } catch (Exception e){
                         userAreaView.showMessage(getString(R.string.erro_download));
@@ -158,6 +160,10 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
         userAreaContext = context;
     }
 
+    @Override
+    public void recebeEditFragment(EditFragment editFragment) {
+        this.editFragment = editFragment;
+    }
 
     @Override
     public void showMusics(List<Musica> availableMusics) {

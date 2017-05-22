@@ -28,6 +28,8 @@ public interface EditContract {
         void atualizaNomeMusica(Musica musicaSelecionada);
 
         void resetaNome();
+
+        EditFragment recebeFragment();
     }
     public interface Actions{
         void loadMusics();

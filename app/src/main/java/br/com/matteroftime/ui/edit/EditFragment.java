@@ -566,9 +566,17 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         showMessage("attach activity");
     }
 
+    @Override
+    public EditFragment recebeFragment() {
+        EditFragment fragment = this;
+        return fragment;
+    }
 
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){
+        presenter = new EditPresenter(this);
+        List<Musica> tempMusicas = new ArrayList<>();
+        adapter = new EditAdapter(tempMusicas, getContext(), this);
         presenter.loadMusics();
         List<Musica> musicas = presenter.getListaMusicas();
         adapter.replaceData(musicas);

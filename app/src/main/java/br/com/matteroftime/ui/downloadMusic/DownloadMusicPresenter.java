@@ -12,6 +12,7 @@ import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
+import br.com.matteroftime.ui.edit.EditFragment;
 
 /**
  * Created by RedBlood on 12/05/2017.
@@ -27,7 +28,10 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
     public DownloadMusicPresenter(DownloadMusicContract.View view) {
         this.view = view;
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
-        bus.register(this);
+        //bus.register(this);
+        EditFragment editFragment = new EditFragment();
+
+        bus.register(editFragment);
     }
 
 
@@ -43,6 +47,8 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
 
     @Override
     public void downloadMusica(Musica musica, Context context) {
+        //bus.unregister(this);
+        //bus.register(EditFragment.class);
         repository.downloadMusica(musica, this, context);
         loadMusics();
         bus.post(new MusicListChangedEvent());

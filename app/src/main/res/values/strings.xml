@@ -124,5 +124,6 @@
     <string name="pesquisando">Pesquisando...</string>
     <string name="adicionar_musica">Adicionar musica</string>
     <string name="atualizar">Atualizar</string>
+    <string name="email_cadastrado">E-mail já cadastrado</string>
 
 </resources>

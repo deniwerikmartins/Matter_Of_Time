@@ -29,7 +29,7 @@ public interface EditContract {
 
         void resetaNome();
 
-        EditFragment recebeFragment();
+
     }
     public interface Actions{
         void loadMusics();

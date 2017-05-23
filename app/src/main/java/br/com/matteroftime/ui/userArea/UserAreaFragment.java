@@ -50,7 +50,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     private SelectMusicDialogFragment selectMusicDialogFragment;
     private UploadMusicFragment uploadMusicFragment;
     private DownloadMusicFragment downloadMusicFragment;
-    private EditFragment editFragment;
+    //private EditFragment editFragment;
     private Musica musicaUpload;
     private Musica musicaDownload;
     private Context context;
@@ -89,8 +89,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         musicaDownload = new Musica();
         ButterKnife.bind(this, view);
         presenter = new UserAreaPresenter(this);
-        editFragment = new EditFragment();
-        editFragment = editFragment.recebeFragment();
+
 
 
         //setup Recyclerview
@@ -238,7 +237,6 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         } else {
             downloadMusicFragment = DownloadMusicFragment.newInstance(musicaDownload, adapter);
             downloadMusicFragment.recebeUserAreaView(this, context);
-            downloadMusicFragment.recebeEditFragment(editFragment);
             downloadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
 
         }

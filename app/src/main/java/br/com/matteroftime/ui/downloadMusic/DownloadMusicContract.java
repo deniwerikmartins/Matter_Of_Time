@@ -20,15 +20,14 @@ public interface DownloadMusicContract {
         void showMessage(String message);
         void displayMessage(String message);
         void recebeUserAreaView(UserAreaFragment userAreaFragment, Context context);
-        void recebeEditFragment(EditFragment editFragment);
         void showMusics(List<Musica> availableMusics);
     }
 
     interface Action{
 
-        void downloadMusica(Musica musica, Context context, EditFragment editFr);
+        void downloadMusica(Musica musica, Context context);
         void loadMusics();
-        void recebeEditFragment(EditFragment editFragment);
+
 
     }
 

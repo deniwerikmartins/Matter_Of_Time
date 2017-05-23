@@ -112,7 +112,7 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
                 public void onClick(View v) {
                     Context context = getActivity().getBaseContext();
                     try {
-                        presenter.downloadMusica(musica, context, editFragment);
+                        presenter.downloadMusica(musica, context);
                         userAreaView.showMessage(getString(R.string.sucesso_download));
                     } catch (Exception e){
                         userAreaView.showMessage(getString(R.string.erro_download));
@@ -160,10 +160,6 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
         userAreaContext = context;
     }
 
-    @Override
-    public void recebeEditFragment(EditFragment editFragment) {
-        this.editFragment = editFragment;
-    }
 
     @Override
     public void showMusics(List<Musica> availableMusics) {

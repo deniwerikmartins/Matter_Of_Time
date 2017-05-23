@@ -34,7 +34,9 @@ public class SignUpRepository implements SignUpContract.Repository {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        if (result.get("result").getAsString().equals("NO")){
+                        if (result.get("result").getAsString().equals("EXISTENTE")){
+                            listener.onSQLOperationFailed(context.getString(R.string.email_cadastrado));
+                        } else if (result.get("result").getAsString().equals("NO")){
                             listener.onSQLOperationFailed(context.getString(R.string.erro_cadastrar));
                         } else {
                             listener.onSQLOperationSucceded(context.getString(R.string.cadastro_sucesso));

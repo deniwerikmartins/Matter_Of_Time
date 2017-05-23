@@ -28,9 +28,9 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
     public DownloadMusicPresenter(DownloadMusicContract.View view) {
         this.view = view;
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
-        //bus.register(this);
+        bus.register(this);
 
-        bus.register(EditFragment.class);
+        //bus.register(EditFragment.class);
 
     }
 
@@ -48,11 +48,13 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
     @Override
     public void downloadMusica(Musica musica, Context context) {
         //bus.unregister(this);
-        /*editFragment = editFr;
+        /*EditFragment editFragment = new EditFragment();
         bus.register(editFragment);*/
         repository.downloadMusica(musica, this, context);
         loadMusics();
+
         bus.post(new MusicListChangedEvent());
+
     }
 
 

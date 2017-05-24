@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import br.com.matteroftime.R;
+import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.edit.EditFragment;
 import br.com.matteroftime.ui.uploadMusic.UploadMusicContract;
@@ -30,6 +31,7 @@ import br.com.matteroftime.ui.userArea.UserAreaAdapter;
 import br.com.matteroftime.ui.userArea.UserAreaContract;
 import br.com.matteroftime.ui.userArea.UserAreaFragment;
 import br.com.matteroftime.util.Constants;
+import br.com.matteroftime.util.EventBus;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -114,10 +116,12 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
                     try {
                         presenter.downloadMusica(musica, context);
                         userAreaView.showMessage(getString(R.string.sucesso_download));
+                        //EventBus.getInstance().post(new MusicListChangedEvent());
                     } catch (Exception e){
                         userAreaView.showMessage(getString(R.string.erro_download));
                     }
                     dismiss();
+                    //EventBus.getInstance().post(new MusicListChangedEvent());
                 }
             });
 
@@ -131,6 +135,7 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
             });
 
         }
+        //EventBus.getInstance().post(new MusicListChangedEvent());
     }
 
     @Override

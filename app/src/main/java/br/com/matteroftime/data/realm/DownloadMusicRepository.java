@@ -15,10 +15,12 @@ import java.util.List;
 
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
+import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.downloadMusic.DownloadMusicContract;
+import br.com.matteroftime.util.EventBus;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
@@ -93,11 +95,13 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                                                                   musica1.setCompassos(compassos);
                                                                   musica1.setCompassosList(null);
                                                                   backgroundRealm.copyToRealmOrUpdate(musica1);
+                                                                  //EventBus.getInstance().post(new MusicListChangedEvent());
                                                               }
                                                           }, new Realm.Transaction.OnSuccess() {
                                                               @Override
                                                               public void onSuccess() {
                                                                   realm.close();
+                                                                  EventBus.getInstance().post(new MusicListChangedEvent()); /*PUTA QUE PARIU FOI!*/
                                                                   listener.onSQLOperationSucceded(context.getString(R.string.adicionado));
                                                               }
                                                           }, new Realm.Transaction.OnError() {

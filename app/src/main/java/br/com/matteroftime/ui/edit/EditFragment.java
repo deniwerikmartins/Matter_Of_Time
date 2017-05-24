@@ -44,6 +44,7 @@ import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.addMusic.AddMusicDialogFragment;
+import br.com.matteroftime.util.EventBus;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -97,6 +98,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         ButterKnife.bind(this, view);
         valorNotas = new String[]{getString(R.string.semibreve),getString(R.string.minima),getString(R.string.seminima),getString(R.string.colcheia),getString(R.string.semicolcheia),getString(R.string.fusa),getString(R.string.semifusa)};
         bus.register(this);
+
         presenter = new EditPresenter(this);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -552,12 +554,16 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     public void onStart() {
         super.onStart();
         showMessage("start");
+        EventBus.getInstance().register(this);
     }
 
     @Override
     public void onStop() {
-        super.onStop();
+        EventBus.getInstance().unregister(this);
         showMessage("stop");
+        super.onStop();
+
+
     }
 
     @Override
@@ -569,13 +575,9 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
 
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){
-        /*presenter = new EditPresenter(this);
-        List<Musica> tempMusicas = new ArrayList<>();
-        adapter = new EditAdapter(tempMusicas, getContext(), this);*/
         presenter.loadMusics();
-
-        /*List<Musica> musicas = presenter.getListaMusicas();
-        adapter.replaceData(musicas);*/
+        List<Musica> musicas = presenter.getListaMusicas();
+        adapter.replaceData(musicas);
 
     }
 }

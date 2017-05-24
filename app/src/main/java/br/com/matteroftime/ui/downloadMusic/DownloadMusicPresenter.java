@@ -13,6 +13,7 @@ import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnDatabaseOperationCompleteListener;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.edit.EditFragment;
+import br.com.matteroftime.util.EventBus;
 
 /**
  * Created by RedBlood on 12/05/2017.
@@ -53,7 +54,8 @@ public class DownloadMusicPresenter implements DownloadMusicContract.Action, OnD
         repository.downloadMusica(musica, this, context);
         loadMusics();
 
-        bus.post(new MusicListChangedEvent());
+        //bus.post(new MusicListChangedEvent());
+        //EventBus.getInstance().post(new MusicListChangedEvent());
 
     }
 

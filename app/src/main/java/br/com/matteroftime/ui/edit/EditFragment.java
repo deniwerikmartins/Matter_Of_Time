@@ -441,6 +441,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             edtBpm.setError(getString(R.string.obrigatorio));
             edtBpm.requestFocus();
             showMessage(getString(R.string.bpm_necessario));
+
         } else if (edtTempos.getText().toString().isEmpty()){
             edtTempos.setError(getString(R.string.obrigatorio));
             edtTempos.requestFocus();
@@ -449,24 +450,29 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
             edtRepeticoes.setError(getString(R.string.obrigatorio));
             edtRepeticoes.requestFocus();
             showMessage(getString(R.string.repeticoes_necessaria));
-        } else {
-            Compasso compasso = new Compasso();
-            compasso.setOrdem(Integer.parseInt(edtNumeroCompasso.getText().toString()));
-            compasso.setBpm(Integer.parseInt(edtBpm.getText().toString()));
-            compasso.setTempos(Integer.parseInt(edtTempos.getText().toString()));
-            compasso.setNota(nota);
-            compasso.setRepeticoes(Integer.parseInt(edtRepeticoes.getText().toString()));
+        } else if (!edtBpm.getText().toString().isEmpty()){
+            int val = Integer.parseInt(edtBpm.getText().toString());
+            if (val < 30 || val > 250){
+                showMessage(getString(R.string.valor_incompativel));
+            } else {
+                Compasso compasso = new Compasso();
+                compasso.setOrdem(Integer.parseInt(edtNumeroCompasso.getText().toString()));
+                compasso.setBpm(Integer.parseInt(edtBpm.getText().toString()));
+                compasso.setTempos(Integer.parseInt(edtTempos.getText().toString()));
+                compasso.setNota(nota);
+                compasso.setRepeticoes(Integer.parseInt(edtRepeticoes.getText().toString()));
             /*RealmList<Compasso> compassos = musica.getCompassos();
             compassos.set(compasso.getOrdem(), compasso);
             musica.setCompassos(compassos);*/
-            //presenter.updateMusica(musica);
-            presenter.atualizarCompassodaMusica(musica, compasso, getActivity().getBaseContext());
-            //presenter.atualizarCompassodaMusica(musica, compasso);
-            List<Musica> musicas = presenter.getListaMusicas();
-            this.showMusics(musicas);
-            recebeMusica(musicas.get(musica.getOrdem())); // -1?
-            atualizaViewsCompasso(musica, compasso);
-            bus.post(new MusicListChangedEvent());
+                //presenter.updateMusica(musica);
+                presenter.atualizarCompassodaMusica(musica, compasso, getActivity().getBaseContext());
+                //presenter.atualizarCompassodaMusica(musica, compasso);
+                List<Musica> musicas = presenter.getListaMusicas();
+                this.showMusics(musicas);
+                recebeMusica(musicas.get(musica.getOrdem())); // -1?
+                atualizaViewsCompasso(musica, compasso);
+                bus.post(new MusicListChangedEvent());
+            }
         }
     }
 
@@ -521,56 +527,19 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        showMessage("detach");
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        showMessage("attach");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        showMessage("pause");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        showMessage("create");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        showMessage("destroy");
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
-        showMessage("start");
         EventBus.getInstance().register(this);
     }
 
     @Override
     public void onStop() {
         EventBus.getInstance().unregister(this);
-        showMessage("stop");
         super.onStop();
 
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        showMessage("attach activity");
-    }
 
 
     @Subscribe

@@ -324,17 +324,23 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             bpm.setError(getString(R.string.obrigatorio));
             bpm.requestFocus();
             this.showMessage(getString(R.string.bpm_necessario));
-        } else {
-            int t = Integer.parseInt(tempos.getText().toString());
-            int b = Integer.parseInt(bpm.getText().toString());
-            presenter.criaCompasso(b, t, nota);
-            bpmAtual.setText(String.valueOf(b));
-            temposAtual.setText(String.valueOf(t));
-            notaAtual.setText(String.valueOf(nota));
-            nomeMusica.setText(getString(compasso));
-            bus.post(new MusicListChangedEvent());
-            showMessage(getString(R.string.compasso_confirmado));
+        } else if (!bpm.getText().toString().isEmpty()){
+            int val = Integer.parseInt(bpm.getText().toString());
+            if (val < 30 || val > 250){
+                showMessage(getString(R.string.valor_incompativel));
+            } else {
+                int t = Integer.parseInt(tempos.getText().toString());
+                int b = Integer.parseInt(bpm.getText().toString());
+                presenter.criaCompasso(b, t, nota);
+                bpmAtual.setText(String.valueOf(b));
+                temposAtual.setText(String.valueOf(t));
+                notaAtual.setText(String.valueOf(nota));
+                nomeMusica.setText(getString(compasso));
+                bus.post(new MusicListChangedEvent());
+                showMessage(getString(R.string.compasso_confirmado));
+            }
         }
+
 
     }
 
@@ -367,54 +373,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         }
 
     }
-
-    /*@Override
-    public void onDetach() {
-        super.onDetach();
-        showMessage("detach");
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        showMessage("attach");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        showMessage("pause");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        showMessage("create");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        showMessage("destroy");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        showMessage("start");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        showMessage("stop");
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        showMessage("attach activity");
-    }*/
 
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){

@@ -23,7 +23,7 @@
     <string name="remover_compasso">Remover Compasso</string>
     <string name="insere_compasso">Inserir Compasso</string>
     <string name="sem_musicas">Sem Músicas</string>
-    <string name="ordem_da_musica_na_playlist">Ordem da musica na Playlist</string>
+    <string name="ordem_da_musica_na_playlist">Ordem da música na Playlist</string>
     <string name="name_is_required">Nome obrigatório</string>
     <string name="confirmar_compasso">Confirmar compasso</string>
     <string name="tempo_necessario">Necessário tempos por compasso</string>
@@ -33,11 +33,11 @@
     <string name="repeticoes">Repetições</string>
     <string name="tamanho_compassos">Sua música possui </string>
     <string name="compassos">compassos</string>
-    <string name="sem_musica">Sem musica selecionada</string>
+    <string name="sem_musica">Sem música selecionada</string>
     <string name="sem_compasso">Sem compasso selecionado</string>
     <string name="compasso_inexistente">Compasso inexistente</string>
-    <string name="musica_inexistente">Musica inexistente</string>
-    <string name="posicao_invalida">Posição para musica inválida</string>
+    <string name="musica_inexistente">Música inexistente</string>
+    <string name="posicao_invalida">Posição para música inválida</string>
     <string name="total_de_compassos">Compassos</string>
     <string name="sem_posicao">Sem posição selecionada</string>
     <string name="usuario">Usuário</string>
@@ -58,7 +58,7 @@
     <string name="cancelar">Cancelar</string>
     <string name="sucesso_envio">Música enviada com sucesso</string>
     <string name="erro_envio">Erro ao enviar música</string>
-    <string name="informe_musica">Informe o nome da musica à ser pesquisada</string>
+    <string name="informe_musica">Informe o nome da música à ser pesquisada</string>
     <string name="ok" translatable="false">Ok</string>
     <string name="sem_resultados">Sua busca não encontrou resultados</string>
     <string name="erro_download">Erro ao baixar música</string>
@@ -101,7 +101,7 @@
 
     <string name="icon">Icon</string>
     <string name="compasso_confirmado">Compasso Confirmado</string>
-    <string name="musica_confirmada">Musica confirmada</string>
+    <string name="musica_confirmada">Música confirmada</string>
     <string name="email_invalido">E-mail inválido</string>
     <string name="semibreve">Semibreve</string>
     <string name="minima">Mímina</string>
@@ -122,8 +122,10 @@
     <string name="edit">Editar</string>
     <string name="user_area">Área do usuário</string>
     <string name="pesquisando">Pesquisando...</string>
-    <string name="adicionar_musica">Adicionar musica</string>
+    <string name="adicionar_musica">Adicionar música</string>
     <string name="atualizar">Atualizar</string>
     <string name="email_cadastrado">E-mail já cadastrado</string>
+    <string name="valor_incompativel">Defina um valor de BPM entre 30 e 250</string>
+    <string name="compassos_excedentes">Defina uma quantidade de compassos menor que 999</string>
 
 </resources>

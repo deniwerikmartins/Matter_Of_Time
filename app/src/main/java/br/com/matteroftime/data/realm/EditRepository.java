@@ -22,6 +22,37 @@ import io.realm.annotations.RealmClass;
  */
 
 public class EditRepository implements EditContract.Repository{
+
+    @Override
+    public void addMusic(final Musica musica, final OnDatabaseOperationCompleteListener listener, final Context context) {
+        final Realm realm = Realm.getDefaultInstance();
+        final long id = MatterOfTimeApplication.musicaPrimarykey.incrementAndGet();
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+                                          @Override
+                                          public void execute(Realm backgroundRealm) {
+                                              musica.setId(id);
+                                              for (Compasso compasso : musica.getCompassos()) {
+                                                  compasso.setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
+                                              }
+                                              backgroundRealm.copyToRealmOrUpdate(musica);
+                                          }
+                                      }, new Realm.Transaction.OnSuccess() {
+                                          @Override
+                                          public void onSuccess() {
+                                              realm.close();
+                                              listener.onSQLOperationSucceded(context.getString(R.string.adicionado));
+                                          }
+                                      }, new Realm.Transaction.OnError() {
+                                          @Override
+                                          public void onError(Throwable error) {
+                                              realm.close();
+                                              listener.onSQLOperationFailed(error.getLocalizedMessage());
+                                          }
+                                      }
+        );
+    }
+
     @Override
     public List<Musica> getAllMusics() {
         Realm realm = Realm.getDefaultInstance();
@@ -140,35 +171,7 @@ public class EditRepository implements EditContract.Repository{
                                       }
         );
     }
-    @Override
-    public void addMusic(final Musica musica, final OnDatabaseOperationCompleteListener listener, final Context context) {
-        final Realm realm = Realm.getDefaultInstance();
-        final long id = MatterOfTimeApplication.musicaPrimarykey.incrementAndGet();
 
-        realm.executeTransactionAsync(new Realm.Transaction() {
-                                          @Override
-                                          public void execute(Realm backgroundRealm) {
-                                              musica.setId(id);
-                                              for (Compasso compasso : musica.getCompassos()) {
-                                                  compasso.setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
-                                              }
-                                              backgroundRealm.copyToRealmOrUpdate(musica);
-                                          }
-                                      }, new Realm.Transaction.OnSuccess() {
-                                          @Override
-                                          public void onSuccess() {
-                                              realm.close();
-                                              listener.onSQLOperationSucceded(context.getString(R.string.adicionado));
-                                          }
-                                      }, new Realm.Transaction.OnError() {
-                                          @Override
-                                          public void onError(Throwable error) {
-                                              realm.close();
-                                              listener.onSQLOperationFailed(error.getLocalizedMessage());
-                                          }
-                                      }
-        );
-    }
     @Override
     public void updateMusic(final Musica musica, final OnDatabaseOperationCompleteListener listener, final Context context) {
         final Realm realm = Realm.getDefaultInstance();

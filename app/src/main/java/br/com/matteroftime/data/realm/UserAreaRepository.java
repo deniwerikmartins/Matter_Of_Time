@@ -42,30 +42,11 @@ import io.realm.RealmResults;
 
 public class UserAreaRepository implements UserAreaContract.Repository {
     List<Musica> musicas = new ArrayList<>();
-    File file;
-    File file2;
 
     @Override
-    public List<Musica> getAllMusics() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Musica> musicas = realm.where(Musica.class).findAllSorted("ordem");
-        List<Musica> result = realm.copyFromRealm(musicas);
-        realm.close();
-        return result;
-    }
-
-    @Override
-    public Musica getMusicById(long id) {
-            Realm realm = Realm.getDefaultInstance();
-            RealmResults<Musica> musicas = realm.where(Musica.class).equalTo("id", id).findAll();
-            Musica result = musicas.first();
-            Musica inMemoryMusic = realm.copyFromRealm(result);
-            realm.close();
-            return inMemoryMusic;
-    }
-
-    @Override
-    public void pesquisaMusica(String nomeMusica, final OnDatabaseOperationCompleteListener listener, final Context context, final UserAreaContract.Actions presenter) {
+    public void pesquisaMusica(String nomeMusica,
+                               final OnDatabaseOperationCompleteListener listener,
+                               final Context context, final UserAreaContract.Actions presenter) {
         nomeMusica = nomeMusica.trim();
         /*nomeMusica = nomeMusica.toLowerCase();
         nomeMusica = nomeMusica.replaceAll(" ", "");
@@ -92,4 +73,25 @@ public class UserAreaRepository implements UserAreaContract.Repository {
                     }
                 });
     }
+
+    @Override
+    public List<Musica> getAllMusics() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Musica> musicas = realm.where(Musica.class).findAllSorted("ordem");
+        List<Musica> result = realm.copyFromRealm(musicas);
+        realm.close();
+        return result;
+    }
+
+    @Override
+    public Musica getMusicById(long id) {
+            Realm realm = Realm.getDefaultInstance();
+            RealmResults<Musica> musicas = realm.where(Musica.class).equalTo("id", id).findAll();
+            Musica result = musicas.first();
+            Musica inMemoryMusic = realm.copyFromRealm(result);
+            realm.close();
+            return inMemoryMusic;
+    }
+
+
 }

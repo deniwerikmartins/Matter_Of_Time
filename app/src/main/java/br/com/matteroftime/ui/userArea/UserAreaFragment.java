@@ -238,6 +238,9 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
             downloadMusicFragment = DownloadMusicFragment.newInstance(musicaDownload, adapter);
             downloadMusicFragment.recebeUserAreaView(this, context);
             downloadMusicFragment.show(getActivity().getFragmentManager(), "Dialog");
+     /*       EditFragment fragment = new EditFragment();
+
+            fragment.showMusics();*/
 
         }
     }

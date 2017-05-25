@@ -25,7 +25,8 @@ public class Compasso extends RealmObject implements Serializable{
     public Compasso() {
     }
 
-    public Compasso(long id, int bpm, int tempos, int nota, int repeticoes, boolean fim, int ordem, Musica musica) {
+    public Compasso(long id, int bpm, int tempos, int nota, int repeticoes, boolean fim,
+                    int ordem, Musica musica) {
         this.id = id;
         this.bpm = bpm;
         this.tempos = tempos;

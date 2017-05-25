@@ -46,7 +46,8 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.ViewHolder>{
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_musicas_list, parent, false);
+        View rowView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.row_musicas_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(rowView);
         return viewHolder;
     }

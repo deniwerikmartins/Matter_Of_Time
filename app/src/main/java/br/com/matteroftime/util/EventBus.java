@@ -14,7 +14,4 @@ public class EventBus extends Bus {
     }
 
     private EventBus(){}
-
-
-
 }

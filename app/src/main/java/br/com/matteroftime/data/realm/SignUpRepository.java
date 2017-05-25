@@ -16,20 +16,13 @@ import br.com.matteroftime.ui.signup.SignUpContract;
 
 public class SignUpRepository implements SignUpContract.Repository {
 
-
-
     @Override
-    public void cadastraUsuario(final String mail, final String pass, final Context context, final OnDatabaseOperationCompleteListener listener) {
-        /*JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("email", mail);
-        jsonObject.addProperty("senha", pass);*/
-
+    public void cadastraUsuario(final String mail, final String pass, final Context context
+            , final OnDatabaseOperationCompleteListener listener) {
         Ion.with(context)
                 .load("https://matteroftime-redblood666.c9users.io/registrar.php")
-                //.setJsonObjectBody(jsonObject)
                 .setBodyParameter("email", mail)
                 .setBodyParameter("senha", pass)
-
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override

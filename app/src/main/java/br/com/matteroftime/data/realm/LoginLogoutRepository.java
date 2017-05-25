@@ -22,12 +22,14 @@ public class LoginLogoutRepository implements LoginLogoutContract.Repository {
     private SharedPreferences sharedPreferences;
 
     @Override
-    public void esqueciSenha(String mail, OnDatabaseOperationCompleteListener listener, Context context) {
+    public void esqueciSenha(String mail, OnDatabaseOperationCompleteListener listener
+            , Context context) {
 
     }
 
     @Override
-    public void login(final String mail, final  String pass, final  Context context, final  OnDatabaseOperationCompleteListener listener) {
+    public void login(final String mail, final  String pass, final  Context context
+            , final  OnDatabaseOperationCompleteListener listener) {
 
         Ion.with(context)
                 .load("https://matteroftime-redblood666.c9users.io/login.php")
@@ -38,8 +40,12 @@ public class LoginLogoutRepository implements LoginLogoutContract.Repository {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         if (result.get("result").getAsString().equals("NO")){
-                            //talvez usar resultado do exception -> e
-                            listener.onSQLOperationFailed(context.getString(R.string.erro_login));
+                            if (result.get("erro").getAsString().equals("email")){
+                                //listener.onSQLOperationFailed(context.getString(R.string.erro_login));
+                                listener.onSQLOperationFailed(context.getString(R.string.email_invalido));
+                            } else if(result.get("erro").getAsString().equals("senha")){
+                                listener.onSQLOperationFailed(context.getString(R.string.senha_invalida));
+                            }
                         } else {
                             id = result.get("id").getAsLong();
                             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -49,6 +55,5 @@ public class LoginLogoutRepository implements LoginLogoutContract.Repository {
                         }
                     }
                 });
-
     }
 }

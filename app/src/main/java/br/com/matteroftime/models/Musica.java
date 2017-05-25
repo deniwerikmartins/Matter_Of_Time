@@ -32,8 +32,9 @@ public class Musica extends RealmObject implements Serializable {
     public Musica() {
     }
 
-    public Musica(long id, String nome, RealmList<Compasso> compassos, int ordem, boolean possuiOrdem,int qtdCompassos,
-                  boolean preContagem, int temposContagem, boolean compasso, List<Compasso> compassosList) {
+    public Musica(long id, String nome, RealmList<Compasso> compassos, int ordem,
+                  boolean possuiOrdem,int qtdCompassos, boolean preContagem, int temposContagem,
+                  boolean compasso, List<Compasso> compassosList) {
         this.id = id;
         this.nome = nome;
         this.compassos = compassos;

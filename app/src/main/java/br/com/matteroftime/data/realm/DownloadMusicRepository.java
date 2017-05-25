@@ -31,36 +31,29 @@ import io.realm.RealmResults;
 
 public class DownloadMusicRepository implements DownloadMusicContract.Repository {
     File file;
-    File file2;
     Musica musica1 = new Musica();
 
     @Override
     public void downloadMusica(Musica musica, final OnDatabaseOperationCompleteListener listener, final Context context) {
         long musicaId = musica.getId();
         String id = String.valueOf(musicaId);
-        /*JsonObject json = new JsonObject();
-        json.addProperty("id", id);*/
+
         Future<File> downloading;
 
         downloading = Ion.with(context)
                 .load("https://matteroftime-redblood666.c9users.io/download.php")
-                //.setJsonObjectBody(json)
+
                 .setBodyParameter("id", id)
                 .write(context.getFileStreamPath("archive_"+System.currentTimeMillis()+"_music.met"))
                 .setCallback(new FutureCallback<File>() {
                     @Override
                     public void onCompleted(Exception e, File result) {
                         if (e != null){
-                            //listener.onSQLOperationFailed(context.getString(R.string.erro_download));
                             return;
                         } else {
                             file = result;
-                            ///////////////////////////////////////////////////////////////////////
-
                             try {
-                                //file2 = (File)downloading;
-                                //FileInputStream fileInputStream = new FileInputStream("data/data/br.com.matteroftime/"+musica.getNome()+"_music.met");
-                                FileInputStream fileInputStream = new FileInputStream(file); // file ou file 2
+                                FileInputStream fileInputStream = new FileInputStream(file);
                                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                                 musica1 = (Musica) objectInputStream.readObject();
                                 objectInputStream.close();
@@ -76,7 +69,6 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                                 ee.printStackTrace();
                                 listener.onSQLOperationFailed(context.getString(R.string.falha_importar));
                             }
-                            ////////////////////////////////////////////////////////////////////////
 
                             final Realm realm = Realm.getDefaultInstance();
                             final long idMusica = MatterOfTimeApplication.musicaPrimarykey.incrementAndGet();
@@ -84,24 +76,22 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                                                               @Override
                                                               public void execute(Realm backgroundRealm) {
                                                                   musica1.setId(idMusica);
-                                                                  /*for (Compasso compasso : musica1.getCompassos()) {
-                                                                      compasso.setId(MatterOfTimeApplication.compassoPrimarykey.incrementAndGet());
-                                                                  }*/
                                                                   RealmList<Compasso> compassos = new RealmList<Compasso>();
                                                                   for (Compasso compasso : musica1.getCompassosList()){
-                                                                      compasso.setId(MatterOfTimeApplication.compassoPrimarykey.getAndIncrement());
+                                                                      compasso.setId(MatterOfTimeApplication.compassoPrimarykey
+                                                                              .getAndIncrement());
                                                                       compassos.add(compasso);
                                                                   }
                                                                   musica1.setCompassos(compassos);
                                                                   musica1.setCompassosList(null);
                                                                   backgroundRealm.copyToRealmOrUpdate(musica1);
-                                                                  //EventBus.getInstance().post(new MusicListChangedEvent());
+
                                                               }
                                                           }, new Realm.Transaction.OnSuccess() {
                                                               @Override
                                                               public void onSuccess() {
                                                                   realm.close();
-                                                                  EventBus.getInstance().post(new MusicListChangedEvent()); /*PUTA QUE PARIU FOI!*/
+                                                                  EventBus.getInstance().post(new MusicListChangedEvent());
                                                                   listener.onSQLOperationSucceded(context.getString(R.string.adicionado));
                                                               }
                                                           }, new Realm.Transaction.OnError() {
@@ -112,19 +102,10 @@ public class DownloadMusicRepository implements DownloadMusicContract.Repository
                                                               }
                                                           }
                             );
-
-
-
-
-
                             listener.onSQLOperationSucceded(context.getString(R.string.sucesso_baixar));
                         }
-
                     }
                 });
-
-
-
     }
 
     @Override

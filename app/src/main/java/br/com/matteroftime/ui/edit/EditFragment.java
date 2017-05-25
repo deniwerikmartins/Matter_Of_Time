@@ -59,7 +59,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     private AddMusicDialogFragment addMusicDialogFragment;
     private String[] valorNotas;
     private int nota;
-    private String select;
     private boolean contagem;
     private Musica musica;
     @BindView(R.id.editList_recycler_view) RecyclerView editListRecyclerView;
@@ -119,7 +118,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                select = (String)spinner.getSelectedItem();
                 int selectedItemPosition = spinner.getSelectedItemPosition();
                 switch (selectedItemPosition){
                     case 0:

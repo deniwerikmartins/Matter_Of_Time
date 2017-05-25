@@ -37,8 +37,8 @@
     <string name="deletado">Deleted</string>
     <string name="deletar">Delete</string>
     <string name="deletar_musica">Delete music</string>
-    <string name="digite_email">Enter your e-mail</string>
-    <string name="digite_senha">Enter your password</string>
+    <string name="digite_email">Set your e-mail</string>
+    <string name="digite_senha">Set your password</string>
     <string name="editar_musica">Edit music</string>
     <string name="email">E-mail</string>
     <string name="email_invalido">Invalid e-mail</string>
@@ -118,4 +118,8 @@
     <string name="pesquisando">Searching...</string>
     <string name="adicionar_musica">Add music</string>
     <string name="atualizar">Update</string>
+    <string name="senha_invalida">Invalid password</string>
+    <string name="email_cadastrado">E-mail already registered</string>
+    <string name="valor_incompativel">Set a value for BPM between 30 and 250</string>
+    <string name="compassos_excedentes">Set an amount of measures less than 999</string>
 </resources>

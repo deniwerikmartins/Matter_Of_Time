@@ -64,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 .withToolbar(toolbar)
                 .withAccountHeader(header)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.cadastro).withIcon(FontAwesome.Icon.faw_user_plus).withIdentifier(Constants.CADASTRO),
-                        new PrimaryDrawerItem().withName(R.string.loginlogout).withIcon(FontAwesome.Icon.faw_sign_in).withIdentifier(Constants.LOGINLOGOUT)
+                        new PrimaryDrawerItem().withName(R.string.cadastro).withIcon(FontAwesome.Icon.faw_user_plus)
+                                .withIdentifier(Constants.CADASTRO),
+                        new PrimaryDrawerItem().withName(R.string.loginlogout).withIcon(FontAwesome.Icon.faw_sign_in)
+                                .withIdentifier(Constants.LOGINLOGOUT)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -80,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .withSavedInstance(savedInstanceState)
                 .build();
-
 
         setupViewPager();
     }

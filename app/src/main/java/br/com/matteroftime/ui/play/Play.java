@@ -56,6 +56,13 @@ public class Play extends Thread implements Runnable{
     public void run() {
         super.run();
 
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return;
+        }
+
         //COMPASSO
         if (musica.isCompasso() == true){
             intervalo = (long)musica.getCompassos().get(0).getIntervalo();

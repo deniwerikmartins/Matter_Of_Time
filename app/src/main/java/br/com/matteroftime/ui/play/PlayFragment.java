@@ -155,6 +155,16 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                         repeticoesTotal.setText(String.valueOf(msg.arg2));
                         break;
                     case 5:
+                        if (imgClick1.getVisibility() == View.VISIBLE){
+                            imgClick1.setVisibility(View.INVISIBLE);
+                        }else{
+                            imgClick1.setVisibility(View.VISIBLE);
+                        }
+                        if (imgClick1.getVisibility() == View.VISIBLE){
+                            imgClick2.setVisibility(View.INVISIBLE);
+                        } else {
+                            imgClick2.setVisibility(View.VISIBLE);
+                        }
                         String compassoAtualBPMCompasso = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_BPM));
                         String compassoAtualTempoTotalCompasso = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_TEMPO_TOTAL));
                         String compassoAtualNotaCompasso = String.valueOf(data.getInt(Constants.COMPASSO_ATUAL_NOTA));
@@ -364,7 +374,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             temposAtual.setText(String.valueOf(musica.getCompassos().get(i).getTempos()));
             notaAtual.setText(String.valueOf(musica.getCompassos().get(i).getNota()));
 
-            if (musica.getCompassos().get(i+1) != null){
+            if (musica.getCompassos().size() > 1){
                 proxBpm.setText(String.valueOf(musica.getCompassos().get(i+1).getBpm()));
                 proxTempos.setText(String.valueOf(musica.getCompassos().get(i+1).getTempos()));
                 proxNota.setText(String.valueOf(musica.getCompassos().get(i+1).getNota()));

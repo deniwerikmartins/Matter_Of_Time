@@ -335,18 +335,23 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     @OnClick(R.id.imgBtnConfirmaMusica)
     public void setConfirmaMusica(View view){
         int ord = 0;
-        if (ordemDaMusica.getText().toString().isEmpty()){
+        if (ordemDaMusica.getText().toString().isEmpty() && musica.isPossuiOrdem() == false){
             ordemDaMusica.setError(getString(R.string.obrigatorio));
             ordemDaMusica.requestFocus();
             showMessage(getString(R.string.sem_posicao));
         } else {
-            ord = Integer.parseInt(ordemDaMusica.getText().toString());
+            if (!ordemDaMusica.getText().toString().isEmpty()){
+                ord = Integer.parseInt(ordemDaMusica.getText().toString());
+            } else {
+                ord = musica.getOrdem();
+            }
         }
-        if (ord <= 0 || ord > adapter.getItemCount()){
+
+        if (ord < 0 || ord > adapter.getItemCount()){
             showMessage(getString(R.string.posicao_invalida));
         } else if (musica.getNome() == null){
             showMessage(getString(R.string.sem_musica));
-        } else if (ordemDaMusica.getText().toString().isEmpty()){
+        } else if (ordemDaMusica.getText().toString().isEmpty() && musica.isPossuiOrdem() == false){
             ordemDaMusica.setError(getString(R.string.obrigatorio));
             ordemDaMusica.requestFocus();
             showMessage(getString(R.string.ordem_necessaria));
@@ -356,34 +361,45 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                 && Integer.parseInt(contar.getText().toString()) == 0) {
             showMessage(getString(R.string.sem_contagem));
         } else if (contagem == true) {
-            if (ord - 1 < 0){
+            if (ord - 1 < -1){
                 showMessage(getString(R.string.posicao_invalida));
 
             } else if (ord > presenter.getListaMusicas().size()){
                 showMessage(getString(R.string.posicao_invalida));
             }
             else{
-                musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()) - 1);
+                if (!ordemDaMusica.getText().toString().isEmpty()){
+                    musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()) - 1);
+                } else {
+                    musica.setOrdem(ord);
+                }
+
                 musica.setPreContagem(contagem);
                 musica.setTemposContagem(Integer.parseInt(contar.getText().toString()));
                 musica.setPossuiOrdem(true);
                 numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 atualizaViewsMusica(musica);
-                bus.post(new MusicListChangedEvent());
+                //bus.post(new MusicListChangedEvent());
+                EventBus.getInstance().post(new MusicListChangedEvent());
                 showMessage(getString(R.string.musica_confirmada));
             }
         } else if (contagem == false){
-            if (ord - 1 < 0){
+            if (ord - 1 < -1){
                 showMessage(getString(R.string.musica_inexistente));
             } else if (ord > presenter.getListaMusicas().size()){
                 showMessage(getString(R.string.musica_inexistente));
             } else {
-                musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()) - 1);
+                if (!ordemDaMusica.getText().toString().isEmpty()){
+                    musica.setOrdem(Integer.parseInt(ordemDaMusica.getText().toString()) - 1);
+                } else {
+                    musica.setOrdem(ord);
+                }
                 musica.setPreContagem(contagem);
                 musica.setPossuiOrdem(true);
                 numeroMusica.setText(String.valueOf(musica.getOrdem() + 1));
                 atualizaViewsMusica(musica);
-                bus.post(new MusicListChangedEvent());
+                //bus.post(new MusicListChangedEvent());
+                EventBus.getInstance().post(new MusicListChangedEvent());
                 showMessage(getString(R.string.musica_confirmada));
             }
         }

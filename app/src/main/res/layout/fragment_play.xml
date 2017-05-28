@@ -192,14 +192,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/margin_padding_small"
+            android:layout_marginRight="@dimen/margin_padding_xnormal"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtRepeticoesAtual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_padding_small"
-                android:text="000" />
+
+                android:text="0" />
 
             <TextView
                 android:id="@+id/textView39"
@@ -211,21 +213,23 @@
                 android:id="@+id/txtRepeticoesTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="000" />
+                android:text="0" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="256dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginLeft="@dimen/margin_xlarge"
+            android:layout_marginRight="@dimen/margin_xlarge"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtRepeticoesCompassoAtual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="000" />
+                android:text="0" />
 
             <TextView
                 android:id="@+id/textView34"
@@ -237,22 +241,25 @@
                 android:id="@+id/txtRepeticoesCompassoTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="000" />
+                android:text="0" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="right"
             android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/margin_padding_xlarge"
+            android:layout_marginRight="@dimen/margin_padding_small"
             android:weightSum="1">
 
             <TextView
                 android:id="@+id/txtRepeticoesProximo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_padding_small"
                 android:gravity="right"
-                android:text="000" />
+                android:text="0" />
         </LinearLayout>
 
     </LinearLayout>

@@ -47,10 +47,8 @@ public class Play extends Thread implements Runnable{
         message = Message.obtain();
         data = new Bundle();
         listIterator = this.musica.getCompassos().listIterator();
+        setPriority(MAX_PRIORITY);
     }
-
-
-
 
     @Override
     public void run() {

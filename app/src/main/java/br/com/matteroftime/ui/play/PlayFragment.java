@@ -39,6 +39,7 @@ import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.util.Constants;
+import br.com.matteroftime.util.EventBus;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -127,15 +128,17 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                         repeticoesTotal.setText(compassoAtualTempoTotal);
                         break;
                     case 1:
-                        String compassoProximoBPM = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_BPM));
-                        String compassoProximoTempos = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_TEMPOS));
-                        String compassoProximoNota = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_NOTA));
-                        String compassoProximoRepeticoes = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_REPETICOES));
+                        if (musica.getCompassos().size() > 1){
+                            String compassoProximoBPM = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_BPM));
+                            String compassoProximoTempos = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_TEMPOS));
+                            String compassoProximoNota = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_NOTA));
+                            String compassoProximoRepeticoes = String.valueOf(data.getInt(Constants.COMPASSO_PROXIMO_REPETICOES));
 
-                        proxBpm.setText(compassoProximoBPM);
-                        proxTempos.setText(compassoProximoTempos);
-                        proxNota.setText(compassoProximoNota);
-                        repeticoesProximo.setText(compassoProximoRepeticoes);
+                            proxBpm.setText(compassoProximoBPM);
+                            proxTempos.setText(compassoProximoTempos);
+                            proxNota.setText(compassoProximoNota);
+                            repeticoesProximo.setText(compassoProximoRepeticoes);
+                        }
                         break;
                     case 2:
                         String compassoRepeticoesAtual = String.valueOf(data.getInt(Constants.COMPASSO_REPETICOES_ATUAL));
@@ -145,10 +148,19 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                         repeticoesCompassoTotal.setText(compassoRepeticoesTotal);
                         break;
                     case 3:
+                        bpmAtual.setText(String.valueOf(msg.arg2));
+                        temposAtual.setText(String.valueOf(msg.arg1));
+                        notaAtual.setText(String.valueOf(msg.arg1));
+                        repeticoesAtual.setText(String.valueOf(msg.arg2));
+                        repeticoesTotal.setText(String.valueOf(msg.arg2));
+                        repeticoesCompassoAtual.setText(String.valueOf(msg.arg2));
+                        repeticoesCompassoTotal.setText(String.valueOf(msg.arg2));
                         proxBpm.setText(String.valueOf(msg.arg2));
                         proxTempos.setText(String.valueOf(msg.arg1));
                         proxNota.setText(String.valueOf(msg.arg1));
                         repeticoesProximo.setText(String.valueOf(msg.arg2));
+                        imgClick1.setVisibility(View.INVISIBLE);
+                        imgClick2.setVisibility(View.INVISIBLE);
                         break;
                     case 4:
                         repeticoesAtual.setText(String.valueOf(msg.arg1));
@@ -363,6 +375,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     @OnClick(R.id.btnStop)
     public void parar(View view){
         presenter.stop();
+        repeticoesCompassoAtual.setText(String.valueOf(000));
+        repeticoesCompassoTotal.setText(String.valueOf(000));
     }
 
     @Override
@@ -384,8 +398,21 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getInstance().unregister(this);
+        super.onStop();
+    }
+
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){
         presenter.loadMusics();
+
     }
 }

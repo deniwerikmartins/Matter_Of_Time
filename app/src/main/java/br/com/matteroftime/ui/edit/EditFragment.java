@@ -45,6 +45,7 @@ import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.ui.addMusic.AddMusicDialogFragment;
 import br.com.matteroftime.util.EventBus;
+import br.com.matteroftime.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -168,8 +169,61 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
                         atualizaViewsCompasso(musica, musica.getCompassos().get(ord));
                     }
                 }
+                if (!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), edtNumeroCompasso);
+                }
             }
         });
+
+        ordemDaMusica.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), ordemDaMusica);
+                }
+            }
+        });
+
+        contar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), contar);
+                }
+
+            }
+        });
+
+        edtBpm.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), edtBpm);
+                }
+
+            }
+        });
+
+        edtTempos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), edtTempos);
+                }
+
+            }
+        });
+
+        edtRepeticoes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), edtRepeticoes);
+                }
+
+            }
+        });
+
         return view;
     }
 

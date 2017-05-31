@@ -30,7 +30,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 selectedFragment = new PlayFragment();
                 break;
             case 1:
-                selectedFragment = new EditFragment();
+                selectedFragment = new  EditFragment();
 
                 break;
             case 2:
@@ -55,9 +55,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         switch (position){
             case 0:
                 title = mainActivity.getString(R.string.play);
+
                 break;
             case 1:
                 title = mainActivity.getString(R.string.edit);
+
                 break;
             case 2:
                 title = mainActivity.getString(R.string.user_area);

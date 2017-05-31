@@ -62,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
+            android:nextFocusDown="@+id/edt_contar"
             android:inputType="number" />
 
 
@@ -100,6 +101,7 @@
             android:id="@+id/edt_contar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:nextFocusDown="@+id/edt_numero_compasso"
             android:ems="2"
             android:inputType="number" />
 
@@ -224,7 +226,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:inputType="number" />
+            android:inputType="number"
+            android:nextFocusRight="@+id/edt_bpm"/>
 
         <TextView
             android:id="@+id/textView9"
@@ -239,7 +242,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:inputType="number" />
+            android:inputType="number"
+            android:nextFocusDown="@+id/edt_tempos" />
 
     </LinearLayout>
 
@@ -261,6 +265,7 @@
 
         <EditText
             android:id="@+id/edt_tempos"
+            android:nextFocusDown="@+id/edt_repeticoes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"

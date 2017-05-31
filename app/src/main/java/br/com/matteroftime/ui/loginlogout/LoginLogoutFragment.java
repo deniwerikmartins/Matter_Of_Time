@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import javax.inject.Inject;
 import br.com.matteroftime.R;
 import br.com.matteroftime.core.MatterOfTimeApplication;
 import br.com.matteroftime.util.Constants;
+import br.com.matteroftime.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,8 +35,8 @@ public class LoginLogoutFragment extends Fragment implements LoginLogoutContract
 
     private View view;
     private LoginLogoutContract.Actions presenter;
-    @BindView(R.id.edtEmail) TextView email;
-    @BindView(R.id.edtSenha) TextView senha;
+    @BindView(R.id.edtEmail) EditText email;
+    @BindView(R.id.edtSenha) EditText senha;
     @BindView(R.id.btnEntrar) Button entrar;
     @BindView(R.id.btnSair) Button sair;
     @BindView(R.id.btnEsqueciSenha) Button esqueciSenha;
@@ -55,6 +57,24 @@ public class LoginLogoutFragment extends Fragment implements LoginLogoutContract
         ButterKnife.bind(this, view);
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
         context = getContext();
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), email);
+                }
+            }
+        });
+
+        senha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), senha);
+                }
+            }
+        });
 
 
         return view;
@@ -103,7 +123,7 @@ public class LoginLogoutFragment extends Fragment implements LoginLogoutContract
             senha.setError(getString(R.string.obrigatorio));
             senha.requestFocus();
             showMessage(getString(R.string.senha_necessaria));
-        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+        } else if(Utils.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
             showMessage(getString(R.string.sem_conexao));
         } else {
             String mail = email.getText().toString();

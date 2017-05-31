@@ -32,6 +32,7 @@
                 android:id="@+id/edtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@+id/edtSenha"
                 android:layout_weight="1"
                 android:ems="5"
                 android:hint="@string/digite_email"

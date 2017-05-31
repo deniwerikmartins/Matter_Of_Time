@@ -22,6 +22,7 @@ import br.com.matteroftime.R;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.util.Constants;
+import br.com.matteroftime.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.RealmList;
@@ -79,6 +80,26 @@ public class AddMusicDialogFragment extends DialogFragment  implements AddMusicC
                 }
             });
         }
+
+        edtNomeDaMusica.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), edtNomeDaMusica);
+                }
+
+            }
+        });
+
+        edtQtdCompassos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), edtQtdCompassos);
+                }
+            }
+        });
+
         return dialogFragment.create();
     }
     @Override

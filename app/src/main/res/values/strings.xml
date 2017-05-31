@@ -128,5 +128,7 @@
     <string name="valor_incompativel">Defina um valor de BPM entre 30 e 250</string>
     <string name="compassos_excedentes">Defina uma quantidade de compassos menor que 999</string>
     <string name="senha_invalida">Senha inválida</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="title_activity_ajuda">AjudaActivity</string>
 
 </resources>

@@ -21,6 +21,7 @@
             android:id="@+id/edt_nome_da_musica"
             style="@style/AddProductForm"
             android:hint="@string/nomedamusica"
+            android:nextFocusDown="@+id/edt_quantidade_compassos"
             android:imeOptions="actionNext" />
 
         <EditText

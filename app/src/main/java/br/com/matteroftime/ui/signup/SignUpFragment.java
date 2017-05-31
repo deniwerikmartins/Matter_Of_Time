@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,9 +37,9 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
     private View view;
     private SignUpContract.Actions presenter;
 
-    @BindView(R.id.edtEmail) TextView email;
-    @BindView(R.id.edtSenha) TextView senha;
-    @BindView(R.id.edtConfirmSenha) TextView confirmSenha;
+    @BindView(R.id.edtEmail) EditText email;
+    @BindView(R.id.edtSenha) EditText senha;
+    @BindView(R.id.edtConfirmSenha) EditText confirmSenha;
     @BindView(R.id.btnCadastrar) Button cadastrar;
     @Inject Bus bus;
 
@@ -55,6 +56,33 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         ButterKnife.bind(this, view);
         MatterOfTimeApplication.getInstance().getAppComponent().inject(this);
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), email);
+                }
+            }
+        });
+
+        senha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), senha);
+                }
+            }
+        });
+
+        confirmSenha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), confirmSenha);
+                }
+            }
+        });
         return view;
     }
 
@@ -107,7 +135,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.View{
             showMessage(getString(R.string.confirmacaoSenhaNecessaria));
         } else if (!senha.getText().toString().equals(confirmSenha.getText().toString())){
             showMessage(getString(R.string.senha_nao_confere));
-        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+        } else if(Utils.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
             showMessage(getString(R.string.sem_conexao));
         } else {
             String mail = email.getText().toString();

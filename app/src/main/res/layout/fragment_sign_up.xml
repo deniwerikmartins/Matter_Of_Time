@@ -42,6 +42,7 @@
 
         <EditText
             android:id="@+id/edtEmail"
+            android:nextFocusDown="@+id/edtSenha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -68,6 +69,7 @@
 
         <EditText
             android:id="@+id/edtSenha"
+            android:nextFocusDown="@+id/edtConfirmSenha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -33,6 +33,7 @@ import br.com.matteroftime.ui.edit.EditFragment;
 import br.com.matteroftime.ui.selectMusic.SelectMusicDialogFragment;
 import br.com.matteroftime.ui.uploadMusic.UploadMusicFragment;
 import br.com.matteroftime.util.Constants;
+import br.com.matteroftime.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -101,6 +102,15 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        pesquisarMusica.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), pesquisarMusica);
+                }
+            }
+        });
+
 
 
         return view;
@@ -168,7 +178,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
             showMessage(getString(R.string.login_nao_realizado));
         }
 
-        if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+        if(Utils.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
             showMessage(getString(R.string.sem_conexao));
         } else if (musicaId > 0 && usuarioId > 0){
             musicaUpload = presenter.getMusica(musicaId);
@@ -193,7 +203,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
             showMessage(getString(R.string.login_nao_realizado));
         }
 
-        if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+        if(Utils.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
             showMessage(getString(R.string.sem_conexao));
         } else if (musicaId > 0 && usuarioId > 0){
             musicaUpload = presenter.getMusica(musicaId);
@@ -214,7 +224,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
             pesquisarMusica.setError(getString(R.string.obrigatorio));
             pesquisarMusica.requestFocus();
             showMessage(getString(R.string.informe_musica));
-        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+        } else if(Utils.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
             showMessage(getString(R.string.sem_conexao));
         } else {
             showMessage(getString(R.string.pesquisando));
@@ -232,7 +242,7 @@ public class UserAreaFragment extends Fragment implements UserAreaContract.View,
     public void baixarMusica(View view){
         if (musicaDownload.getNome() == null){
             showMessage(getString(R.string.sem_musica));
-        } else if(Constants.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
+        } else if(Utils.netWorkdisponibilidade(this.getActivity().getBaseContext()) == false) {
             showMessage(getString(R.string.sem_conexao));
         } else {
             downloadMusicFragment = DownloadMusicFragment.newInstance(musicaDownload, adapter);

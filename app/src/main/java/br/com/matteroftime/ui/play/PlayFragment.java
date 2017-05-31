@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,12 +35,15 @@ import java.util.ListIterator;
 import javax.inject.Inject;
 
 import br.com.matteroftime.R;
+import br.com.matteroftime.common.DrawerLocker;
+import br.com.matteroftime.common.MainActivity;
 import br.com.matteroftime.core.events.MusicListChangedEvent;
 import br.com.matteroftime.core.listeners.OnMusicSelectedListener;
 import br.com.matteroftime.models.Compasso;
 import br.com.matteroftime.models.Musica;
 import br.com.matteroftime.util.Constants;
 import br.com.matteroftime.util.EventBus;
+import br.com.matteroftime.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,6 +62,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
     private int nota;
     private String select;
     private Musica musica;
+    private boolean tocando = false;
     Handler handler;
 
     @BindView(R.id.playlist_recycler_view) RecyclerView playlistRecyclerView;
@@ -245,15 +250,27 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
             }
         });
+
+        tempos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), tempos);
+                }
+            }
+        });
+
+        bpm.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    Utils.hideKeyboard(getActivity().getBaseContext(), bpm);
+                }
+            }
+        });
+
         return view;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.loadMusics();
-    }
-
 
     @Override
     public void mostrarMusicas(List<Musica> musicas) {
@@ -338,6 +355,8 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @OnClick(R.id.btnOk)
     public void onClickOk(View view){
+
+
         if (tempos.getText().toString().isEmpty()){
             tempos.setError(getString(R.string.obrigatorio));
             tempos.requestFocus();
@@ -368,15 +387,33 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @OnClick(R.id.btnPlay)
     public void tocar(View view){
-        presenter.play(getContext(), handler);
+
+        if (tocando == false ){
+            ((DrawerLocker) getActivity()).setDrawerEnabled(false);
+            ((MainActivity) getActivity()).desabilitaViewPager();
+            ((MainActivity) getActivity()).desabilitaTabLayout();
+            tocando = true;
+            presenter.play(getContext(), handler);
+        } else {
+            return;
+        }
     }
 
 
     @OnClick(R.id.btnStop)
     public void parar(View view){
-        presenter.stop();
-        repeticoesCompassoAtual.setText(String.valueOf(000));
-        repeticoesCompassoTotal.setText(String.valueOf(000));
+        if (tocando == true){
+            ((DrawerLocker) getActivity()).setDrawerEnabled(true);
+            ((MainActivity) getActivity()).habilitaViewPager();
+            ((MainActivity) getActivity()).habilitaTabLayout();
+            presenter.stop();
+            repeticoesCompassoAtual.setText(String.valueOf(000));
+            repeticoesCompassoTotal.setText(String.valueOf(000));
+            tocando = false;
+        } else {
+            return;
+        }
+
     }
 
     @Override
@@ -400,6 +437,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @Override
     public void onStart() {
+        //showMessage("on start");
         super.onStart();
         EventBus.getInstance().register(this);
     }
@@ -409,6 +447,110 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         EventBus.getInstance().unregister(this);
         super.onStop();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //showMessage("resume");
+        presenter.loadMusics();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        presenter.stop();
+
+    }
+
+    /*
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.setClassLoader(ClassLoader.getSystemClassLoader());
+        outState.putAll(outState);
+        showMessage("save instance state");
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showMessage("activity created");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showMessage("on create");
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        showMessage("pause");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        showMessage("on Attach context");
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        showMessage("on attach activity");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        showMessage("destroy");
+    }
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        showMessage("destroy view");
+    }
+
+    @Override
+    public void onDestroyOptionsMenu() {
+        super.onDestroyOptionsMenu();
+        showMessage("destroy options menu");
+    }
+
+
+
+    @Override
+    public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
+        super.onInflate(context, attrs, savedInstanceState);
+        showMessage("inflate");
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        showMessage("view created");
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        showMessage("view state restored");
+    }
+
+    @Override
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
+        super.onInflate(activity, attrs, savedInstanceState);
+        showMessage("on inflate");
+    }
+    */
+
 
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){

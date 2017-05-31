@@ -3,8 +3,8 @@
     package="br.com.matteroftime">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
@@ -29,21 +29,31 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:label="@string/title_activity_sign_up"
-            android:screenOrientation="portrait"
             android:parentActivityName=".common.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".common.MainActivity"/>
-            </activity>
+                android:value=".common.MainActivity" />
+        </activity>
         <activity
             android:name=".ui.loginlogout.LoginLogoutActivity"
             android:label="@string/title_activity_login_logout"
-            android:screenOrientation="portrait"
             android:parentActivityName=".common.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:value=".common.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.ajuda.AjudaActivity"
+            android:label="@string/title_activity_ajuda"
+            android:parentActivityName=".common.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT.ACTIVITY"
                 android:value=".common.MainActivity"/>
         </activity>
     </application>

@@ -108,7 +108,10 @@ public class EditPresenter implements EditContract.Actions, OnDatabaseOperationC
 
     @Subscribe
     public void onMusicListChanged(MusicListChangedEvent event){
-        loadMusics();
+        if(repository.getAllMusics().size() > 0){
+            loadMusics();
+        }
+
     }
 
 

@@ -355,8 +355,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @OnClick(R.id.btnOk)
     public void onClickOk(View view){
-
-
+        Utils.hideKeyboard(getActivity().getBaseContext(), view);
         if (tempos.getText().toString().isEmpty()){
             tempos.setError(getString(R.string.obrigatorio));
             tempos.requestFocus();

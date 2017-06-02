@@ -94,7 +94,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
 
             View titleView = inflater.inflate(R.layout.dialog_title, null);
             TextView titleText = (TextView)titleView.findViewById(R.id.txt_view_dialog_title);
-            titleText.setText(editMode ? getString(R.string.atualizar_musica) : getString(R.string.enviar));
+            titleText.setText(editMode ? getString(R.string.atualizar_musica): getString(R.string.enviar));
             dialogFragment.setCustomTitle(titleView);
 
             dialogFragment.setPositiveButton(editMode ? getString(R.string.atualizar_musica) : getString(R.string.enviar), new DialogInterface.OnClickListener() {
@@ -117,7 +117,7 @@ public class UploadMusicFragment extends DialogFragment implements UploadMusicCo
         long id = sharedPreferences.getLong(Constants.ID_MUSICA, 0);
         if (id > 0){
             musica = presenter.getMusica(id);
-            nomeMusicaEnvio.setText(musica.getNome());
+            nomeMusicaEnvio.setText(" " + musica.getNome());
         } else {
            showMessage(getString(R.string.sem_musica));
         }

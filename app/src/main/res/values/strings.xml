@@ -130,5 +130,25 @@
     <string name="senha_invalida">Senha inválida</string>
     <string name="ajuda">Ajuda</string>
     <string name="title_activity_ajuda">AjudaActivity</string>
+    <string name="realizar_cadastro">Realizar Cadastro</string>
+    <string name="help_cadastro">Para realizar o cadastro de usuário, na tela Cadastro, insira nos campos E-mail, Senha e Confirme sua senha, um e-mail válido  e a confirmação respectivamente, após inserir os dados clique no botão cadastrar.</string>
+    <string name="login">Login</string>
+    <string name="help_login">Para realizar o login, na tela Login/Logout, digite nos campos E-mail e Senha, seu e-mail se senha cadastrados e clique no botão login.</string>
+    <string name="logout">Logout</string>
+    <string name="help_logout" >Na tela Login/Logout, Clique no botão Logout.</string>
+    <string name="tocar_compasso">Tocar compasso continuamente</string>
+    <string name="help_tocar_compasso">Para tocar um compasso continuamente, na tela TOCAR, defina a quantidade de tempos por compasso, a nota de referencia que irá valer um tempo para aquele compasso(entre Semibreve e Semifusa) e o valor dos batimentos por minuto para este compasso(entre 30 e 250) clique no botão com simbolo de confirmado e depois no botão com o simbolo de play.</string>
+    <string name="criar_musica">Criar música</string>
+    <string name="editar_compasso">Editar Compasso</string>
+    <string name="h_deletar_musica">Deletar música</string>
+    <string name="help_adicionar_musica">Para criar uma música que irá possuir andamentos de compassos, na tela EDITAR, clique no botão com um sinal de + no canto inferior direito da tela, insira o nome e a quantidade de compassos que a música irá ter e clique em ADICIONAR.</string>
+    <string name="editar_musica1">Para para editar uma música, na tela EDITAR, selecione a música desejada na Playlist, escolha em qual posição ela será exibida definindo um valor no campo Ordem da música na Playlist; Na caixa de seleção Pré Contagem é possivel selecionar se a música irá possuir ou não tempos de contagem preparatórios antes do primeiro compasso da música; Se a música for possuir uma Pré Contagem, defina quantos tempos deseja e clique no botão com simbolo de confirmado.</string>
+    <string name="help_editar2">Ainda quanto a edição da musica é possivel alterar seu nome e quantos compassos ela possui, para isto clique e pressione a referida música na Playlist e selecione Editar música, selecione um novo nome e uma nova quantidade de compassos para a mesma(andamentos de compassos anteriormente definidos serão apagados)</string>
+    <string name="help_compasso">Para editar um compasso de uma música, na tela EDITAR, selecione uma música na playlist, no campo Compasso # defina o numero do compasso quer editar, no campo BPM defina o valor dos batimentos por minuto, no campo Tempos defina quantos tempos este compasso irá possuir, selecione uma nota que irá ser referente à um tempo neste compasso(entre Semibreve e Semicolheia), defina no campo Repetições a quantidade de vezes que este compasso será repetido durante a contagem de tempos.</string>
+    <string name="help_remover_compasso">Para remover um compasso de uma música, na tela EDITAR, selecione a música na playlist, informe qual o numero do compasso que deseja remover no campo Compasso # e clique no botão REMOVER COMPASSO.</string>
+    <string name="help_inserir_compasso">Para inserir um compasso em uma música, na tela EDITAR, selecione a música na Playlist e clique no botão INSERIR COMPASSO, o novo compasso será adicionado após o ultimo compasso existente.</string>
+    <string name="help_deletar">Para deletar uma música, na tela EDITAR, clique e pressiona a música desejada na Playlist, clique em deletar e clique em SIM.</string>
+    <string name="help_enviar_musica">Para enviar uma musica criada para o repositório online, faça login com seu usuário, na tela ÁREA DO USUÁRIO, clique no botão SELECIONAR MÚSICA, selecione a música desejada e clique em ADICIONAR, clique no botão ENVIAR MÚSICA e na caixa de diálogo clique em enviar.</string>
+    <string name="help_baixar_musica">Para baixar andamentos de uma música do repositório online, na tela ÁREA DO USUÁRIO, digite um termo para busca no campo Música, clique em pesquisar, selecione a música que deseja na lista, clique no botão baixar e em seguida em BAIXAR MÚSICA.</string>
 
 </resources>

@@ -97,7 +97,7 @@ public class DownloadMusicFragment extends DialogFragment implements DownloadMus
                     dialog.dismiss();
                 }
             });
-            nomeMusicaBaixar.setText(musica.getNome());
+            nomeMusicaBaixar.setText(" " + musica.getNome());
         }
         return dialogFragment.create();
     }

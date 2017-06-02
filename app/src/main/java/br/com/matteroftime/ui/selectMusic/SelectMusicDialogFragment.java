@@ -160,10 +160,16 @@ public class SelectMusicDialogFragment extends DialogFragment implements SelectM
                     //mandar musica para o fragment
                     //testar com metodo que retorna a musica | muda retorno
 
-                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putLong(Constants.ID_MUSICA, musica.getId()).commit();
-                    dismiss();
+
+                    if (musica != null){
+                        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putLong(Constants.ID_MUSICA, musica.getId()).commit();
+                        dismiss();
+                    } else {
+                        displayMessage(getString(R.string.sem_musica));
+                    }
+
                     /*readyToCloseDialog = true;
                     if (readyToCloseDialog){
 

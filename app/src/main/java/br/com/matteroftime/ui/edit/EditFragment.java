@@ -267,7 +267,7 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
         View titleView = (View)inflater.inflate(R.layout.dialog_title,null);
         TextView titleText = (TextView) titleView.findViewById(R.id.txt_view_dialog_title);
         titleText.setText(getString(R.string.deletar_musica));
-        alertDialog.setMessage(getString(R.string.deletar) + musica.getNome());
+        alertDialog.setMessage(getString(R.string.deletar) + " " + musica.getNome());
         alertDialog.setPositiveButton(getString(R.string.sim), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -604,8 +604,6 @@ public class EditFragment extends Fragment implements EditContract.View, OnMusic
     public void onStop() {
         EventBus.getInstance().unregister(this);
         super.onStop();
-
-
     }
 
 

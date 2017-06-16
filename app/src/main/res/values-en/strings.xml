@@ -122,4 +122,23 @@
     <string name="email_cadastrado">E-mail already registered</string>
     <string name="valor_incompativel">Set a value for BPM between 30 and 250</string>
     <string name="compassos_excedentes">Set an amount of measures less than 999</string>
+    <string name="ajuda">Help</string>
+    <string name="criar_musica">Create music</string>
+    <string name="editar_compasso">Edit Measure</string>
+    <string name="h_deletar_musica">Delete music</string>
+    <string name="realizar_cadastro">Perfrom signup</string>
+    <string name="tocar_compasso">Play measure continuously</string>
+    <string name="editar_musica1">To edit a song, on the EDIT screen, select the desired song in the Playlist, choose which position it will be displayed by setting a value in the Playlist order field; In the Pre Count checkbox it is possible to select whether or not the song will have preparatory count times before the first measure of the song; If the song has a Pre Count, set how many times you want and click on the Confirmed button.</string>
+    <string name="help_adicionar_musica">To create a song that will have beats tempo, on the EDIT screen, click the + button in the lower right corner of the screen, enter the name and number of measures of the song and click ADD.</string>
+    <string name="help_baixar_musica">To download tempos from a song from the online repository, on the USER AREA screen, type a search term in the Music field, click search, select the song you want from the list, click the download button and then DOWNLOAD MUSIC.</string>
+    <string name="help_cadastro">To perform the user registration, in the Registration screen, enter in the fields E-mail, Password and Confirm your password, a valid email, the desired password and the confirmation of the password respectively, after inserting the data click the register button.</string>
+    <string name="help_compasso">To edit a measure of a song, on the EDIT screen, select a song in the playlist, in the field Compass # set the measure number you want to edit, in the BPM field set the value of the beats per minute, in the Times field define how many beats this measure will have, Select a note that will be referring to a tempo in this measure (between whole note and sixty-fourth note), set in the Repeats field the number of times this measure will be repeated during the count of times.</string>
+    <string name="help_deletar">To delete a song, on the EDIT screen, click and hold the desired song in the Playlist, click delete, and then click YES.</string>
+    <string name="help_editar2">Traduzir  Ainda quanto a edição da musica é possivel alterar seu nome e quantos compassos ela possui, para isto clique e pressione a referida música na Playlist e selecione Editar música, selecione um novo nome e uma nova quantidade de compassos para a mesma(andamentos de compassos anteriormente definidos serão apagados)  312/5000 While editing a song, you can change its name and how many measures it has, by clicking and pressing the song in the Playlist and selecting Edit song, select a new name and a new number of measures for it(andamentos de compassos anteriormente definidos serão apagados)</string>
+    <string name="help_enviar_musica">To send a song created for the online repository, log in with your user, then on the USER AREA screen click the SELECT MUSIC button, select the desired song and click on ADD, click the SUBMIT MUSIC button and in the dialog box click on send .</string>
+    <string name="help_inserir_compasso">To insert a measure into a song, on the EDIT screen, select the song in the Playlist and click the INSERT COMPASS button, the new measure will be added after the last existing measure.</string>
+    <string name="help_login">To log in, on the Login / Logout screen, type in the E-mail and Password fields, your registered e-mail and password and click the login button.</string>
+    <string name="help_logout">On the Login / Logout screen, click the Logout button.</string>
+    <string name="help_remover_compasso">To remove a measure from a song, on the EDIT screen, select the song in the playlist, enter the measure number you want to remove in the Measure # field, and click the REMOVE MEASURE button.</string>
+    <string name="help_tocar_compasso">To play a measure continuously, on the PLAY screen, set the number of beats per measure, the reference note that will be worth a time for that measure (between whole note and sixty-fourth note) and the beats per minute value for this measure (between 30 and 250) click the button with confirmed symbol and then the button with the play symbol.</string>
 </resources>

@@ -43,7 +43,7 @@
     <string name="email">E-mail</string>
     <string name="email_invalido">Invalid e-mail</string>
     <string name="email_necessario">E-mail required</string>
-    <string name="entrar">Enter</string>
+    <string name="entrar">Login</string>
     <string name="enviando_musica">Upload music</string>
     <string name="enviar">Upload</string>
     <string name="enviar_musica">Upload music</string>

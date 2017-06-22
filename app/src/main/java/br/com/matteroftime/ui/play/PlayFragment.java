@@ -170,7 +170,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                         ((MainActivity) getActivity()).habilitaViewPager();
                         ((MainActivity) getActivity()).habilitaTabLayout();
                         tocando = false;
-                        tocando = false;
                         break;
                     case 4:
                         repeticoesAtual.setText(String.valueOf(msg.arg1));

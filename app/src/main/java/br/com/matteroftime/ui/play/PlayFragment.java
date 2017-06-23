@@ -315,18 +315,34 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
             if (musicaSelecionada.getCompassos().get(i).getTempos() == 0){
                 showMessage(getString(R.string.o_compasso) + " " +String.valueOf(i+1)+ " " + getString(R.string.compassos_nao_definidos));
                 ok = false;
+                playAdapter.checaSelecao(false);
+                musica = null;
+                presenter.defineMusica(null);
+                nomeMusica.setText("");
                 return;
             } else if(musicaSelecionada.getCompassos().get(i).getRepeticoes() == 0){
                 showMessage(getString(R.string.o_compasso) + " " + String.valueOf(i+1)+ " "  + getString(R.string.repeticoes_nao_definidos));
                 ok = false;
+                playAdapter.checaSelecao(false);
+                musica = null;
+                presenter.defineMusica(null);
+                nomeMusica.setText("");
                 return;
             }  else if(musicaSelecionada.getCompassos().get(i).getBpm() == 0){
                 showMessage(getString(R.string.o_compasso) + " " +String.valueOf(i+1)+ " "  + getString(R.string.bpm_nao_definido));
                 ok = false;
+                playAdapter.checaSelecao(false);
+                musica = null;
+                presenter.defineMusica(null);
+                nomeMusica.setText("");
                 return;
             } else if(musicaSelecionada.getCompassos().get(i).getOrdem() < 0) {
                 showMessage(getString(R.string.o_compasso) + " " +String.valueOf(i+1)+ " "  + getString(R.string.ordem_nao_definida));
                 ok = false;
+                playAdapter.checaSelecao(false);
+                musica = null;
+                presenter.defineMusica(null);
+                nomeMusica.setText("");
                 return;
             } else {
                 ok = true;
@@ -334,6 +350,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         }
 
         if (ok == true){
+            playAdapter.checaSelecao(true);
             musica = musicaSelecionada;
             presenter.defineMusica(musica);
             nomeMusica.setText(musica.getNome());
@@ -390,16 +407,20 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
 
     @OnClick(R.id.btnPlay)
     public void tocar(View view){
-
         if (tocando == false ){
-            ((DrawerLocker) getActivity()).setDrawerEnabled(false);
-            ((MainActivity) getActivity()).desabilitaViewPager();
-            ((MainActivity) getActivity()).desabilitaTabLayout();
-            tocando = true;
-            presenter.play(getContext(), handler);
-        } else {
-            return;
+            if (musica != null){
+                ((DrawerLocker) getActivity()).setDrawerEnabled(false);
+                ((MainActivity) getActivity()).desabilitaViewPager();
+                ((MainActivity) getActivity()).desabilitaTabLayout();
+                tocando = true;
+                presenter.play(getContext(), handler);
+            } else {
+                showMessage(getString(R.string.sem_musica));
+            }
         }
+
+
+
     }
 
 

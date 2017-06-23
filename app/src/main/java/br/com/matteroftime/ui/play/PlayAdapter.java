@@ -28,6 +28,7 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
     private List<Musica> musicas;
     private Context context;
     private boolean shouldHighlightSelectedRow = false;
+    private boolean selecao;
     private int selectedPosition = 0;
     private final OnMusicSelectedListener listener;
 
@@ -105,6 +106,11 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
         notifyDataSetChanged();
     }
 
+    public void checaSelecao(boolean selecao) {
+        this.selecao = selecao;
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.txt_numero_musica) TextView numeroMusica;
@@ -131,7 +137,12 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.ViewHolder>{
             Musica musicaSelecionada = musicas.get(getLayoutPosition());
             listener.onSelectMusic(musicaSelecionada);
             notifyDataSetChanged();
-            shouldHighlightSelectedRow = true;
+            if (selecao == false){
+                shouldHighlightSelectedRow = false;
+            } else {
+                shouldHighlightSelectedRow = true;
+            }
+
         }
 
     }

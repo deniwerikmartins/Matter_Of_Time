@@ -25,6 +25,7 @@ public interface PlayContract {
         void atualizaViewsMusica(int i);
 
 
+        void recebeMusica(Musica musica);
     }
 
     public interface Actions{

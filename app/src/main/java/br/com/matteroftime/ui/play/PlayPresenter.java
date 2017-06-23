@@ -113,6 +113,8 @@ public class PlayPresenter implements PlayContract.Actions{
         musica.setCompassos(compassos);
         musica.setCompasso(true);
         this.defineMusica(musica);
+        view.recebeMusica(musica);
+
         bus.post(new MusicListChangedEvent());
     }
 

@@ -393,6 +393,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
                 int t = Integer.parseInt(tempos.getText().toString());
                 int b = Integer.parseInt(bpm.getText().toString());
                 presenter.criaCompasso(b, t, nota);
+
                 bpmAtual.setText(String.valueOf(b));
                 temposAtual.setText(String.valueOf(t));
                 notaAtual.setText(String.valueOf(nota));
@@ -403,6 +404,11 @@ public class PlayFragment extends Fragment implements PlayContract.View, OnMusic
         }
 
 
+    }
+
+    @Override
+    public void recebeMusica(Musica musica) {
+        this.musica = musica;
     }
 
     @OnClick(R.id.btnPlay)
